@@ -16,8 +16,8 @@ const withMDX = nextMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/LGCC.github.io',
-  assetPrefix: '/LGCC.github.io',
+  basePath: '/handbook',
+  assetPrefix: '/handbook',
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
   outputFileTracingIncludes: {
     '/**/*': ['./src/app/**/*.mdx'],
