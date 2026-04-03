@@ -1,0 +1,185 @@
+export const metadata = {
+  title: 'Code Improvement',
+  description:
+    'Make your working code better — readability, naming, reducing repetition, and refactoring basics.',
+}
+
+export const sections = [
+  { title: 'Working Code Is Not Finished Code', id: 'intro' },
+  { title: 'Naming', id: 'naming' },
+  { title: 'Reducing Repetition', id: 'dry' },
+  { title: 'Extracting Helper Functions', id: 'helpers' },
+  { title: 'Simplifying Conditionals', id: 'conditionals' },
+  { title: 'Thinking About Efficiency', id: 'efficiency' },
+  { title: 'Explaining Your Improvements', id: 'explaining' },
+]
+
+# Code Improvement
+
+Getting code to work is step one. Making it clear, clean, and maintainable is step two. {{ className: 'lead' }}
+
+## Working Code Is Not Finished Code {{ id: 'intro' }}
+
+When your code works, resist the urge to move on immediately. Ask yourself: could someone else (or future you) understand this in six months? Is there anything here that would confuse a teammate?
+
+Code is read far more often than it is written. Clarity is a form of kindness to everyone who reads it.
+
+## Naming {{ id: 'naming' }}
+
+Good names make code self-documenting. Bad names force readers to mentally simulate the code to understand it.
+
+```javascript
+// Hard to understand
+const x = u.filter(i => i.s === true)
+
+// Clear at a glance
+const activeUsers = users.filter(user => user.isActive === true)
+```
+
+**Guidelines:**
+
+- Variables and functions should describe what they hold or do.
+- Booleans should read like questions: `isLoading`, `hasError`, `isLoggedIn`.
+- Functions should start with a verb: `getUser`, `formatDate`, `handleSubmit`.
+- Avoid single-letter names except in short loops where `i`, `j` are conventional.
+- Avoid vague names like `data`, `info`, `temp`, `stuff`, `thing`.
+
+## Reducing Repetition {{ id: 'dry' }}
+
+If you write the same logic more than twice, it belongs in a function. The principle is called DRY — Don't Repeat Yourself.
+
+```javascript
+// Repeated logic
+const firstName = name.trim().toLowerCase()
+const lastName = surname.trim().toLowerCase()
+const cityName = city.trim().toLowerCase()
+
+// Extract the pattern
+function normalize(str) {
+  return str.trim().toLowerCase()
+}
+
+const firstName = normalize(name)
+const lastName = normalize(surname)
+const cityName = normalize(city)
+```
+
+When something changes (say you need to also remove extra spaces), you only fix it in one place.
+
+## Extracting Helper Functions {{ id: 'helpers' }}
+
+Long functions that do many things are hard to read and hard to test. Break them into smaller, focused functions with clear names.
+
+```javascript
+// One big function doing too much
+function handleFormSubmit(event) {
+  event.preventDefault()
+  const email = event.target.email.value
+  if (!email.includes('@')) {
+    setError('Please enter a valid email')
+    return
+  }
+  const formatted = email.trim().toLowerCase()
+  fetch('/api/subscribe', {
+    method: 'POST',
+    body: JSON.stringify({ email: formatted })
+  })
+}
+
+// Separated by responsibility
+function isValidEmail(email) {
+  return email.includes('@')
+}
+
+function normalizeEmail(email) {
+  return email.trim().toLowerCase()
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault()
+  const email = event.target.email.value
+  if (!isValidEmail(email)) {
+    setError('Please enter a valid email')
+    return
+  }
+  fetch('/api/subscribe', {
+    method: 'POST',
+    body: JSON.stringify({ email: normalizeEmail(email) })
+  })
+}
+```
+
+Each piece is now independently readable and testable.
+
+## Simplifying Conditionals {{ id: 'conditionals' }}
+
+Complex conditionals are often the hardest part of code to understand. Look for ways to simplify.
+
+**Early returns reduce nesting:**
+
+```javascript
+// Deeply nested
+function getDiscount(user) {
+  if (user) {
+    if (user.isPremium) {
+      if (user.yearsActive > 2) {
+        return 0.3
+      } else {
+        return 0.15
+      }
+    } else {
+      return 0
+    }
+  } else {
+    return 0
+  }
+}
+
+// Flat with early returns
+function getDiscount(user) {
+  if (!user) return 0
+  if (!user.isPremium) return 0
+  if (user.yearsActive > 2) return 0.3
+  return 0.15
+}
+```
+
+## Thinking About Efficiency {{ id: 'efficiency' }}
+
+As a beginner, the most important thing is writing clear, correct code. But it is worth starting to notice patterns that can be slow.
+
+**Nested loops:** Two loops one inside the other means the work grows quickly as the data size grows. Sometimes it is unavoidable, but often there is a way to use a lookup (an object or Map) instead.
+
+```javascript
+// Slow for large arrays — O(n²)
+const result = []
+for (const user of users) {
+  for (const order of orders) {
+    if (order.userId === user.id) {
+      result.push({ user, order })
+    }
+  }
+}
+
+// Faster — build a lookup first
+const ordersByUserId = {}
+for (const order of orders) {
+  ordersByUserId[order.userId] = order
+}
+const result = users.map(user => ({
+  user,
+  order: ordersByUserId[user.id]
+}))
+```
+
+Do not optimize prematurely. First make it work, then make it clear, then optimize only if there is a real performance problem.
+
+## Explaining Your Improvements {{ id: 'explaining' }}
+
+One of the most valuable skills in this program is explaining what you changed and why. When you refactor code:
+
+- Name what pattern you applied (extracted a helper, removed duplication, simplified a conditional)
+- Explain what problem it solves (easier to read, easier to change, less likely to introduce a bug)
+- Be honest about trade-offs
+
+Practice saying things like: _"I extracted the validation logic into a helper function because it was being repeated in three places, and this way if we need to change the validation rules we only do it once."_

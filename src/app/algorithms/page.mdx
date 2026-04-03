@@ -1,0 +1,198 @@
+export const metadata = {
+  title: 'Algorithms Corner',
+  description:
+    'Beginner-friendly algorithm and data structure concepts — Big O, arrays, objects, recursion, sorting, and more.',
+}
+
+export const sections = [
+  { title: 'Why Algorithms', id: 'why' },
+  { title: 'Big O in Plain English', id: 'big-o' },
+  { title: 'Arrays vs Objects', id: 'arrays-vs-objects' },
+  { title: 'Maps and Sets', id: 'maps-sets' },
+  { title: 'Stacks and Queues', id: 'stacks-queues' },
+  { title: 'Recursion Basics', id: 'recursion' },
+  { title: 'Sorting and Searching', id: 'sorting' },
+  { title: 'Practice Resources', id: 'practice' },
+]
+
+# Algorithms Corner
+
+Optional enrichment — practical algorithm concepts explained for beginners, without unnecessary abstraction. {{ className: 'lead' }}
+
+## Why Algorithms {{ id: 'why' }}
+
+You do not need to master algorithms to build web apps. But understanding the basics helps you:
+
+- Write code that performs well with real data sizes
+- Talk confidently in technical interviews
+- Recognize patterns in problems you have not seen before
+
+This section stays practical and beginner-friendly. Every concept is shown with JavaScript examples.
+
+## Big O in Plain English {{ id: 'big-o' }}
+
+Big O notation describes how the time (or space) a piece of code needs grows as the input size grows. You do not need the math — just the intuition.
+
+| Notation | Plain English | Example |
+|---|---|---|
+| O(1) | Constant — same speed no matter how big the input | Looking up a value in an object by key |
+| O(n) | Linear — grows proportionally with input | Looping through an array once |
+| O(n²) | Quadratic — grows fast, gets slow for large inputs | A loop inside a loop |
+| O(log n) | Logarithmic — fast, halves the problem each step | Binary search |
+
+**Practical rule:** For small inputs (dozens, hundreds), most code is fast enough. For large inputs (thousands, millions), nested loops get expensive fast.
+
+## Arrays vs Objects {{ id: 'arrays-vs-objects' }}
+
+Knowing when to use each one is one of the most practical algorithm skills.
+
+**Arrays** are ordered lists. Use them when order matters or when you need to iterate over everything.
+
+```javascript
+const names = ['Alice', 'Bob', 'Carol']
+names[0]           // O(1) — fast
+names.includes('Bob')  // O(n) — scans the whole array
+```
+
+**Objects** are key-value stores. Use them when you need fast lookup by a specific identifier.
+
+```javascript
+const userById = {
+  '001': { name: 'Alice' },
+  '002': { name: 'Bob' },
+}
+userById['002']    // O(1) — instant lookup, regardless of size
+```
+
+**The pattern:** When you find yourself searching an array repeatedly for the same thing, convert it to an object or Map first.
+
+## Maps and Sets {{ id: 'maps-sets' }}
+
+**Map** is like an object but allows any type as a key and preserves insertion order.
+
+```javascript
+const scores = new Map()
+scores.set('Alice', 95)
+scores.set('Bob', 87)
+scores.get('Alice')   // 95
+scores.has('Carol')   // false
+```
+
+**Set** stores unique values — duplicates are automatically ignored.
+
+```javascript
+const tags = new Set(['js', 'react', 'js', 'css'])
+// tags = Set { 'js', 'react', 'css' }  — no duplicates
+
+// Deduplicate an array
+const unique = [...new Set(someArray)]
+```
+
+## Stacks and Queues {{ id: 'stacks-queues' }}
+
+These are patterns for managing ordered collections of items.
+
+**Stack — last in, first out (LIFO).** Like a stack of plates.
+
+```javascript
+const stack = []
+stack.push('first')
+stack.push('second')
+stack.pop()   // 'second' — removes the last item
+```
+
+**Queue — first in, first out (FIFO).** Like a line at a store.
+
+```javascript
+const queue = []
+queue.push('first')
+queue.push('second')
+queue.shift()  // 'first' — removes the first item
+```
+
+You use these patterns constantly without realizing it — browser history is a stack, task queues are queues.
+
+## Recursion Basics {{ id: 'recursion' }}
+
+A recursive function calls itself. Every recursive function needs a **base case** (when to stop) and a **recursive case** (the self-call that makes progress toward stopping).
+
+```javascript
+function countdown(n) {
+  if (n <= 0) {
+    console.log('Done!')
+    return
+  }
+  console.log(n)
+  countdown(n - 1)   // calls itself with a smaller value
+}
+
+countdown(3)
+// 3
+// 2
+// 1
+// Done!
+```
+
+A classic example — factorial:
+
+```javascript
+function factorial(n) {
+  if (n === 1) return 1          // base case
+  return n * factorial(n - 1)   // recursive case
+}
+
+factorial(5)  // 120  (5 * 4 * 3 * 2 * 1)
+```
+
+**Warning:** Always make sure the base case will be reached, or the function will run forever and crash.
+
+## Sorting and Searching {{ id: 'sorting' }}
+
+**JavaScript's built-in sort:**
+
+```javascript
+const nums = [3, 1, 4, 1, 5, 9, 2, 6]
+nums.sort((a, b) => a - b)   // ascending: [1, 1, 2, 3, 4, 5, 6, 9]
+nums.sort((a, b) => b - a)   // descending
+```
+
+**Linear search** — scan every element:
+
+```javascript
+function findIndex(arr, target) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) return i
+  }
+  return -1
+}
+// O(n) — works on any array
+```
+
+**Binary search** — works only on sorted arrays, but much faster:
+
+```javascript
+function binarySearch(arr, target) {
+  let left = 0
+  let right = arr.length - 1
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2)
+    if (arr[mid] === target) return mid
+    if (arr[mid] < target) left = mid + 1
+    else right = mid - 1
+  }
+  return -1
+}
+// O(log n) — each step cuts the problem in half
+```
+
+## Practice Resources {{ id: 'practice' }}
+
+Once you are comfortable with the basics, these platforms offer good practice problems at beginner to intermediate level:
+
+- **[LeetCode](https://leetcode.com)** — Filter by Easy. Start with Array and String problems.
+- **[Codewars](https://www.codewars.com)** — Start at 8 kyu and work up. Good for short, focused problems.
+- **[HackerRank](https://www.hackerrank.com)** — Has structured problem sets by topic.
+- **[NeetCode](https://neetcode.io)** — Excellent video explanations for common interview problems.
+
+Start with what you know. Build confidence with easier problems before moving to harder ones.

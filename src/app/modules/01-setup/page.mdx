@@ -1,0 +1,127 @@
+export const metadata = {
+  title: 'Module 1 — Program Setup, Git & GitHub',
+  description:
+    'Get your environment ready, learn Git fundamentals, and build your first workflow.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 1 — Program Setup, Git & GitHub
+
+Get your environment ready, learn the Git workflow, and push your first code to GitHub. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+This module covers everything you need before writing a single line of application code: a working terminal, a configured Git installation, a connected GitHub account, and the basic commands that make version control possible.
+
+## Why This Matters {{ id: 'why' }}
+
+Every professional developer uses Git every day. It is not optional. Without version control, you have no history, no safety net, and no way to collaborate. Getting comfortable with Git in week one means you will not be fighting your tools while also trying to learn HTML, CSS, and JavaScript.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Navigate your file system using the terminal
+- Initialize and clone Git repositories
+- Stage, commit, and push changes to GitHub
+- Pull changes and understand why pull before push matters
+- Explain what a branch is and when you would use one
+- Create and merge a simple branch
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Repository (repo) | A folder tracked by Git, containing your project and its full history |
+| Commit | A saved snapshot of your changes with a message describing what you did |
+| Branch | An independent line of development that diverges from the main codebase |
+| Remote | A version of your repository hosted on a server (GitHub) |
+| Clone | Copying a remote repository to your local machine |
+| Push | Sending your local commits to the remote |
+| Pull | Downloading changes from the remote to your local machine |
+| Staging area | Where you prepare changes before committing them |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### The Git workflow
+
+The basic loop you will repeat throughout the program:
+
+1. Make a change to a file
+2. Stage the change with `git add`
+3. Commit the change with `git commit -m "message"`
+4. Push to GitHub with `git push`
+
+### What a commit message should look like
+
+Be specific. A good commit message tells a teammate (or future you) exactly what changed and why.
+
+- **Bad:** `update` / `fix` / `asdfgh`
+- **Good:** `Fix form validation not triggering on empty email field`
+
+### Branches
+
+A branch lets you work on something without affecting the main codebase. When your work is ready, you merge it back in. The default branch is usually called `main`.
+
+## Examples {{ id: 'examples' }}
+
+**Clone a repository:**
+
+```bash
+git clone git@github.com:username/my-project.git
+cd my-project
+```
+
+**Make a change and push it:**
+
+```bash
+# edit a file, then:
+git add index.html
+git commit -m "Add hero section to homepage"
+git push
+```
+
+**Create and switch to a new branch:**
+
+```bash
+git checkout -b feature/add-nav-links
+# make changes, then:
+git add .
+git commit -m "Add navigation links to header"
+git push -u origin feature/add-nav-links
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Forgetting to `git pull` before starting work.** If someone else pushed changes while you were away, you need to pull first or you will have a conflict when you try to push.
+- **Committing everything with `git add .` without reviewing what changed.** Get in the habit of `git status` first so you know exactly what you are staging.
+- **Vague commit messages.** Write messages that describe the change, not just that a change happened.
+- **Working directly on `main`.** Use a branch for new features or experiments so you always have a clean main to fall back to.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- `git status` — shows you exactly what has changed and what is staged. Run this constantly.
+- `git log --oneline` — shows recent commit history in a compact format.
+- If a push fails with "rejected", run `git pull` first to bring in remote changes, then push again.
+- If you see `Permission denied (publickey)`, your SSH key is not set up correctly. Revisit the [Get Started](/get-started#ssh-keys) guide.
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can navigate directories in the terminal
+- [ ] I have Git installed and configured with my name and email
+- [ ] I can clone a repository from GitHub
+- [ ] I can stage, commit, and push changes
+- [ ] I understand what `git pull` does and when to use it
+- [ ] I created a branch, made a commit on it, and pushed it
+- [ ] I understand what a merge is at a basic level

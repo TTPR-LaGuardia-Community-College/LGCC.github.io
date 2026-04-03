@@ -1,0 +1,43 @@
+import { Guides } from '@/components/Guides'
+import { Resources } from '@/components/Resources'
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+  title: 'LAGCC Student Handbook',
+  description:
+    'Your one-stop reference for the TTPR program at LaGuardia Community College — course logistics, modules, exercises, assignments, and engineering references.',
+}
+
+export const sections = [
+  { title: 'Quick Links', id: 'guides' },
+  { title: 'Reference Library', id: 'resources' },
+]
+
+<HeroPattern />
+
+# LAGCC Student Handbook
+
+Your central home for course logistics, curriculum, morning exercises, assignments, and engineering references for the TTPR program at LaGuardia Community College. {{ className: 'lead' }}
+
+<div className="not-prose mt-6 mb-16 flex gap-3">
+  <Button href="/get-started" arrow="right">
+    <>Get Started</>
+  </Button>
+  <Button href="/modules" variant="outline">
+    <>Browse Modules</>
+  </Button>
+</div>
+
+## About this handbook {{ anchor: false }}
+
+This handbook centralizes everything you need during the program. Use it to find course expectations, review module content, revisit morning exercises, locate assignment details, and look up references for Git, debugging, and more. If something feels unclear, start with [FAQ](/faq) or the [Get Started](/get-started) section. {{ className: 'lead' }}
+
+<div className="not-prose">
+  <Button href="/syllabus" variant="text" arrow="right">
+    <>View the Syllabus</>
+  </Button>
+</div>
+
+<Guides />
+
+<Resources />

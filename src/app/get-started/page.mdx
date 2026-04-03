@@ -1,0 +1,162 @@
+export const metadata = {
+  title: 'Get Started',
+  description:
+    'Set up your GitHub account, SSH keys, and profile README. Complete your first-day checklist.',
+}
+
+export const sections = [
+  { title: 'Create a GitHub Account', id: 'github-account' },
+  { title: 'Set Up SSH Keys', id: 'ssh-keys' },
+  { title: 'Profile README', id: 'profile-readme' },
+  { title: 'Local Git Workflow', id: 'local-git' },
+  { title: 'First-Day Checklist', id: 'checklist' },
+]
+
+# Get Started
+
+Complete this section during your first days in the program. Each step builds on the last, so work through them in order. {{ className: 'lead' }}
+
+## Create a GitHub Account {{ id: 'github-account' }}
+
+GitHub is where you will store your code, submit assignments, and build a visible portfolio of your work. Every project you complete will live here.
+
+**Steps:**
+
+1. Go to [github.com](https://github.com) and click **Sign up**.
+2. Choose a professional username — your name or initials work well. Avoid handles that are hard to share with employers.
+3. Verify your email address before moving on.
+4. Fill out your profile: add your name, a photo, and a short bio.
+
+**Why it matters:** Employers often look at GitHub profiles. Starting early gives you more time to build a good one.
+
+## Set Up SSH Keys {{ id: 'ssh-keys' }}
+
+SSH keys let you push code to GitHub without entering your password every time. You generate a key pair — a private key that stays on your computer and a public key you share with GitHub.
+
+**Check if you already have a key:**
+
+```bash
+ls ~/.ssh
+```
+
+If you see `id_ed25519` or `id_rsa`, you may already have one. If not, generate a new key.
+
+**Generate a new SSH key:**
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Press Enter to accept the default file location. Add a passphrase if you want extra security.
+
+**Start the SSH agent and add your key:**
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+**Copy your public key:**
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the output. Then go to **GitHub → Settings → SSH and GPG keys → New SSH key** and paste it in.
+
+**Test the connection:**
+
+```bash
+ssh -T git@github.com
+```
+
+You should see: `Hi username! You've successfully authenticated.`
+
+**Common errors:**
+
+- `Permission denied (publickey)` — the key was not added to GitHub or the agent. Re-check both steps above.
+- `Could not open a connection` — your SSH agent may not be running. Run `eval "$(ssh-agent -s)"` again.
+
+## Personalize a GitHub Profile README {{ id: 'profile-readme' }}
+
+A profile README shows up on your GitHub profile page. It is one of the first things people see when they look you up.
+
+**How to create it:**
+
+1. Create a new repository with the exact same name as your GitHub username.
+2. Check the box to initialize it with a README.
+3. Edit the README to introduce yourself.
+
+**Starter template:**
+
+```markdown
+# Hi, I'm [Your Name] 👋
+
+I'm a student in the TTPR program at LaGuardia Community College,
+learning full-stack web development.
+
+## What I'm Learning
+- HTML, CSS, JavaScript
+- React and Node.js
+- Git and GitHub workflows
+
+## Projects
+_Coming soon — check back as I build things!_
+
+## Contact
+- GitHub: [@yourusername](https://github.com/yourusername)
+```
+
+Keep it simple and honest. You can improve it as you build more projects.
+
+## Local Git Workflow Basics {{ id: 'local-git' }}
+
+These are the five commands you will use every day.
+
+**Clone a repository to your machine:**
+
+```bash
+git clone git@github.com:username/repo-name.git
+```
+
+**Stage your changes:**
+
+```bash
+git add filename.js
+# or stage everything:
+git add .
+```
+
+**Commit with a message:**
+
+```bash
+git commit -m "Add login form validation"
+```
+
+**Push to GitHub:**
+
+```bash
+git push
+```
+
+**Pull the latest changes:**
+
+```bash
+git pull
+```
+
+For a deeper reference, see the [Git & GitHub handbook](/references/git).
+
+## First-Day Checklist {{ id: 'checklist' }}
+
+Work through this list before the end of your first session:
+
+- [ ] GitHub account created and email verified
+- [ ] Professional username chosen
+- [ ] Profile photo and bio added
+- [ ] SSH key generated and added to GitHub
+- [ ] SSH connection tested successfully (`ssh -T git@github.com`)
+- [ ] Profile README repository created
+- [ ] Profile README published with your name and learning goals
+- [ ] First repository cloned locally
+- [ ] First commit made and pushed to GitHub
