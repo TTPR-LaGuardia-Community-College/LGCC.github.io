@@ -1,0 +1,104 @@
+export const metadata = {
+  title: 'Responsible AI Use',
+  description:
+    'How to use AI tools effectively as a learning aid — asking better questions, verifying output, and knowing when not to rely on AI.',
+}
+
+export const sections = [
+  { title: 'AI as a Support Tool', id: 'framing' },
+  { title: 'Asking Better Questions', id: 'asking' },
+  { title: 'Using AI to Debug', id: 'debugging' },
+  { title: 'Verifying AI Output', id: 'verifying' },
+  { title: 'When Not to Rely on AI', id: 'limits' },
+  { title: 'Citing AI Use', id: 'citing' },
+]
+
+# Responsible AI Use
+
+AI tools can accelerate your learning when used well — or slow it down when used as a shortcut. {{ className: 'lead' }}
+
+## AI as a Support Tool {{ id: 'framing' }}
+
+AI assistants like ChatGPT, Claude, and GitHub Copilot are powerful tools, but they are not replacements for understanding. The goal of this program is for you to be able to write, read, and debug code independently. AI can support that goal — or it can undermine it.
+
+**Use AI to:**
+
+- Get an explanation of something you do not understand
+- Explore alternative approaches to a problem you have already attempted
+- Debug code you have already tried to fix yourself
+- Check your understanding by asking follow-up questions
+- Get unstuck when you have been spinning on something for too long
+
+**Do not use AI to:**
+
+- Generate code you paste in without reading or understanding
+- Skip the struggle that is part of learning
+- Avoid asking your instructor or TA a question they would actually enjoy answering
+
+## Asking Better Questions {{ id: 'asking' }}
+
+Vague prompts get vague answers. The more specific and honest you are about your situation, the more useful the response will be.
+
+**Weak prompt:**
+> Fix my code
+
+**Stronger prompt:**
+> I'm writing a React component that fetches a list of users from an API and renders them. The component renders correctly on first load, but when I click a button to filter by active users, the list doesn't update. Here's my code: [paste code]. What might be causing this and how should I think about debugging it?
+
+Notice the stronger prompt:
+- Describes what the code is supposed to do
+- Describes the specific problem
+- Includes the actual code
+- Asks for explanation, not just a fix
+
+## Using AI to Debug {{ id: 'debugging' }}
+
+AI is genuinely useful for debugging — but use it as a thinking partner, not a solution dispenser.
+
+**A better process:**
+
+1. Read the error message yourself first
+2. Try to identify the problem on your own
+3. If stuck, share the error, your code, and what you already tried with the AI
+4. Ask it to explain what might be wrong and why — not just to "fix it"
+5. Apply the explanation yourself
+
+When you ask an AI to just fix your code and you paste the result in, you learn nothing and you cannot defend or extend that code.
+
+## Verifying AI Output {{ id: 'verifying' }}
+
+AI models generate plausible-sounding output — but they make mistakes. They can produce code that looks right but has bugs, uses outdated APIs, or handles edge cases incorrectly.
+
+**Always:**
+
+- Read every line of AI-generated code before using it
+- Test it — does it actually work in your project?
+- Understand what it is doing — could you explain it to someone else?
+- Check whether library or API versions mentioned match what your project uses
+
+**Be especially careful with:**
+
+- Security-related code (auth, input validation, encryption)
+- Database queries — a wrong query can corrupt or delete data
+- Code that involves state management — subtle bugs are common here
+
+If you cannot explain what the code does, you are not ready to use it.
+
+## When Not to Rely on AI {{ id: 'limits' }}
+
+There are situations where reaching for AI before doing the work yourself is counterproductive:
+
+- **During learning exercises and assignments** — the point is for you to struggle productively with the problem. That struggle is where learning happens.
+- **When you have not read the error message yet** — do this first, every time.
+- **When you have not tried anything yourself** — make an attempt first, then use AI to reflect on your approach.
+- **When the deadline pressure is causing you to shortcut** — talk to your instructor instead.
+
+AI is most valuable to people who already understand the domain. The more you know, the better you can evaluate AI output, ask good questions, and catch mistakes. Investing in your own understanding now pays off long-term.
+
+## Citing AI Use {{ id: 'citing' }}
+
+If the program requires you to acknowledge AI use, do so clearly. A simple note works:
+
+> I used ChatGPT to help me understand how `useEffect` cleanup functions work, then implemented the component myself.
+
+Be honest about what you used AI for and what you did yourself. This is a professional habit — in most teams, AI-assisted work is expected and accepted, but passing off entirely AI-generated work as your own is not.

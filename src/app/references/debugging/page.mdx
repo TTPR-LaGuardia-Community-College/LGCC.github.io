@@ -1,0 +1,174 @@
+export const metadata = {
+  title: 'Debugging',
+  description:
+    'How to read error messages, use console.log effectively, and debug HTML, CSS, JavaScript, React, and APIs.',
+}
+
+export const sections = [
+  { title: 'Reading Error Messages', id: 'reading-errors' },
+  { title: 'Using console.log Well', id: 'console-log' },
+  { title: 'Debugging HTML & CSS', id: 'html-css' },
+  { title: 'Debugging JavaScript', id: 'javascript' },
+  { title: 'Debugging React', id: 'react' },
+  { title: 'Debugging APIs', id: 'apis' },
+  { title: 'Debugging Checklist', id: 'checklist' },
+]
+
+# Debugging
+
+Debugging is not a sign that something went wrong — it is a normal part of writing code. The faster you build a repeatable process, the more independent you become. {{ className: 'lead' }}
+
+## Reading Error Messages {{ id: 'reading-errors' }}
+
+Error messages tell you what went wrong and where. Most beginners skip them too quickly. Slow down and read the whole message.
+
+**What to look for:**
+
+1. **The error type** — `TypeError`, `ReferenceError`, `SyntaxError`, etc. Each type tells you something different.
+2. **The message** — The human-readable description of what went wrong (e.g., `Cannot read properties of undefined`).
+3. **The file and line number** — Where in your code the error occurred.
+4. **The stack trace** — The chain of function calls that led to the error. Start from the top.
+
+**Common error types:**
+
+| Error | What it means |
+|---|---|
+| `SyntaxError` | Your code has a typo or structural problem (missing bracket, extra comma) |
+| `ReferenceError` | You used a variable that doesn't exist or isn't in scope |
+| `TypeError` | You called something as a function that isn't one, or accessed a property on `undefined` |
+| `RangeError` | A value is outside the allowed range (e.g., infinite recursion) |
+
+## Using console.log Well {{ id: 'console-log' }}
+
+`console.log` is your most basic and most useful debugging tool. But random logging makes debugging slower, not faster. Be deliberate.
+
+**Log with labels:**
+
+```javascript
+// Bad — you don't know what this is
+console.log(data)
+
+// Good — you know exactly what you are looking at
+console.log('user object:', user)
+console.log('cart items count:', cart.length)
+```
+
+**Log at the boundaries of a problem:**
+
+```javascript
+function calculateTotal(items) {
+  console.log('calculateTotal called with:', items)   // what came in?
+  const total = items.reduce((sum, item) => sum + item.price, 0)
+  console.log('calculated total:', total)              // what came out?
+  return total
+}
+```
+
+**Clean up logs before committing.** Leaving debug logs in committed code is a bad habit.
+
+## Debugging HTML & CSS {{ id: 'html-css' }}
+
+**Open DevTools:** Right-click anything on the page → Inspect (or `Cmd+Option+I` / `F12`).
+
+**For layout problems:**
+
+- Use the **Elements** panel to inspect the DOM — see if your HTML structure is what you expect.
+- Hover over elements to see their box model (margin, padding, border, content).
+- Use the **Styles** panel to see which CSS rules are applied and which are overridden (struck through).
+- Toggle styles on and off live to see what is causing the issue.
+
+**Common CSS issues:**
+
+- A style not applying — another rule with higher specificity is overriding it.
+- Element not visible — check `display`, `visibility`, `opacity`, and `z-index`.
+- Layout not working as expected — add a temporary `border: 1px solid red` to see the actual size and position of elements.
+
+## Debugging JavaScript {{ id: 'javascript' }}
+
+**The process:**
+
+1. Read the error message and find the line number.
+2. Go to that line. Read the code out loud.
+3. Check what the values of the relevant variables actually are (using `console.log`).
+4. Work backward: where did those values come from?
+
+**Check your assumptions:**
+
+```javascript
+// You assume user exists — but what if it doesn't?
+console.log(typeof user, user)
+
+// You assume the array has items — does it?
+console.log('items:', items, 'length:', items.length)
+```
+
+**Common JavaScript bugs:**
+
+- `undefined is not a function` — you are calling something that is not a function. Log it before calling it.
+- Off-by-one errors in loops — check if you should use `<` or `<=`.
+- Mutating data you did not mean to — arrays and objects are passed by reference.
+
+## Debugging React {{ id: 'react' }}
+
+**State not updating as expected:**
+
+- `useState` updates are async — the new value is not available until the next render.
+- Never mutate state directly. Always use the setter function.
+
+```javascript
+// Wrong — mutating state directly
+state.items.push(newItem)
+
+// Right — creating a new array
+setState([...state.items, newItem])
+```
+
+**Component not re-rendering:**
+
+- Check that you are using the setter from `useState`, not modifying the variable directly.
+- Check that props are actually changing — React only re-renders when state or props change.
+
+**Props not arriving as expected:**
+
+```javascript
+function MyComponent({ user, items }) {
+  console.log('MyComponent props:', { user, items })
+  // ...
+}
+```
+
+**Install React DevTools** in your browser. It lets you inspect component trees, view current state and props, and trigger re-renders.
+
+## Debugging APIs {{ id: 'apis' }}
+
+**Check the Network tab first:**
+
+1. Open DevTools → Network
+2. Make the request (click the button, submit the form, etc.)
+3. Click on the request in the list
+4. Check: Status code, Request headers, Request body, Response body
+
+**Common API issues:**
+
+| Symptom | Likely cause |
+|---|---|
+| `404 Not Found` | URL is wrong or the route doesn't exist |
+| `401 Unauthorized` | Missing or invalid auth token |
+| `400 Bad Request` | Request body is malformed or missing required fields |
+| `500 Internal Server Error` | Something broke on the server — check server logs |
+| CORS error in console | Server is not allowing requests from your origin |
+
+**Test your API with a tool like Postman or curl** before connecting it to your frontend. If it works there, the problem is in your frontend code.
+
+## Debugging Checklist {{ id: 'checklist' }}
+
+When you are stuck, go through this list before asking for help:
+
+- [ ] Read the full error message — don't just skim the first line
+- [ ] Find the file and line number from the error
+- [ ] Add `console.log` to see actual values at the problem location
+- [ ] Check your assumptions — are the variables actually what you think they are?
+- [ ] Simplify the problem — can you reproduce the bug in a smaller piece of code?
+- [ ] Search the exact error message — someone has almost certainly hit it before
+- [ ] Explain the problem out loud (rubber duck debugging) — often reveals the answer
+- [ ] Look at recent changes — what did you change right before it broke?

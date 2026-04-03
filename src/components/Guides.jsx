@@ -1,0 +1,56 @@
+import { Button } from '@/components/Button'
+import { Heading } from '@/components/Heading'
+
+const guides = [
+  {
+    href: '/get-started',
+    name: 'Get Started',
+    description:
+      'Set up your GitHub account, SSH keys, and profile README. Complete your first-day checklist.',
+  },
+  {
+    href: '/modules',
+    name: 'Modules',
+    description:
+      'Browse the full curriculum in order. Each module has explanations, examples, and linked exercises.',
+  },
+  {
+    href: '/exercises',
+    name: 'Morning Exercises',
+    description:
+      'Revisit daily warm-up prompts with hints, common mistakes, and reflection questions.',
+  },
+  {
+    href: '/assignments',
+    name: 'Assignments',
+    description:
+      'Find assignment objectives, requirements, submission steps, and common issues in one place.',
+  },
+]
+
+export function Guides() {
+  return (
+    <div className="my-16 xl:max-w-none">
+      <Heading level={2} id="guides">
+        Quick Links
+      </Heading>
+      <div className="not-prose mt-4 grid grid-cols-1 gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-4 dark:border-white/5">
+        {guides.map((guide) => (
+          <div key={guide.href}>
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+              {guide.name}
+            </h3>
+            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+              {guide.description}
+            </p>
+            <p className="mt-4">
+              <Button href={guide.href} variant="text" arrow="right">
+                Read more
+              </Button>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

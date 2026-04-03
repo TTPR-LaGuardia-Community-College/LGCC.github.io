@@ -1,0 +1,112 @@
+export const metadata = {
+  title: 'FAQ',
+  description:
+    'Answers to the most common student questions — account setup, GitHub, getting unstuck, and asking for help well.',
+}
+
+export const sections = [
+  { title: 'Account & Setup', id: 'setup' },
+  { title: 'GitHub & Submission', id: 'github-submission' },
+  { title: 'Getting Unstuck', id: 'unstuck' },
+  { title: 'Assignments', id: 'assignments' },
+  { title: 'Asking for Help Well', id: 'asking-for-help' },
+]
+
+# FAQ
+
+Answers to the questions that come up every cohort. Check here before asking on Slack. {{ className: 'lead' }}
+
+## Account & Setup {{ id: 'setup' }}
+
+**How do I set up my GitHub account?**
+
+Follow the [Get Started guide](/get-started#github-account). Create an account at github.com, choose a professional username, verify your email, and fill out your profile.
+
+**How do I set up SSH keys?**
+
+See the [SSH keys section](/get-started#ssh-keys) in Get Started. It walks through generating a key, adding it to GitHub, and testing the connection.
+
+**The SSH test says "Permission denied (publickey)". What do I do?**
+
+Usually this means either: (1) you did not add your public key to GitHub yet, or (2) the SSH agent is not running. Re-read the [SSH setup guide](/get-started#ssh-keys) step by step. Run `ssh-add ~/.ssh/id_ed25519` to make sure the key is loaded.
+
+**I messed up my Git config. How do I fix my name/email?**
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+Run those commands in your terminal to update them globally.
+
+## GitHub & Submission {{ id: 'github-submission' }}
+
+**I pushed my code but the instructor says they cannot see it. What happened?**
+
+Check a few things:
+1. Run `git status` — is everything committed? (`nothing to commit` means yes)
+2. Run `git push` and confirm it succeeded with no errors
+3. Visit your repository on github.com and confirm the files are there
+4. Make sure you shared the right repository URL
+
+**I get "rejected — non-fast-forward" when I try to push. What does that mean?**
+
+The remote has commits that you do not have locally. Run `git pull` first to bring them in, then push again. This is why pulling before you start working every session matters.
+
+**I accidentally committed to the wrong branch. What do I do?**
+
+Talk to your instructor or TA. Git makes most things recoverable, but the fix depends on the specifics. Do not try to force-push or reset without guidance.
+
+**Where do I submit my assignments?**
+
+See the [Assignments page](/assignments#submission) for the submission workflow. Usually you push your code to GitHub and share the repository link as directed.
+
+## Getting Unstuck {{ id: 'unstuck' }}
+
+**I've been stuck for a while. What should I do?**
+
+1. Read the error message — the full message, including the file and line number.
+2. Add `console.log` to see what the actual values are at the problem location.
+3. Search the exact error message — someone has almost certainly hit it before.
+4. Take a short break. Stepping away for 5–10 minutes often unsticks you.
+5. Try explaining the problem out loud, even to yourself. (Rubber duck debugging.)
+6. Ask for help — but tell us what you tried first.
+
+**How long should I try before asking for help?**
+
+A good rule: if you have been stuck and actively trying for 20–30 minutes without making progress, it is time to ask. Staring at the same problem for hours without movement is not productive.
+
+**I asked the AI and it gave me code but I do not understand it. What now?**
+
+Do not paste in code you do not understand. Instead, ask the AI to explain it line by line. Then ask your instructor to review your understanding. See the [Responsible AI Use](/references/ai-use) guide.
+
+## Assignments {{ id: 'assignments' }}
+
+**Where do I find assignment details?**
+
+All assignments are on the [Assignments page](/assignments). Each has its own page with the full requirements, submission steps, and common issues.
+
+**What if I cannot finish an assignment on time?**
+
+Communicate early. Let your instructor know before the deadline, not after. Partial work submitted on time is better than complete work submitted late with no communication.
+
+**The assignment says to use a starter repo. Where is it?**
+
+The link to the starter repository is on the individual assignment page. If it is missing, ask on Slack.
+
+## Asking for Help Well {{ id: 'asking-for-help' }}
+
+The quality of your question directly affects the quality of the help you get. When you ask for help, include:
+
+1. **What you are trying to do** — describe the goal, not just the symptom
+2. **What you tried** — show the code or steps you already attempted
+3. **What actually happened** — paste the exact error message or describe the unexpected behavior
+4. **What you expected to happen**
+
+**Example of a weak question:**
+> My code doesn't work, can someone help?
+
+**Example of a good question:**
+> I'm trying to fetch user data from `/api/users` in my React component using `useEffect`, but the component renders with an empty array even though the API returns data. I've confirmed the API works in Postman. Here's my useEffect: [paste code]. The console shows the fetch completes but the state doesn't update. Am I calling `setState` incorrectly?
+
+The second version will get you a faster, more useful answer — and asking it will often help you figure out the answer yourself.
