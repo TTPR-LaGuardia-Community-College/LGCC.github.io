@@ -1,0 +1,209 @@
+export const metadata = {
+  title: 'Module 5 — DOM Manipulation',
+  description: 'Use JavaScript to read and change what is on the page in real time.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 5 — DOM Manipulation
+
+Make your pages come alive — read and update content, respond to events, and build interactivity. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+The DOM (Document Object Model) is the browser's live representation of your HTML. JavaScript can read any element on the page, change its content, modify its styles, add or remove elements, and respond to user interactions like clicks, keypresses, and form submissions. This is the foundation of all browser interactivity before you get to React.
+
+## Why This Matters {{ id: 'why' }}
+
+Even though you will spend most of the program working in React, React is a layer on top of the DOM. Understanding how the DOM works — and how JavaScript manipulates it directly — gives you a foundation that makes React make sense. You will also occasionally need raw DOM skills even in React projects.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Select elements using `querySelector` and `querySelectorAll`
+- Read and update element content using `textContent` and `innerHTML`
+- Add, remove, and toggle CSS classes on elements
+- Listen for and handle events: `click`, `input`, `submit`
+- Create and append new elements to the DOM
+- Read values from form inputs
+- Prevent default browser behavior (e.g., form submission)
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| DOM | The browser's tree-structured representation of an HTML document |
+| Node | Any item in the DOM tree (element, text, comment) |
+| Event | Something that happens in the browser (click, scroll, submit) |
+| Event listener | A function that runs when a specific event fires on an element |
+| Event object | The argument passed to a listener, containing data about the event |
+| `preventDefault()` | Stops the browser's default behavior for an event |
+| `querySelector` | Returns the first element matching a CSS selector |
+| `classList` | A DOM API for adding, removing, and toggling CSS classes |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Selecting elements
+
+```js
+// select the first match
+const btn = document.querySelector('#submit-btn')
+const heading = document.querySelector('h1')
+const card = document.querySelector('.card')
+
+// select all matches (returns a NodeList)
+const items = document.querySelectorAll('.list-item')
+items.forEach((item) => console.log(item.textContent))
+```
+
+### Reading and updating content
+
+```js
+const heading = document.querySelector('h1')
+
+// read
+console.log(heading.textContent)
+
+// update text (safe — no HTML parsing)
+heading.textContent = 'New Title'
+
+// update HTML (use only with trusted content)
+heading.innerHTML = '<em>New</em> Title'
+```
+
+### Handling events
+
+```js
+const btn = document.querySelector('#submit-btn')
+
+btn.addEventListener('click', (event) => {
+  console.log('button clicked', event)
+})
+
+// form submit
+const form = document.querySelector('form')
+form.addEventListener('submit', (event) => {
+  event.preventDefault() // stop the page from reloading
+  const input = document.querySelector('#name-input')
+  console.log('submitted:', input.value)
+})
+```
+
+### Modifying classes
+
+```js
+const card = document.querySelector('.card')
+
+card.classList.add('active')
+card.classList.remove('hidden')
+card.classList.toggle('expanded') // add if absent, remove if present
+card.classList.contains('active') // true or false
+```
+
+### Creating and appending elements
+
+```js
+const list = document.querySelector('#todo-list')
+
+const newItem = document.createElement('li')
+newItem.textContent = 'Learn the DOM'
+list.appendChild(newItem)
+```
+
+## Examples {{ id: 'examples' }}
+
+**A counter button:**
+
+```js
+let count = 0
+const display = document.querySelector('#count')
+const btn = document.querySelector('#increment')
+
+btn.addEventListener('click', () => {
+  count++
+  display.textContent = count
+})
+```
+
+**Rendering a list from an array:**
+
+```js
+const students = ['Alex', 'Jordan', 'Sam']
+const list = document.querySelector('#student-list')
+
+students.forEach((name) => {
+  const item = document.createElement('li')
+  item.textContent = name
+  list.appendChild(item)
+})
+```
+
+**Filtering visible items by search input:**
+
+```js
+const searchInput = document.querySelector('#search')
+const items = document.querySelectorAll('.item')
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase()
+  items.forEach((item) => {
+    const match = item.textContent.toLowerCase().includes(query)
+    item.classList.toggle('hidden', !match)
+  })
+})
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Running DOM code before the page loads.** If your `<script>` tag is in `<head>`, the elements do not exist yet. Put scripts at the bottom of `<body>`, or use `DOMContentLoaded`.
+- **Using `innerHTML` with user input.** This creates XSS vulnerabilities. Use `textContent` for user-supplied text.
+- **Selecting an element that does not exist.** If `querySelector` returns `null`, calling methods on it throws a `TypeError`. Always check that the element exists.
+- **Forgetting `event.preventDefault()` on form submit.** Without it, the page reloads and you lose your work.
+- **Adding event listeners inside loops.** Each iteration creates a new listener. Attach one listener to the parent and use event delegation instead.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- If your code runs but nothing changes, use `console.log` to confirm that `querySelector` found the element (not `null`).
+- Open DevTools → Console and check for errors before assuming the code is wrong.
+- Use DevTools → Elements to watch attributes and class names change in real time as you interact with the page.
+- If a form is reloading the page, `event.preventDefault()` is missing.
+- Add `debugger` in your event listener to pause execution and step through it.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 5 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Build a simple to-do list using only HTML, CSS, and vanilla JavaScript. Add items from a form input, display them in a list, and allow the user to mark items as complete (toggle a class) and delete them.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [MDN — Introduction to the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) — how the DOM works
+- [MDN — EventTarget.addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) — complete event listener reference
+- [MDN — Document.querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) — selector API
+- [javascript.info — Document](https://javascript.info/document) — excellent chapter on DOM manipulation
+- [javascript.info — Events](https://javascript.info/events) — everything about events
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can select elements using `querySelector` and `querySelectorAll`
+- [ ] I can read and update element content with `textContent`
+- [ ] I can attach event listeners for `click`, `input`, and `submit`
+- [ ] I can prevent form default behavior with `event.preventDefault()`
+- [ ] I can create and append new DOM elements
+- [ ] I can toggle CSS classes using `classList`
+- [ ] I understand why `innerHTML` with user input is dangerous

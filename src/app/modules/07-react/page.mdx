@@ -1,0 +1,218 @@
+export const metadata = {
+  title: 'Module 7 — Introduction to React',
+  description: 'Build component-based UIs with React — JSX, props, and component composition.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 7 — Introduction to React
+
+Build UIs from reusable components — think in components, not pages. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+React is a JavaScript library for building user interfaces. Instead of manipulating the DOM directly, you describe what the UI should look like, and React handles the updates. The core idea is components — small, reusable pieces of UI that can be composed together. This module introduces JSX, props, and how to structure a React application.
+
+## Why This Matters {{ id: 'why' }}
+
+React is the most widely used front-end library in the industry. Nearly every web development job listing mentions it. The component model also reflects how professional teams build UIs — each component has a single responsibility, can be tested independently, and can be reused across a project.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Create a React project with Vite
+- Understand what JSX is and how it differs from HTML
+- Write functional components
+- Pass data between components using props
+- Render lists using `.map()`
+- Apply conditional rendering
+- Structure a project with multiple component files
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Component | A function that returns JSX — a reusable piece of UI |
+| JSX | A syntax extension that looks like HTML but compiles to JavaScript |
+| Props | Data passed from a parent component to a child component |
+| Rendering | React converting your components into DOM elements |
+| Virtual DOM | React's in-memory copy of the DOM — used to calculate the minimum number of changes |
+| Vite | A fast build tool and dev server for modern JavaScript projects |
+| Fragment | `<>...</>` — a wrapper with no DOM output, used when you need a single root |
+| Composition | Building complex UIs by nesting smaller components inside larger ones |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Creating a project
+
+```bash
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+npm run dev
+```
+
+### Your first component
+
+```jsx
+// components/Greeting.jsx
+export default function Greeting({ name }) {
+  return <h1>Hello, {name}!</h1>
+}
+```
+
+```jsx
+// App.jsx
+import Greeting from './components/Greeting'
+
+export default function App() {
+  return (
+    <main>
+      <Greeting name="Alex" />
+      <Greeting name="Jordan" />
+    </main>
+  )
+}
+```
+
+### JSX rules
+
+```jsx
+// always return a single root element (use a Fragment if needed)
+return (
+  <>
+    <h1>Title</h1>
+    <p>Content</p>
+  </>
+)
+
+// use className, not class
+<div className="card">...</div>
+
+// expressions go in curly braces
+<p>{user.name}</p>
+<p>{2 + 2}</p>
+<p>{isLoggedIn ? 'Welcome back' : 'Please sign in'}</p>
+```
+
+### Rendering lists
+
+```jsx
+const skills = ['html', 'css', 'javascript', 'react']
+
+return (
+  <ul>
+    {skills.map((skill) => (
+      <li key={skill}>{skill}</li>
+    ))}
+  </ul>
+)
+```
+
+### Conditional rendering
+
+```jsx
+export default function StatusBadge({ isActive }) {
+  if (!isActive) return null
+
+  return <span className="badge badge-green">Active</span>
+}
+```
+
+## Examples {{ id: 'examples' }}
+
+**A card component with props:**
+
+```jsx
+export default function StudentCard({ name, cohort, bio }) {
+  return (
+    <article className="card">
+      <h2>{name}</h2>
+      <p className="cohort">{cohort}</p>
+      <p>{bio}</p>
+    </article>
+  )
+}
+```
+
+```jsx
+// used in a parent component
+<StudentCard
+  name="Alex Rivera"
+  cohort="Spring 2026"
+  bio="Full-stack developer in training."
+/>
+```
+
+**A list component that maps over data:**
+
+```jsx
+const students = [
+  { id: 1, name: 'Alex Rivera', cohort: 'Spring 2026' },
+  { id: 2, name: 'Jordan Kim', cohort: 'Spring 2026' },
+]
+
+export default function StudentList() {
+  return (
+    <ul>
+      {students.map((student) => (
+        <li key={student.id}>{student.name} — {student.cohort}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Missing `key` prop on list items.** React needs a unique `key` to track items efficiently. Use a unique ID from your data, not the array index.
+- **Using `class` instead of `className`.** JSX compiles to JavaScript where `class` is a reserved word.
+- **Returning multiple root elements without a wrapper.** A component can only return one root element. Wrap in a `<div>` or `<>`.
+- **Trying to render objects directly.** React cannot render plain objects (`{user}` will crash). Access the properties you want: `{user.name}`.
+- **Not capitalizing component names.** React treats lowercase names as HTML tags. `<card />` means a literal `<card>` tag. `<Card />` means your component.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Install the [React DevTools browser extension](https://react.dev/learn/react-developer-tools) — it lets you inspect components, props, and state directly.
+- If nothing renders, check the Console for errors first.
+- If a component is not receiving props, add `console.log(props)` inside the component to inspect what was passed.
+- `Cannot read properties of undefined` usually means you are trying to access a property before data has loaded. Add a guard: `if (!data) return null`.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 7 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Build a student directory app in React. Create a `StudentCard` component with props for name, cohort, and bio. Render a list of cards from an array of data. Add a simple search input that filters which cards are shown.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [React docs — Quick Start](https://react.dev/learn) — official introduction
+- [React docs — Thinking in React](https://react.dev/learn/thinking-in-react) — the most important conceptual read
+- [React docs — Describing the UI](https://react.dev/learn/describing-the-ui) — components, JSX, props, and lists
+- [Vite docs](https://vitejs.dev/guide/) — project setup and configuration
+- [Scrimba — Learn React](https://scrimba.com/learn/learnreact) — interactive React course
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can create a React project with Vite
+- [ ] I know JSX rules (className, single root, expressions in `{}`)
+- [ ] I can write a component that accepts and uses props
+- [ ] I can render a list using `.map()` with a `key` prop
+- [ ] I can conditionally render content
+- [ ] I have split my UI into multiple component files
+- [ ] I installed and used React DevTools

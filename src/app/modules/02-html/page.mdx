@@ -1,0 +1,190 @@
+export const metadata = {
+  title: 'Module 2 — HTML Foundations',
+  description: 'Learn the language that structures every webpage.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 2 — HTML Foundations
+
+Learn the language that gives structure and meaning to every webpage on the internet. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+HTML (HyperText Markup Language) is the skeleton of every webpage. It describes the content and structure of a page using elements — things like headings, paragraphs, images, links, and forms. Before you can style anything or make it interactive, you need to understand how to write well-structured HTML.
+
+## Why This Matters {{ id: 'why' }}
+
+Everything in web development builds on top of HTML. React renders HTML. CSS styles HTML. JavaScript manipulates HTML. If your HTML structure is wrong, everything on top of it will be harder to work with. Good HTML is also important for accessibility — screen readers and assistive technologies rely on semantic elements to help users navigate your pages.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Understand how HTML documents are structured
+- Use semantic elements correctly (`header`, `main`, `nav`, `footer`, `section`, `article`)
+- Create headings, paragraphs, lists, links, and images
+- Build a basic HTML form with inputs, labels, and a submit button
+- Understand the difference between block and inline elements
+- Write valid, well-indented HTML
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Element | A building block of HTML, defined by an opening tag, content, and closing tag |
+| Tag | The markup that defines an element, e.g. `<p>` and `</p>` |
+| Attribute | Extra information added to a tag, e.g. `class`, `id`, `href`, `src` |
+| Semantic HTML | Using elements that describe meaning, not just appearance |
+| Block element | Takes up the full width of its container (`div`, `p`, `h1`) |
+| Inline element | Only takes up as much space as needed (`span`, `a`, `strong`) |
+| Void element | Self-closing element with no content, e.g. `<img>`, `<br>`, `<input>` |
+| DOM | Document Object Model — the browser's internal representation of your HTML |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Document structure
+
+Every HTML page starts with the same boilerplate:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Title</title>
+  </head>
+  <body>
+    <!-- your content goes here -->
+  </body>
+</html>
+```
+
+- `<!DOCTYPE html>` — tells the browser this is HTML5
+- `<head>` — metadata, title, and links to CSS/JS (not visible on the page)
+- `<body>` — everything the user sees
+
+### Semantic elements
+
+Use elements that describe their purpose:
+
+```html
+<header>
+  <nav>
+    <a href="/">home</a>
+    <a href="/about">about</a>
+  </nav>
+</header>
+
+<main>
+  <section>
+    <h1>Welcome</h1>
+    <p>This is the main content area.</p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 LaGuardia Community College</p>
+</footer>
+```
+
+### Forms
+
+```html
+<form action="/submit" method="POST">
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" placeholder="Your name" required />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required />
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+Always pair `<label>` with an `<input>` using matching `for` and `id` attributes. This is required for accessibility.
+
+## Examples {{ id: 'examples' }}
+
+**An ordered list:**
+
+```html
+<ol>
+  <li>clone the repo</li>
+  <li>open the project in your editor</li>
+  <li>run the development server</li>
+</ol>
+```
+
+**A card component in plain HTML:**
+
+```html
+<article class="card">
+  <img src="profile.jpg" alt="Student profile photo" />
+  <h2>Alex Rivera</h2>
+  <p>Full-stack developer in training.</p>
+  <a href="/profile/alex">View profile</a>
+</article>
+```
+
+**An image with a caption:**
+
+```html
+<figure>
+  <img src="diagram.png" alt="Flowchart showing the request/response cycle" />
+  <figcaption>the request/response cycle</figcaption>
+</figure>
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Missing `alt` attributes on images.** Every `<img>` needs an `alt` attribute, even if it's empty (`alt=""`). Screen readers need it and it appears when the image fails to load.
+- **Using `<div>` for everything.** Reach for semantic elements first. `<nav>`, `<main>`, `<article>`, `<section>` all carry meaning.
+- **Skipping heading levels.** Don't jump from `<h1>` to `<h4>`. Headings create a document outline — keep them in order.
+- **Not closing tags.** Most elements need both an opening and closing tag. Missing a `</div>` or `</ul>` will break your layout in confusing ways.
+- **Putting block elements inside inline elements.** A `<div>` inside a `<span>` is invalid HTML. Block elements can contain inline elements, not the other way around.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Open DevTools → Elements tab to see the actual DOM. If your HTML looks different there than in your file, the browser tried to fix an error.
+- Validate your HTML at [validator.w3.org](https://validator.w3.org) to catch structural issues.
+- If a layout looks broken, check for unclosed tags. DevTools will usually show you where the structure went wrong.
+- If a form is not submitting, check that the `<button>` has `type="submit"` and is inside the `<form>`.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 2 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Build a personal profile page using only HTML. It should include a header with navigation, a main section with your name, a short bio, a list of things you're learning, and a footer. No CSS yet — focus on clean, semantic structure.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [MDN — HTML basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics) — the best starting point for HTML fundamentals
+- [MDN — HTML elements reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) — complete list of every HTML element
+- [web.dev — Learn HTML](https://web.dev/learn/html) — Google's structured HTML course
+- [HTML validator](https://validator.w3.org) — check your HTML for errors
+- [Interneting Is Hard — HTML & CSS](https://internetingishard.netlify.app) — friendly visual guide to HTML and CSS
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can write a valid HTML document from scratch
+- [ ] I understand the purpose of `<head>` vs `<body>`
+- [ ] I use semantic elements instead of divs for everything
+- [ ] I can build a form with labeled inputs and a submit button
+- [ ] I know the difference between block and inline elements
+- [ ] My HTML is properly indented and all tags are closed

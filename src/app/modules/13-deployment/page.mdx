@@ -1,0 +1,181 @@
+export const metadata = {
+  title: 'Module 13 — Deployment',
+  description: 'Deploy your full-stack app to the internet with Netlify and Render.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 13 — Deployment
+
+Get your app off localhost and onto the internet. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+Deployment is the process of making your application available on the internet. For the full-stack apps you are building, that means deploying your React frontend (to Netlify) and your Express backend (to Render), with a production PostgreSQL database hosted on Render's managed database service. This module walks through the process end to end.
+
+## Why This Matters {{ id: 'why' }}
+
+A project that lives only on your laptop is not a project — it is a draft. Deploying gives you a real URL to put on your resume, share with employers, and show to users. It also exposes the gap between local development and production environments, which is valuable knowledge. Every developer needs to know how to ship.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Deploy a React frontend to Netlify from a GitHub repository
+- Configure environment variables on Netlify
+- Handle client-side routing on Netlify with a `_redirects` file
+- Deploy an Express backend to Render
+- Connect a Render-hosted backend to a Render-managed PostgreSQL database
+- Set production environment variables on Render
+- Run production database migrations
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Deployment | Making an application available on a live server |
+| Build | The process of compiling and bundling your app for production |
+| Environment variable | A configuration value set outside the code (not hardcoded) |
+| CI/CD | Continuous Integration / Continuous Deployment — automatic builds on push |
+| CDN | Content Delivery Network — serves static files from servers close to users |
+| Managed database | A hosted database service that handles backups, patches, and scaling |
+| `_redirects` | A Netlify config file that handles SPA routing |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Deploying the React frontend (Netlify)
+
+1. Push your project to GitHub
+2. Log in to [Netlify](https://netlify.com) and click **Add new site → Import an existing project**
+3. Connect your GitHub account and select the repo
+4. Set build settings:
+   - **Base directory:** `client` (or wherever your Vite app lives)
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
+5. Add environment variables under **Site settings → Environment variables**
+6. Deploy
+
+**Handle client-side routing:**
+
+```text
+# client/public/_redirects
+/*    /index.html    200
+```
+
+Without this, refreshing a React Router page returns a 404 from Netlify.
+
+### Deploying the Express backend (Render)
+
+1. Push your server code to GitHub
+2. Log in to [Render](https://render.com) and create a **New Web Service**
+3. Connect your GitHub repo
+4. Set:
+   - **Root directory:** `server`
+   - **Build command:** `npm install`
+   - **Start command:** `node index.js`
+5. Add environment variables (DATABASE_URL, PORT, etc.)
+6. Deploy
+
+### Using a Render PostgreSQL database
+
+1. Create a **New PostgreSQL** database on Render
+2. Copy the **External Database URL**
+3. Add it as `DATABASE_URL` in your web service environment variables
+4. Update `config/config.json` (or use `process.env.DATABASE_URL` directly)
+
+### Running migrations in production
+
+```bash
+# add to your package.json scripts
+"migrate": "npx sequelize-cli db:migrate"
+```
+
+Run via Render's shell or as a pre-deploy command.
+
+### Pointing the frontend at the production backend
+
+```js
+// in your React app, use an environment variable for the API base URL
+const API_URL = import.meta.env.VITE_API_URL || '/api'
+
+// in Netlify environment variables:
+// VITE_API_URL = https://your-app.onrender.com/api
+```
+
+## Examples {{ id: 'examples' }}
+
+**An Express server that works on any port:**
+
+```js
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => console.log(`server running on port ${PORT}`))
+```
+
+Render assigns a port via `process.env.PORT` — your server must use it.
+
+**Disabling the Vite proxy in production:**
+
+```js
+// vite.config.js
+export default defineConfig({
+  server: {
+    proxy: process.env.NODE_ENV === 'development'
+      ? { '/api': 'http://localhost:3001' }
+      : undefined,
+  },
+})
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Committing `.env` to GitHub.** Render and Netlify both have environment variable UIs — never commit secrets.
+- **Forgetting `_redirects` on Netlify.** React Router pages will 404 on direct access or refresh without it.
+- **Using `localhost` URLs in production.** Your React app cannot call `http://localhost:3001` when deployed. Use `VITE_API_URL` and set it in Netlify.
+- **Not running migrations after deploying a new model.** The table does not exist in the production database until you migrate.
+- **Using a free Render instance and expecting it to stay awake.** Free-tier Render services spin down after 15 minutes of inactivity. Warn users or upgrade for production.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Check the deploy logs on Netlify and Render for build errors.
+- On Render, the **Logs** tab shows runtime `console.log` output — use it to debug server behavior.
+- If your frontend is getting CORS errors in production, make sure the `cors()` middleware on Express is configured to allow your Netlify domain, or use `cors()` with no arguments to allow all origins.
+- Test API routes directly using the Render URL in Postman before debugging the frontend.
+- If your frontend is blank after deploy, open browser DevTools → Console — the error message usually points to the issue.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 13 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Deploy your full-stack CRUD app from Module 12. Deploy the React frontend to Netlify and the Express backend to Render with a managed PostgreSQL database. Get a working live URL for both. Add the links to your GitHub profile README.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [Netlify docs](https://docs.netlify.com) — official Netlify documentation
+- [Render docs](https://render.com/docs) — official Render documentation
+- [Render — Deploying a Node.js app](https://render.com/docs/deploy-node-express-app) — step-by-step guide
+- [Netlify — Redirects and rewrites](https://docs.netlify.com/routing/redirects/) — configuring `_redirects`
+- [12factor.net](https://12factor.net) — best practices for building deployable apps (skim the config and processes sections)
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] My React frontend is deployed on Netlify and accessible via a public URL
+- [ ] I have a `_redirects` file so React Router works on Netlify
+- [ ] My Express backend is deployed on Render
+- [ ] I am using a Render-managed PostgreSQL database in production
+- [ ] All secrets are in environment variables, not in code
+- [ ] I ran migrations on the production database
+- [ ] The frontend can successfully communicate with the production backend

@@ -14,25 +14,18 @@ export function GridPattern({ width, height, x, y, squares, ...props }) {
           x={x}
           y={y}
         >
-          <path d={`M.5 ${height}V.5H${width}`} fill="none" />
+          <circle cx={width / 2} cy={height / 2} r="1.5" />
         </pattern>
       </defs>
-      <rect
-        width="100%"
-        height="100%"
-        strokeWidth={0}
-        fill={`url(#${patternId})`}
-      />
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([x, y]) => (
-            <rect
-              strokeWidth="0"
-              key={`${x}-${y}`}
-              width={width + 1}
-              height={height + 1}
-              x={x * width}
-              y={y * height}
+          {squares.map(([sx, sy]) => (
+            <circle
+              key={`${sx}-${sy}`}
+              cx={sx * width + width / 2}
+              cy={sy * height + height / 2}
+              r="4"
             />
           ))}
         </svg>

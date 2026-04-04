@@ -1,0 +1,242 @@
+export const metadata = {
+  title: 'Module 9 — React Router',
+  description: 'Build multi-page React apps with client-side routing using React Router.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 9 — React Router
+
+Add navigation to your React apps — multiple pages, URL parameters, and programmatic redirects. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+Single-page applications (SPAs) load once and then swap content without a full page reload. React Router is the standard library for adding client-side routing to React apps — it maps URL paths to components, handles navigation, and gives you access to URL parameters. This module covers setting up routes, linking between them, reading URL params, and navigating programmatically.
+
+## Why This Matters {{ id: 'why' }}
+
+Real applications have multiple views: a home page, a detail page, a profile page, a login page. React Router is how you manage those views in a React SPA. It is also how you pass data via the URL (e.g., `/users/42`) and how you protect routes from unauthenticated users. You will use it in every multi-page React project.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Set up React Router in a Vite project
+- Define routes using `<Routes>` and `<Route>`
+- Navigate between pages using `<Link>` and `<NavLink>`
+- Read URL parameters using `useParams`
+- Navigate programmatically using `useNavigate`
+- Create a shared layout with persistent navigation
+- Handle 404 routes with a catch-all
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Client-side routing | Navigation handled by JavaScript, not the server |
+| Route | A mapping between a URL path and a component |
+| URL parameter | A dynamic segment in a URL (e.g., `/users/:id`) |
+| `<Link>` | A React Router component for navigation without a page reload |
+| `<NavLink>` | Like `<Link>` but adds an active class when the URL matches |
+| `useParams` | A hook that returns the URL parameters for the current route |
+| `useNavigate` | A hook that returns a function for programmatic navigation |
+| Outlet | A placeholder where nested routes render their content |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Installation and setup
+
+```bash
+npm install react-router-dom
+```
+
+```jsx
+// main.jsx
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+)
+```
+
+### Defining routes
+
+```jsx
+// App.jsx
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import UserDetail from './pages/UserDetail'
+import NotFound from './pages/NotFound'
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/users/:id" element={<UserDetail />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  )
+}
+```
+
+### Navigation links
+
+```jsx
+import { Link, NavLink } from 'react-router-dom'
+
+export default function Nav() {
+  return (
+    <nav>
+      <Link to="/">home</Link>
+      <NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''}>
+        about
+      </NavLink>
+    </nav>
+  )
+}
+```
+
+### Reading URL parameters
+
+```jsx
+import { useParams } from 'react-router-dom'
+
+export default function UserDetail() {
+  const { id } = useParams() // reads the :id segment from the URL
+
+  return <p>viewing user {id}</p>
+}
+```
+
+### Programmatic navigation
+
+```jsx
+import { useNavigate } from 'react-router-dom'
+
+export default function LoginForm() {
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // ... authenticate user ...
+    navigate('/dashboard') // redirect after login
+  }
+
+  return <form onSubmit={handleSubmit}>...</form>
+}
+```
+
+## Examples {{ id: 'examples' }}
+
+**A layout component with shared navigation:**
+
+```jsx
+// layouts/MainLayout.jsx
+import { Outlet } from 'react-router-dom'
+import Nav from '../components/Nav'
+
+export default function MainLayout() {
+  return (
+    <>
+      <Nav />
+      <main>
+        <Outlet /> {/* nested route renders here */}
+      </main>
+    </>
+  )
+}
+```
+
+```jsx
+// App.jsx with nested routes
+<Routes>
+  <Route element={<MainLayout />}>
+    <Route path="/" element={<Home />} />
+    <Route path="/about" element={<About />} />
+  </Route>
+</Routes>
+```
+
+**Fetching data based on a URL param:**
+
+```jsx
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+
+export default function PokemonDetail() {
+  const { name } = useParams()
+  const [pokemon, setPokemon] = useState(null)
+
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      .then((res) => res.json())
+      .then((data) => setPokemon(data))
+  }, [name])
+
+  if (!pokemon) return <p>loading...</p>
+
+  return (
+    <div>
+      <h1>{pokemon.name}</h1>
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+    </div>
+  )
+}
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Using `<a href>` instead of `<Link to>`.** An `<a>` tag triggers a full page reload, losing React state. Always use `<Link>` or `<NavLink>` for internal navigation.
+- **Not wrapping the app in `<BrowserRouter>`.** All router hooks (`useParams`, `useNavigate`) require a router context. The app will crash without it.
+- **Defining routes outside `<Routes>`.** `<Route>` elements must be direct children of `<Routes>`.
+- **Not handling the 404 case.** A `<Route path="*">` catch-all prevents React Router from rendering nothing on an unknown URL.
+- **Using `window.location.href` for navigation.** This reloads the page. Use `useNavigate` instead.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- If a component is not rendering on the expected route, `console.log` the `path` prop and confirm the URL matches exactly (including trailing slashes).
+- React DevTools shows the component tree — you can confirm which page component is rendering.
+- If `useParams` returns an empty object, the route definition does not include the `:param` segment you are expecting.
+- If a link is doing a full reload, it is an `<a>` tag, not a `<Link>`.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 9 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Add routing to your Pokémon app. Create a home page that lists Pokémon, a detail page at `/pokemon/:name` that shows full info, and a shared navigation layout. Use `useParams` to fetch the right data on the detail page.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [React Router docs](https://reactrouter.com/en/main) — official documentation
+- [React Router — Tutorial](https://reactrouter.com/en/main/start/tutorial) — step-by-step walkthrough
+- [React docs — Thinking in React](https://react.dev/learn/thinking-in-react) — helpful for thinking about component structure with routes
+- [Scrimba — React Router](https://scrimba.com) — interactive routing course
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I have React Router installed and `<BrowserRouter>` wrapping my app
+- [ ] I can define routes with `<Routes>` and `<Route>`
+- [ ] I use `<Link>` and `<NavLink>` instead of `<a>` for internal navigation
+- [ ] I can read URL parameters with `useParams`
+- [ ] I can navigate programmatically with `useNavigate`
+- [ ] I have a catch-all `*` route for unknown paths
+- [ ] I can use a layout component with `<Outlet>` for shared navigation

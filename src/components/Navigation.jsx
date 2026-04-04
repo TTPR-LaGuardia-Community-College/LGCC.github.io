@@ -218,6 +218,7 @@ export const navigation = [
       { title: 'Git & GitHub', href: '/references/git' },
       { title: 'Debugging', href: '/references/debugging' },
       { title: 'Code Improvement', href: '/references/code-improvement' },
+      { title: 'Deploying Projects', href: '/references/deployment' },
       { title: 'Responsible AI Use', href: '/references/ai-use' },
     ],
   },

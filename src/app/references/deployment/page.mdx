@@ -1,0 +1,237 @@
+export const metadata = {
+  title: 'Deploying Projects',
+  description:
+    'Ship your work to the internet — free hosting options for frontends, backends, and full-stack apps.',
+}
+
+export const sections = [
+  { title: 'Before You Deploy', id: 'before' },
+  { title: 'Frontend — Netlify', id: 'netlify' },
+  { title: 'Frontend — Vercel', id: 'vercel' },
+  { title: 'Frontend — GitHub Pages', id: 'github-pages' },
+  { title: 'Backend & Full-Stack — Render', id: 'render' },
+  { title: 'Database — Supabase', id: 'supabase' },
+  { title: 'Choosing the Right Platform', id: 'choosing' },
+  { title: 'Environment Variables', id: 'env' },
+  { title: 'Common Errors', id: 'errors' },
+]
+
+# Deploying Projects
+
+Get your work off localhost and onto the internet — free options that cover everything from static sites to full-stack apps. {{ className: 'lead' }}
+
+## Before You Deploy {{ id: 'before' }}
+
+A few things to confirm before deploying anything:
+
+- Your app builds without errors locally: `npm run build`
+- Sensitive values (API keys, database URLs, passwords) are in `.env` and in `.gitignore` — not hardcoded
+- You have pushed your latest code to GitHub
+- Your `package.json` has the correct `build` and `start` scripts
+
+**Never deploy a broken build.** Fix errors locally first — debugging in production is much harder.
+
+## Frontend — Netlify {{ id: 'netlify' }}
+
+[Netlify](https://netlify.com) is the recommended platform for deploying React (Vite) apps. It detects your framework automatically and handles builds.
+
+**Setup:**
+
+1. Push your project to GitHub
+2. Log in to Netlify → **Add new site → Import an existing project**
+3. Connect GitHub and select your repo
+4. Set build settings:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist` (for Vite) or `build` (for Create React App)
+5. Add environment variables under **Site settings → Environment variables**
+6. Click **Deploy**
+
+**Fix client-side routing (required for React Router):**
+
+Create a file at `public/_redirects`:
+
+```text
+/*    /index.html    200
+```
+
+Without this, refreshing any React Router URL returns a 404.
+
+**Custom domain:** Netlify provides a free `*.netlify.app` subdomain. You can connect your own domain for free under **Domain settings**.
+
+**Redeploy:** Netlify auto-deploys on every push to your main branch.
+
+## Frontend — Vercel {{ id: 'vercel' }}
+
+[Vercel](https://vercel.com) is another excellent option for React, Next.js, and static frontends. If you are deploying a Next.js app, Vercel is the best choice (it was built by the Next.js team).
+
+**Setup:**
+
+1. Push your project to GitHub
+2. Log in to Vercel → **Add New → Project**
+3. Import your GitHub repo
+4. Vercel auto-detects your framework — confirm the build settings:
+   - **Framework Preset:** Vite / Next.js / etc.
+   - **Build command:** `npm run build`
+   - **Output directory:** `dist` or `.next`
+5. Add environment variables in the **Environment Variables** tab
+6. Click **Deploy**
+
+**Vercel vs Netlify:**
+
+| Feature | Vercel | Netlify |
+|---|---|---|
+| Best for | Next.js, React | React, static sites |
+| Automatic HTTPS | Yes | Yes |
+| Free tier | Yes | Yes |
+| Serverless functions | Yes | Yes |
+| Deploy on push | Yes | Yes |
+
+Both are excellent. Vercel has a slight edge for Next.js; Netlify is slightly simpler for Vite/React.
+
+## Frontend — GitHub Pages {{ id: 'github-pages' }}
+
+[GitHub Pages](https://pages.github.com) is ideal for static sites and HTML/CSS/JS projects — no build step required. It is free with any GitHub account.
+
+**For a plain HTML/CSS/JS site:**
+
+1. Push your code to a GitHub repository
+2. Go to **Settings → Pages**
+3. Under **Source**, select the branch (`main`) and folder (`/root` or `/docs`)
+4. Click **Save** — your site is live at `https://username.github.io/repo-name/`
+
+**For a Vite/React app:**
+
+Install the GitHub Pages deploy package:
+
+```bash
+npm install --save-dev gh-pages
+```
+
+Add to `package.json`:
+
+```json
+{
+  "homepage": "https://username.github.io/repo-name",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  }
+}
+```
+
+Update `vite.config.js` with the base path:
+
+```js
+export default defineConfig({
+  base: '/repo-name/',
+})
+```
+
+Deploy:
+
+```bash
+npm run deploy
+```
+
+**Limitation:** GitHub Pages only serves static files — no Node.js backend. Use Render for your API.
+
+## Backend & Full-Stack — Render {{ id: 'render' }}
+
+[Render](https://render.com) is the recommended platform for Node.js/Express backends and PostgreSQL databases.
+
+**Deploy a Node.js backend:**
+
+1. Push your server code to GitHub
+2. Log in to Render → **New → Web Service**
+3. Connect your GitHub repo
+4. Set:
+   - **Root directory:** `server` (if monorepo) or leave blank
+   - **Build command:** `npm install`
+   - **Start command:** `node index.js` (or `npm start`)
+   - **Environment:** Node
+5. Add environment variables (PORT, DATABASE_URL, etc.)
+6. Click **Create Web Service**
+
+**Important:** Render assigns a port via `process.env.PORT`. Your server must use it:
+
+```js
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => console.log(`listening on port ${PORT}`))
+```
+
+**Free tier note:** Free Render services spin down after 15 minutes of inactivity and take ~30 seconds to wake up on the next request. This is expected behavior on the free plan.
+
+**Deploy a PostgreSQL database:**
+
+1. Render → **New → PostgreSQL**
+2. Name your database and select the free plan
+3. Copy the **External Database URL**
+4. Add it as `DATABASE_URL` in your web service's environment variables
+
+## Database — Supabase {{ id: 'supabase' }}
+
+[Supabase](https://supabase.com) is a hosted PostgreSQL service with a generous free tier and a built-in dashboard for viewing your data.
+
+**Setup:**
+
+1. Create an account at supabase.com
+2. Click **New project** and name it
+3. Go to **Settings → Database → Connection string → URI** and copy the connection string
+4. Use it as your `DATABASE_URL` in your Express app or Sequelize config
+
+**Supabase vs Render PostgreSQL:**
+
+| | Supabase | Render |
+|---|---|---|
+| Free tier | 500 MB | 1 GB (expires after 90 days) |
+| Dashboard | Excellent — view/edit rows directly | Basic |
+| Connection limits | Lower on free tier | Higher |
+| Best for | Projects with a longer shelf-life | Short-term / class projects |
+
+For class projects, Render's managed database is simpler since your backend is already there. For personal projects you plan to keep, Supabase is a better long-term option.
+
+## Choosing the Right Platform {{ id: 'choosing' }}
+
+| What you're deploying | Platform |
+|---|---|
+| React (Vite) frontend | Netlify or Vercel |
+| Next.js app | Vercel |
+| Plain HTML/CSS/JS | GitHub Pages |
+| Node.js / Express backend | Render |
+| PostgreSQL database | Render (PostgreSQL) or Supabase |
+| Full-stack (React + Express + DB) | Frontend → Netlify, Backend + DB → Render |
+
+## Environment Variables {{ id: 'env' }}
+
+Never hardcode secrets. Every platform has a place to set environment variables:
+
+- **Netlify:** Site settings → Environment variables
+- **Vercel:** Project settings → Environment variables
+- **Render:** Service page → Environment
+
+**React (Vite) apps:** prefix variables with `VITE_` to expose them to the browser:
+
+```bash
+# .env
+VITE_API_URL=https://your-app.onrender.com/api
+```
+
+```js
+// in your React code
+const API_URL = import.meta.env.VITE_API_URL
+```
+
+**Node.js apps:** use `process.env.VARIABLE_NAME` — no prefix needed.
+
+**Never put secrets (API keys, database passwords) in a Vite env variable.** `VITE_` variables are bundled into the frontend JavaScript and visible to anyone who views the source. Keep secrets on the backend.
+
+## Common Errors {{ id: 'errors' }}
+
+| Error | Cause | Fix |
+|---|---|---|
+| Build fails on Netlify/Vercel | Missing dependency or wrong Node version | Check build logs, confirm `package.json` has all dependencies |
+| React Router URLs return 404 on Netlify | Missing `_redirects` file | Add `public/_redirects` with `/* /index.html 200` |
+| Frontend can't reach the backend | Wrong API URL or CORS not configured | Set `VITE_API_URL` to the Render URL; add `cors()` middleware to Express |
+| Render app is slow to respond | Free tier spin-down | Expected — add a note to your readme, or upgrade |
+| Environment variable is `undefined` | Not set in the platform's env dashboard | Add the variable in Netlify/Vercel/Render settings and redeploy |
+| Database connection fails in production | Wrong `DATABASE_URL` | Copy the exact connection string from the database dashboard |

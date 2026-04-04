@@ -1,0 +1,216 @@
+export const metadata = {
+  title: 'Module 12 — Full-Stack CRUD App',
+  description: 'Connect a React frontend to an Express + PostgreSQL backend to build a complete CRUD application.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 12 — Full-Stack CRUD App
+
+Put it all together — React, Express, and PostgreSQL working as a complete application. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+A CRUD app (Create, Read, Update, Delete) is the foundation of most web applications. In this module you will build a full-stack app that connects a React frontend to an Express + PostgreSQL backend. Data flows from the database through your API to your React UI, and changes from the UI flow back to the database. This is the pattern behind almost every app you will build.
+
+## Why This Matters {{ id: 'why' }}
+
+Up until now, you have built the pieces in isolation. This module is where everything comes together. Building a full-stack CRUD app from scratch — including managing state, handling loading/error states, and wiring up the frontend to real backend routes — is the closest thing to a real production workflow you will experience in this program.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Set up a project with separate frontend (React) and backend (Express) directories
+- Proxy API requests from Vite to your Express server in development
+- Fetch data from your own API and render it in React
+- Create new records from a React form and reflect them in the UI
+- Update and delete records and keep the UI in sync
+- Manage loading and error states across the full data lifecycle
+- Structure a full-stack project clearly
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Full-stack | An application with both a frontend (UI) and a backend (server + database) |
+| CRUD | Create, Read, Update, Delete — the four basic operations on data |
+| Proxy | A redirect that forwards frontend requests to the backend during development |
+| Optimistic update | Updating the UI before the server confirms the change |
+| Race condition | A bug where two async operations produce incorrect results because of timing |
+| Separation of concerns | Keeping the UI, business logic, and data storage in distinct layers |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Project structure
+
+```text
+my-app/
+├── client/          # vite react app
+│   ├── src/
+│   └── vite.config.js
+└── server/          # express + sequelize api
+    ├── models/
+    ├── routes/
+    └── index.js
+```
+
+### Proxying API requests in development
+
+```js
+// client/vite.config.js
+export default {
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3001', // forward /api/* to the express server
+    },
+  },
+}
+```
+
+### Reading data from your own API
+
+```jsx
+import { useState, useEffect } from 'react'
+
+export default function ItemList() {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    fetch('/api/items')
+      .then((res) => res.json())
+      .then((data) => {
+        setItems(data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        setError('failed to load items')
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) return <p>loading...</p>
+  if (error) return <p>{error}</p>
+
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+### Creating a record from a form
+
+```jsx
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  const res = await fetch('/api/items', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form),
+  })
+  const newItem = await res.json()
+  setItems([...items, newItem]) // add to local state without refetching
+}
+```
+
+### Deleting a record
+
+```jsx
+const handleDelete = async (id) => {
+  await fetch(`/api/items/${id}`, { method: 'DELETE' })
+  setItems(items.filter((item) => item.id !== id))
+}
+```
+
+## Examples {{ id: 'examples' }}
+
+**Updating a record in place:**
+
+```jsx
+const handleUpdate = async (id, updates) => {
+  const res = await fetch(`/api/items/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates),
+  })
+  const updated = await res.json()
+  setItems(items.map((item) => (item.id === id ? updated : item)))
+}
+```
+
+**An edit form that toggles visibility:**
+
+```jsx
+const [editing, setEditing] = useState(null) // holds the item being edited
+
+return (
+  <>
+    {items.map((item) =>
+      editing?.id === item.id ? (
+        <EditForm key={item.id} item={item} onSave={handleUpdate} onCancel={() => setEditing(null)} />
+      ) : (
+        <ItemRow key={item.id} item={item} onEdit={() => setEditing(item)} onDelete={handleDelete} />
+      )
+    )}
+  </>
+)
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Not keeping UI state in sync with the database.** After a create, update, or delete, update your local state so the UI reflects the change without a full refetch.
+- **Running the frontend and backend on the same port.** They need separate ports. Use the Vite proxy to bridge them in development.
+- **Not handling loading states.** The UI should always tell the user something is happening while a request is in flight.
+- **Sending requests before the component mounts.** Only call `fetch` inside `useEffect` or inside an event handler.
+- **Losing form state on re-render.** Make sure your form inputs are controlled (bound to state), especially when editing.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Check the Network tab in DevTools to see the actual request and response for every API call.
+- If your React app is getting a 404 on `/api/*`, confirm the Vite proxy is configured and the Express server is running on the correct port.
+- If the UI is out of sync after an update, check that you are updating the state correctly (e.g., using `.map()` to replace the updated item, not mutating the array).
+- Keep the Express console open while testing — server errors are logged there, not in the browser.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 12 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Build a full-stack task manager. The backend is an Express + PostgreSQL API with full CRUD. The frontend is a React app that lists tasks, lets you add new ones from a form, toggle them complete, and delete them. Include loading and error states.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [Vite — Server Proxy](https://vitejs.dev/config/server-options.html#server-proxy) — proxying API requests in development
+- [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) — complete fetch reference
+- [React docs — Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects) — fetching data in useEffect
+- [Express.js docs](https://expressjs.com) — Express routing and middleware reference
+- [Postman](https://www.postman.com) — test backend routes independently from the frontend
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] My project has separate client and server directories
+- [ ] I have a Vite proxy forwarding `/api` requests to my Express server
+- [ ] My React app can read data from the API and render it
+- [ ] I can create new records from a form and add them to local state
+- [ ] I can delete records and remove them from local state
+- [ ] I can update records and reflect the changes in the UI
+- [ ] I display loading and error states during API calls

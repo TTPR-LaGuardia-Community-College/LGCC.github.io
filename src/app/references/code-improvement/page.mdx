@@ -29,10 +29,10 @@ Code is read far more often than it is written. Clarity is a form of kindness to
 Good names make code self-documenting. Bad names force readers to mentally simulate the code to understand it.
 
 ```javascript
-// Hard to understand
+// hard to understand
 const x = u.filter(i => i.s === true)
 
-// Clear at a glance
+// clear at a glance
 const activeUsers = users.filter(user => user.isActive === true)
 ```
 
@@ -49,12 +49,12 @@ const activeUsers = users.filter(user => user.isActive === true)
 If you write the same logic more than twice, it belongs in a function. The principle is called DRY — Don't Repeat Yourself.
 
 ```javascript
-// Repeated logic
+// repeated logic
 const firstName = name.trim().toLowerCase()
 const lastName = surname.trim().toLowerCase()
 const cityName = city.trim().toLowerCase()
 
-// Extract the pattern
+// extract the pattern
 function normalize(str) {
   return str.trim().toLowerCase()
 }
@@ -71,7 +71,7 @@ When something changes (say you need to also remove extra spaces), you only fix 
 Long functions that do many things are hard to read and hard to test. Break them into smaller, focused functions with clear names.
 
 ```javascript
-// One big function doing too much
+// one big function doing too much
 function handleFormSubmit(event) {
   event.preventDefault()
   const email = event.target.email.value
@@ -86,7 +86,7 @@ function handleFormSubmit(event) {
   })
 }
 
-// Separated by responsibility
+// separated by responsibility
 function isValidEmail(email) {
   return email.includes('@')
 }
@@ -118,7 +118,7 @@ Complex conditionals are often the hardest part of code to understand. Look for 
 **Early returns reduce nesting:**
 
 ```javascript
-// Deeply nested
+// deeply nested
 function getDiscount(user) {
   if (user) {
     if (user.isPremium) {
@@ -135,7 +135,7 @@ function getDiscount(user) {
   }
 }
 
-// Flat with early returns
+// flat with early returns
 function getDiscount(user) {
   if (!user) return 0
   if (!user.isPremium) return 0
@@ -151,7 +151,7 @@ As a beginner, the most important thing is writing clear, correct code. But it i
 **Nested loops:** Two loops one inside the other means the work grows quickly as the data size grows. Sometimes it is unavoidable, but often there is a way to use a lookup (an object or Map) instead.
 
 ```javascript
-// Slow for large arrays — O(n²)
+// slow for large arrays — O(n²)
 const result = []
 for (const user of users) {
   for (const order of orders) {
@@ -161,7 +161,7 @@ for (const user of users) {
   }
 }
 
-// Faster — build a lookup first
+// faster — build a lookup first
 const ordersByUserId = {}
 for (const order of orders) {
   ordersByUserId[order.userId] = order
