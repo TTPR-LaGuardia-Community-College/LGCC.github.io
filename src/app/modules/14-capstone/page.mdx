@@ -1,0 +1,151 @@
+export const metadata = {
+  title: 'Module 14 — Capstone Project',
+  description: 'Design, build, and present a full-stack web application of your own.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Project Requirements', id: 'requirements' },
+  { title: 'Planning Guide', id: 'planning' },
+  { title: 'Build Phases', id: 'phases' },
+  { title: 'Common Pitfalls', id: 'pitfalls' },
+  { title: 'Presentation Tips', id: 'presentation' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Capstone Checklist', id: 'recap' },
+]
+
+# Module 14 — Capstone Project
+
+Your final project — a real, deployed, full-stack application that is yours. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+The capstone is a full-stack web application that you design, build, and present. You choose the idea. You make the product decisions. You write all the code. It brings together everything from the program: React, Express, PostgreSQL, authentication, deployment, and clean code. The final presentation is in front of an audience at the end of the program.
+
+## Why This Matters {{ id: 'why' }}
+
+The capstone is your primary portfolio piece. When you are job searching, this is what you will show employers. The quality of the idea matters less than the quality of the execution — a well-built, deployed, clearly-explained project stands out far more than an ambitious idea with rough code. Focus on doing the core features well.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of the capstone you will have:
+
+- Built and deployed a full-stack application from scratch
+- Made real product and architecture decisions independently
+- Debugged and unblocked yourself across the entire stack
+- Presented a technical project to an audience
+- Written a README that explains the project clearly
+
+## Project Requirements {{ id: 'requirements' }}
+
+Your capstone must include:
+
+- A **React frontend** with multiple views/routes (React Router)
+- An **Express backend** with at least 4 working API routes
+- A **PostgreSQL database** with at least 2 tables
+- **User authentication** — users can sign up, log in, and their data is protected
+- **Full CRUD** for at least one resource
+- **Deployed** — live frontend URL and live backend URL, both working
+- A **README** that explains what the app does, how to run it locally, and the tech stack
+
+**Nice to have (not required):**
+
+- External API integration
+- Image upload
+- Real-time features (WebSockets)
+- Polished, responsive UI
+
+## Planning Guide {{ id: 'planning' }}
+
+Start with the user, not the code. Ask:
+
+1. **Who uses this app?** One specific type of person.
+2. **What problem does it solve for them?**
+3. **What are the 3 most important things they can do?** These are your MVP features.
+4. **What does each screen look like?** Sketch it — even a rough drawing helps.
+5. **What data do you need to store?** These become your database tables.
+
+### Define your MVP early
+
+An MVP (minimum viable product) is the smallest version of your idea that still demonstrates value. Cut features ruthlessly until you have something achievable in the time you have. A finished MVP is worth 10x more than an unfinished full vision.
+
+### Data model example
+
+For a recipe app:
+
+```text
+users
+  id, email, password_hash, created_at
+
+recipes
+  id, title, description, instructions, user_id (foreign key), created_at
+
+ingredients
+  id, name, quantity, unit, recipe_id (foreign key)
+```
+
+## Build Phases {{ id: 'phases' }}
+
+Build in this order:
+
+1. **Idea & Setup** — finalize your idea, create repos, scaffold frontend and backend
+2. **Data model** — design tables, generate models, run migrations
+3. **Backend API** — build and test all routes with Postman before touching the frontend
+4. **Authentication** — set up sign up, log in, and protected routes
+5. **Frontend** — build the UI one feature at a time, connecting to the API as you go
+6. **Polish** — clean up UI, handle edge cases, add error states
+7. **Deploy** — get it live before the presentation
+8. **README** — write clear setup instructions and describe the project
+
+## Common Pitfalls {{ id: 'pitfalls' }}
+
+- **Trying to build too much.** Cut scope early and often. Ship a working MVP.
+- **Skipping the planning phase.** Jumping into code without a data model or wireframe leads to major rewrites later.
+- **Building frontend and backend simultaneously.** Build and test the backend first. Connecting a frontend to a broken API doubles your confusion.
+- **Waiting until the last minute to deploy.** Deployment almost always reveals issues. Deploy early and redeploy often.
+- **Neglecting error states.** If your app crashes when data fails to load, that is what the audience will see. Handle errors.
+- **Skipping the README.** Employers look at your GitHub. A repo with no README looks unfinished.
+
+## Presentation Tips {{ id: 'presentation' }}
+
+Your final presentation is approximately 10 minutes:
+
+1. **What is the app?** One or two sentences. What problem does it solve?
+2. **Demo the app.** Walk through the main user flow live. Have a backup (recording or screenshots) if live demo is risky.
+3. **Show some code.** Pick one part you are proud of — an interesting query, a component, a hook — and walk through it.
+4. **What did you learn?** One or two specific technical challenges you overcame.
+5. **What would you add?** If you had more time, what is next?
+
+Practice out loud at least once before the real thing. Talking through your own code is a skill — it is exactly what technical interviews ask you to do.
+
+## Exercise {{ id: 'exercise' }}
+
+All capstone work is tracked in the class repository:
+
+[ttpr-lagcc-spring-2026 → Capstone](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Submit your project idea, repo links, and deployed URLs through the class repo. Check in with your instructor during the designated capstone sessions for feedback and unblocking.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [README template](https://github.com/othneildrew/Best-README-Template) — a solid starting point for your project README
+- [Excalidraw](https://excalidraw.com) — wireframe your UI and data model before building
+- [dbdiagram.io](https://dbdiagram.io) — visualize and design your database schema
+- [JWT.io](https://jwt.io) — understand JSON Web Tokens for authentication
+- [Render docs — Deploy a Node.js app](https://render.com/docs/deploy-node-express-app) — production deployment reference
+- [Netlify docs](https://docs.netlify.com) — frontend deployment reference
+
+## Capstone Checklist {{ id: 'recap' }}
+
+- [ ] My idea is defined and scoped to an achievable MVP
+- [ ] I have a data model with at least 2 tables and a foreign key relationship
+- [ ] My backend has at least 4 working API routes (tested in Postman)
+- [ ] Users can sign up, log in, and their data is protected
+- [ ] The frontend has multiple views connected to the API
+- [ ] At least one resource has full CRUD in the UI
+- [ ] The app is deployed — live frontend and backend URLs work
+- [ ] My README explains what the app does and how to run it locally
+- [ ] I have practiced my presentation out loud at least once

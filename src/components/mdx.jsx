@@ -1,10 +1,22 @@
+import { isValidElement, Children } from 'react'
 import clsx from 'clsx'
 import Link from 'next/link'
 
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
+import { PersistentCheckbox } from '@/components/PersistentCheckbox'
 
-export const a = Link
+export function a({ href, children, ...props }) {
+  const isExternal = href && (href.startsWith('http') || href.startsWith('//'))
+  if (isExternal) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+        {children}
+      </a>
+    )
+  }
+  return <Link href={href} {...props}>{children}</Link>
+}
 export { Button } from '@/components/Button'
 export { Code as code, CodeGroup, Pre as pre } from '@/components/Code'
 
@@ -43,6 +55,36 @@ export function Note({ children }) {
       <div className="*:first:mt-0 *:last:mb-0">{children}</div>
     </div>
   )
+}
+
+function getTextContent(node) {
+  if (typeof node === 'string') return node
+  if (typeof node === 'number') return String(node)
+  if (isValidElement(node) && node.props.children) {
+    return Children.toArray(node.props.children).map(getTextContent).join('')
+  }
+  return ''
+}
+
+export function li({ children }) {
+  const childArray = Children.toArray(children)
+  const first = childArray[0]
+  if (
+    isValidElement(first) &&
+    first.type === 'input' &&
+    first.props.type === 'checkbox'
+  ) {
+    const label = childArray.slice(1).map(getTextContent).join('').trim()
+    return (
+      <li className="flex items-start gap-2 pl-0! my-1 list-none">
+        <PersistentCheckbox label={label} defaultChecked={first.props.checked} />
+        <span className={label && childArray.length > 2 ? '' : 'leading-snug'}>
+          {childArray.slice(1)}
+        </span>
+      </li>
+    )
+  }
+  return <li>{children}</li>
 }
 
 export function Row({ children }) {

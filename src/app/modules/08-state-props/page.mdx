@@ -1,0 +1,238 @@
+export const metadata = {
+  title: 'Module 8 — React State & Props',
+  description: 'Manage dynamic data with useState, lift state up, and build interactive components.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 8 — React State & Props
+
+Give your components memory — make them respond to user actions and update the UI automatically. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+State is data that a component owns and can change over time. When state changes, React re-renders the component automatically. This module covers `useState`, controlled inputs, event handling in React, and how to share state between components by lifting it up to a common parent and passing it down through props.
+
+## Why This Matters {{ id: 'why' }}
+
+Without state, React components are just templates. State is what makes a button a toggle, a form interactive, and a counter count. Understanding how state flows — down through props, up through callbacks — is the key mental model for building any non-trivial React application.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Use `useState` to add local state to a component
+- Update state in response to events
+- Build controlled form inputs
+- Lift state to a parent component and pass it down as props
+- Pass callback functions as props to allow children to update parent state
+- Use `useEffect` to run code after a component renders
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| State | Data owned by a component that can change, triggering a re-render |
+| `useState` | A React hook for adding state to a function component |
+| Re-render | React re-running a component function and updating the DOM |
+| Controlled input | A form input whose value is bound to state |
+| Lifting state | Moving state to a parent so multiple children can share it |
+| Props drilling | Passing props through multiple layers of components |
+| `useEffect` | A hook that runs side effects after each render (or on specific changes) |
+| Dependency array | The second argument to `useEffect` — controls when it runs |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### useState
+
+```jsx
+import { useState } from 'react'
+
+export default function Counter() {
+  const [count, setCount] = useState(0) // [current value, updater function]
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(count + 1)}>increment</button>
+      <button onClick={() => setCount(0)}>reset</button>
+    </div>
+  )
+}
+```
+
+### Controlled inputs
+
+```jsx
+import { useState } from 'react'
+
+export default function SearchBar() {
+  const [query, setQuery] = useState('')
+
+  return (
+    <input
+      type="text"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="search..."
+    />
+  )
+}
+```
+
+### Lifting state
+
+```jsx
+// parent owns the state
+export default function App() {
+  const [selected, setSelected] = useState(null)
+
+  return (
+    <>
+      <ItemList onSelect={setSelected} />
+      <ItemDetail item={selected} />
+    </>
+  )
+}
+
+// child calls the parent's callback
+function ItemList({ onSelect }) {
+  const items = ['html', 'css', 'javascript']
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item} onClick={() => onSelect(item)}>{item}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+### useEffect
+
+```jsx
+import { useState, useEffect } from 'react'
+
+export default function UserProfile({ userId }) {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    // runs after render, whenever userId changes
+    const load = async () => {
+      const res = await fetch(`https://api.example.com/users/${userId}`)
+      const data = await res.json()
+      setUser(data)
+    }
+    load()
+  }, [userId]) // dependency array — re-runs when userId changes
+
+  if (!user) return <p>loading...</p>
+  return <p>{user.name}</p>
+}
+```
+
+## Examples {{ id: 'examples' }}
+
+**A form with multiple controlled inputs:**
+
+```jsx
+import { useState } from 'react'
+
+export default function ProfileForm() {
+  const [form, setForm] = useState({ name: '', email: '' })
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('submitted:', form)
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="name" value={form.name} onChange={handleChange} placeholder="name" />
+      <input name="email" value={form.email} onChange={handleChange} placeholder="email" />
+      <button type="submit">save</button>
+    </form>
+  )
+}
+```
+
+**Fetching on mount with useEffect:**
+
+```jsx
+import { useState, useEffect } from 'react'
+
+export default function PostList() {
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+  }, []) // empty array — runs once on mount
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Mutating state directly.** Never do `state.push(item)` or `state.name = 'new'`. Always call the setter with a new value: `setState([...state, item])`.
+- **Using stale state in event handlers.** If your new state depends on the previous value, use the updater form: `setCount((prev) => prev + 1)`.
+- **Forgetting the dependency array in `useEffect`.** Without it, the effect runs on every render. An empty `[]` means run once on mount. List the specific values that should trigger re-runs.
+- **Setting state in a `useEffect` with no dependencies.** This causes an infinite loop: render → effect → setState → re-render → effect → ...
+- **Not using controlled inputs.** Uncontrolled inputs (no `value` prop) make it hard to validate, reset, or pre-fill forms in React.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- React DevTools shows the current state and props for every component — this is the fastest way to verify state is what you expect.
+- If an update does not seem to work, check that you are calling the setter function, not the value: `setCount(...)` not `count(...)`.
+- If a `useEffect` is running too often, add `console.log` inside to trace when it triggers, then review the dependency array.
+- If state seems one render behind, remember: state updates are asynchronous. Log inside the component body, not after the `setState` call.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 8 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Extend your Pokémon app from Module 6 using React. Add a search input with controlled state, fetch Pokémon data on form submit using `useEffect`, display the result, and handle loading and error states with separate state variables.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [React docs — State: A Component's Memory](https://react.dev/learn/state-a-components-memory) — official useState guide
+- [React docs — Sharing State Between Components](https://react.dev/learn/sharing-state-between-components) — lifting state up
+- [React docs — Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects) — useEffect in depth
+- [React docs — You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) — important: when not to use useEffect
+- [javascript.info — React](https://javascript.info) — supplemental reading on async patterns
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can add state to a component with `useState`
+- [ ] I update state using the setter, never by mutating directly
+- [ ] I can build a controlled form input
+- [ ] I understand how to lift state to a parent and pass it down
+- [ ] I can pass a callback function as a prop so a child can update parent state
+- [ ] I can use `useEffect` to fetch data when a component mounts
+- [ ] I understand the dependency array and what happens without it

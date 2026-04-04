@@ -1,0 +1,219 @@
+export const metadata = {
+  title: 'Module 11 — PostgreSQL & Sequelize',
+  description: 'Store and query data with PostgreSQL and interact with your database through Sequelize.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 11 — PostgreSQL & Sequelize
+
+Give your app a real database — store, retrieve, and relate data that persists across requests. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+Up until now, data in your Express API lives in memory — it resets every time the server restarts. A real database makes data persistent. PostgreSQL is a powerful, open-source relational database. Sequelize is an ORM (Object-Relational Mapper) that lets you interact with PostgreSQL using JavaScript instead of raw SQL. This module covers tables, relationships, migrations, and the core Sequelize methods for querying data.
+
+## Why This Matters {{ id: 'why' }}
+
+Every production application stores data in a database. Learning PostgreSQL and Sequelize gives you the skills to build apps where users can sign up, save data, and come back later to find it. It is also a direct prerequisite for authentication and the CRUD app modules.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Create and connect a PostgreSQL database locally
+- Define Sequelize models for tables
+- Run migrations to create and update tables
+- Perform CRUD operations using Sequelize: `findAll`, `findOne`, `create`, `update`, `destroy`
+- Define associations between models (one-to-many)
+- Connect your Express routes to Sequelize models
+- Handle async database errors
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Database | An organized system for storing and retrieving structured data |
+| Table | A collection of rows and columns (like a spreadsheet) in a relational database |
+| Row | A single record in a table |
+| Column | A field definition — its name and data type |
+| Primary key | A unique identifier for each row, usually `id` |
+| Foreign key | A column that references the primary key of another table |
+| ORM | Object-Relational Mapper — maps database rows to JavaScript objects |
+| Migration | A versioned script that creates or modifies a database table |
+| Association | A relationship between two models (e.g., a User has many Posts) |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Installation
+
+```bash
+npm install sequelize pg pg-hstore
+npm install --save-dev sequelize-cli
+npx sequelize-cli init
+```
+
+### Connecting to the database
+
+```js
+// config/config.json (development section)
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "myapp_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
+```
+
+### Defining a model
+
+```bash
+npx sequelize-cli model:generate --name Student --attributes name:string,cohort:string,email:string
+```
+
+This generates a migration file and a model file. Run the migration to create the table:
+
+```bash
+npx sequelize-cli db:migrate
+```
+
+### CRUD with Sequelize
+
+```js
+const { Student } = require('../models')
+
+// get all
+const students = await Student.findAll()
+
+// get one
+const student = await Student.findOne({ where: { id: req.params.id } })
+// or shorthand
+const student = await Student.findByPk(req.params.id)
+
+// create
+const newStudent = await Student.create({ name: 'Alex', cohort: 'Spring 2026' })
+
+// update
+await Student.update({ cohort: 'Fall 2026' }, { where: { id: req.params.id } })
+
+// delete
+await Student.destroy({ where: { id: req.params.id } })
+```
+
+### Associations
+
+```js
+// in models/user.js
+User.hasMany(models.Post, { foreignKey: 'userId' })
+
+// in models/post.js
+Post.belongsTo(models.User, { foreignKey: 'userId' })
+
+// querying with an include
+const users = await User.findAll({ include: Post })
+```
+
+## Examples {{ id: 'examples' }}
+
+**A full GET route using Sequelize:**
+
+```js
+// routes/students.js
+const { Student } = require('../models')
+
+router.get('/', async (req, res) => {
+  try {
+    const students = await Student.findAll()
+    res.json(students)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'server error' })
+  }
+})
+```
+
+**A POST route that creates a record:**
+
+```js
+router.post('/', async (req, res) => {
+  try {
+    const { name, cohort, email } = req.body
+    const student = await Student.create({ name, cohort, email })
+    res.status(201).json(student)
+  } catch (error) {
+    console.error(error)
+    res.status(400).json({ error: error.message })
+  }
+})
+```
+
+**A DELETE route:**
+
+```js
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Student.destroy({ where: { id: req.params.id } })
+    if (!deleted) return res.status(404).json({ error: 'not found' })
+    res.status(204).send()
+  } catch (error) {
+    res.status(500).json({ error: 'server error' })
+  }
+})
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Forgetting to run migrations.** Defining a model does not create the table. Run `npx sequelize-cli db:migrate` after generating a model.
+- **Not using `async/await` with Sequelize.** All Sequelize queries return Promises. Forgetting `await` means you get a Promise object, not data.
+- **Not wrapping database calls in `try/catch`.** Database errors crash your server without proper error handling.
+- **Hardcoding database credentials.** Use environment variables. Never commit passwords to GitHub.
+- **Forgetting to define associations in both models.** A `hasMany` in one model needs a corresponding `belongsTo` in the other.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Enable Sequelize logging in development to see the raw SQL queries: `new Sequelize(..., { logging: console.log })`.
+- Connect to your database with a client like TablePlus, DBeaver, or `psql` to inspect the actual table contents.
+- `npx sequelize-cli db:migrate:status` shows which migrations have run.
+- If a model method fails, check that the column names in your query match the column names in the migration.
+- If `findByPk` returns `null`, the record does not exist — return a 404 instead of crashing.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 11 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Replace the in-memory array in your Module 10 student directory API with a real PostgreSQL database using Sequelize. Generate a `Student` model, run the migration, and update all five CRUD routes to use Sequelize queries.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [PostgreSQL docs](https://www.postgresql.org/docs/) — official PostgreSQL documentation
+- [Sequelize docs](https://sequelize.org/docs/v6/) — full Sequelize v6 reference
+- [Sequelize — Getting Started](https://sequelize.org/docs/v6/getting-started/) — setup walkthrough
+- [Sequelize — Associations](https://sequelize.org/docs/v6/core-concepts/assocs/) — one-to-many, many-to-many
+- [TablePlus](https://tableplus.com) — great GUI for exploring your database locally
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I have PostgreSQL installed and a local database created
+- [ ] I connected Sequelize to my database via `config/config.json`
+- [ ] I generated a model and ran the migration to create the table
+- [ ] I can use `findAll`, `findByPk`, `create`, `update`, and `destroy`
+- [ ] I wrap all Sequelize queries in `try/catch`
+- [ ] My database credentials are in `.env`, not hardcoded
+- [ ] I defined at least one association between two models

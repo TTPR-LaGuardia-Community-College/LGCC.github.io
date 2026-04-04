@@ -42,23 +42,23 @@ git status
 The loop you repeat on every working session:
 
 ```bash
-# 1. Pull latest changes before you start
+# 1. pull latest changes before you start
 git pull
 
-# 2. Make your changes to files
+# 2. make your changes to files
 
-# 3. Check what changed
+# 3. check what changed
 git status
 
-# 4. Stage the files you want to commit
+# 4. stage the files you want to commit
 git add filename.js
 # or stage everything:
 git add .
 
-# 5. Commit with a meaningful message
+# 5. commit with a meaningful message
 git commit -m "Add contact form validation"
 
-# 6. Push to GitHub
+# 6. push to GitHub
 git push
 ```
 
@@ -69,19 +69,19 @@ git push
 A branch lets you work on a feature or fix without touching the main codebase. When it is ready, you merge it back.
 
 ```bash
-# Create and switch to a new branch
+# create and switch to a new branch
 git checkout -b feature/add-login
 
-# See all branches
+# see all branches
 git branch
 
-# Switch to an existing branch
+# switch to an existing branch
 git checkout main
 
-# Merge a branch into main (from main)
+# merge a branch into main (from main)
 git merge feature/add-login
 
-# Delete a branch after merging
+# delete a branch after merging
 git branch -d feature/add-login
 ```
 
@@ -142,30 +142,30 @@ git commit -m "Resolve merge conflict in greeting"
 ## Cheat Sheet {{ id: 'cheat-sheet' }}
 
 ```bash
-# Setup
+# setup
 git config --global user.name "Name"
 git config --global user.email "email"
 
-# Start
+# start
 git init                      # initialize a new repo
 git clone REPO_URL            # copy a remote repo locally
 
-# Daily
+# daily
 git status                    # see what changed
 git add filename.js           # stage a file
 git add .                     # stage all changes
 git commit -m "message"       # save a snapshot
-git push                      # send commits to GitHub
-git pull                      # get latest from GitHub
+git push                      # send commits to github
+git pull                      # get latest from github
 
-# Branches
+# branches
 git branch                    # list branches
 git checkout -b BRANCH_NAME   # create + switch to branch
 git checkout BRANCH_NAME      # switch to existing branch
 git merge BRANCH_NAME         # merge branch into current
 git branch -d BRANCH_NAME     # delete a branch
 
-# History
+# history
 git log --oneline             # compact commit history
 git diff                      # see unstaged changes
 git diff --staged             # see staged changes

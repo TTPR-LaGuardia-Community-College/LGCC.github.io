@@ -1,0 +1,236 @@
+export const metadata = {
+  title: 'Module 10 — Node.js & Express',
+  description: 'Build server-side applications and REST APIs with Node.js and Express.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 10 — Node.js & Express
+
+Write server-side JavaScript and build your first REST API. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+Node.js is a JavaScript runtime that runs outside the browser — on servers, in your terminal, anywhere you need to execute JS. Express is a minimal web framework for Node.js that makes it easy to define routes and handle HTTP requests. Together, they are the foundation of most JavaScript backends. This module takes you from "run a JS file" to "serve a working API."
+
+## Why This Matters {{ id: 'why' }}
+
+Up until now, your JavaScript has lived in the browser. Node.js opens up the server side: handling database queries, authenticating users, protecting sensitive keys, and sending custom responses. Express is the most widely used Node.js framework and the basis for the backend of your capstone project.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Run JavaScript files with Node.js
+- Use `npm` to install and manage packages
+- Understand how modules work with `require` and `import`
+- Set up an Express application
+- Define routes for GET, POST, PUT, and DELETE
+- Use route parameters and query strings
+- Return JSON responses
+- Test your API with Postman
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Node.js | A JavaScript runtime built on Chrome's V8 engine |
+| Express | A minimal Node.js web framework for building APIs |
+| Route | A combination of HTTP method + path that handles a request |
+| Request (req) | The incoming HTTP request object |
+| Response (res) | The outgoing HTTP response object |
+| Middleware | A function that runs between a request and a route handler |
+| Route parameter | A dynamic segment in a route path (e.g., `/users/:id`) |
+| `dotenv` | A package for loading environment variables from a `.env` file |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Running a JS file with Node
+
+```bash
+node index.js
+```
+
+### Setting up Express
+
+```bash
+npm init -y
+npm install express
+```
+
+```js
+// index.js
+const express = require('express')
+const app = express()
+const PORT = 3000
+
+// parse incoming JSON bodies
+app.use(express.json())
+
+app.get('/', (req, res) => {
+  res.json({ message: 'server is running' })
+})
+
+app.listen(PORT, () => {
+  console.log(`server running on port ${PORT}`)
+})
+```
+
+### CRUD routes
+
+```js
+// GET all items
+app.get('/students', (req, res) => {
+  res.json(students)
+})
+
+// GET one item by id
+app.get('/students/:id', (req, res) => {
+  const student = students.find((s) => s.id === Number(req.params.id))
+  if (!student) return res.status(404).json({ error: 'not found' })
+  res.json(student)
+})
+
+// POST — create
+app.post('/students', (req, res) => {
+  const newStudent = { id: students.length + 1, ...req.body }
+  students.push(newStudent)
+  res.status(201).json(newStudent)
+})
+
+// PUT — update
+app.put('/students/:id', (req, res) => {
+  const index = students.findIndex((s) => s.id === Number(req.params.id))
+  if (index === -1) return res.status(404).json({ error: 'not found' })
+  students[index] = { ...students[index], ...req.body }
+  res.json(students[index])
+})
+
+// DELETE
+app.delete('/students/:id', (req, res) => {
+  const index = students.findIndex((s) => s.id === Number(req.params.id))
+  if (index === -1) return res.status(404).json({ error: 'not found' })
+  students.splice(index, 1)
+  res.status(204).send()
+})
+```
+
+### Using environment variables
+
+```bash
+npm install dotenv
+```
+
+```js
+// at the top of index.js
+require('dotenv').config()
+
+const PORT = process.env.PORT || 3000
+const DB_URL = process.env.DATABASE_URL
+```
+
+```text
+# .env (never commit this file)
+PORT=3001
+DATABASE_URL=postgres://localhost/mydb
+```
+
+## Examples {{ id: 'examples' }}
+
+**Adding CORS for a React frontend:**
+
+```bash
+npm install cors
+```
+
+```js
+const cors = require('cors')
+app.use(cors()) // allow all origins (fine for development)
+```
+
+**Using query strings:**
+
+```js
+// GET /students?cohort=spring2026
+app.get('/students', (req, res) => {
+  const { cohort } = req.query
+  const results = cohort
+    ? students.filter((s) => s.cohort === cohort)
+    : students
+  res.json(results)
+})
+```
+
+**Organizing routes with Express Router:**
+
+```js
+// routes/students.js
+const router = require('express').Router()
+
+router.get('/', (req, res) => { /* ... */ })
+router.post('/', (req, res) => { /* ... */ })
+
+module.exports = router
+```
+
+```js
+// index.js
+const studentRoutes = require('./routes/students')
+app.use('/students', studentRoutes)
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Forgetting `express.json()` middleware.** Without it, `req.body` is `undefined` on POST and PUT requests.
+- **Not sending a response.** Every route handler must call `res.json()`, `res.send()`, or `res.status()...` — otherwise the request hangs.
+- **Committing `.env` to GitHub.** Your `.env` file contains secrets. It must be in `.gitignore`. Always.
+- **Using hardcoded ports or URLs.** Use environment variables for anything that might change between development and production.
+- **Not handling the 404 case.** If a resource is not found, return `res.status(404).json({ error: 'not found' })`, not an empty `res.json({})`.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Test routes in Postman before connecting a frontend — it lets you control the request precisely.
+- `console.log(req.body)` to see exactly what the client sent.
+- `console.log(req.params)` to inspect URL parameters.
+- If you get `Cannot GET /route`, the route is not defined or the path is wrong.
+- Use `nodemon` so your server restarts automatically on file changes: `npx nodemon index.js`.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 10 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Build a REST API for a student directory. Implement all five CRUD routes (get all, get one, create, update, delete) using an in-memory array. Test every route with Postman. Add a query string filter for cohort.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [Node.js docs](https://nodejs.org/en/docs) — official Node documentation
+- [Express.js docs](https://expressjs.com) — official Express documentation
+- [Express.js — Routing](https://expressjs.com/en/guide/routing.html) — routing in depth
+- [MDN — HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — know your status codes
+- [Postman](https://www.postman.com) — test your API endpoints
+- [The Odin Project — NodeJS](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs) — full structured backend curriculum
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can run a JavaScript file with Node.js
+- [ ] I have an Express server running on a local port
+- [ ] I can define GET, POST, PUT, and DELETE routes
+- [ ] I use `express.json()` middleware to parse request bodies
+- [ ] I read route parameters with `req.params` and query strings with `req.query`
+- [ ] I return proper status codes (200, 201, 404) in my responses
+- [ ] I store secrets in `.env` and have `.env` in my `.gitignore`
+- [ ] I tested all my routes with Postman

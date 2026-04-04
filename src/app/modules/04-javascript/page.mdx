@@ -1,0 +1,223 @@
+export const metadata = {
+  title: 'Module 4 — JavaScript Fundamentals',
+  description: 'Learn the programming language of the web — variables, functions, arrays, objects, and more.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 4 — JavaScript Fundamentals
+
+Write programs that think, decide, and transform data. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+JavaScript is the programming language of the web. It runs in the browser, on the server (Node.js), and everywhere in between. This module covers the core building blocks: variables, data types, functions, conditionals, loops, arrays, and objects. These fundamentals apply whether you are writing vanilla JS, React, or a Node.js API.
+
+## Why This Matters {{ id: 'why' }}
+
+Everything interactive on a webpage is JavaScript. Form validation, API calls, page updates without reloading, real-time features — all JavaScript. React is JavaScript. Node.js is JavaScript. If your JS fundamentals are shaky, everything built on top will feel like guesswork.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Declare variables using `let` and `const`
+- Work with strings, numbers, booleans, arrays, and objects
+- Write functions using both function declarations and arrow functions
+- Use `if`, `else if`, `else` to control program flow
+- Loop over arrays with `for`, `forEach`, and `map`
+- Understand scope — what variables are accessible where
+- Use common array methods: `map`, `filter`, `find`, `reduce`
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Variable | A named container for a value (`let`, `const`) |
+| Function | A reusable block of code that performs a task |
+| Array | An ordered list of values: `[1, 2, 3]` |
+| Object | A collection of key-value pairs: `{ name: 'Alex', age: 22 }` |
+| Scope | The context in which a variable is accessible |
+| Callback | A function passed as an argument to another function |
+| Higher-order function | A function that takes or returns another function |
+| Truthiness | Whether a value evaluates to `true` or `false` in a boolean context |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Variables
+
+```js
+const name = 'Alex'         // cannot be reassigned
+let score = 0               // can be reassigned
+score = score + 10
+
+// avoid var — it has confusing scope rules
+```
+
+### Functions
+
+```js
+// function declaration
+function greet(name) {
+  return `Hello, ${name}!`
+}
+
+// arrow function (preferred in modern JS)
+const greet = (name) => `Hello, ${name}!`
+
+// arrow function with a block body
+const add = (a, b) => {
+  const result = a + b
+  return result
+}
+```
+
+### Conditionals
+
+```js
+const score = 72
+
+if (score >= 90) {
+  console.log('A')
+} else if (score >= 80) {
+  console.log('B')
+} else if (score >= 70) {
+  console.log('C')
+} else {
+  console.log('below passing')
+}
+```
+
+### Arrays and common methods
+
+```js
+const fruits = ['apple', 'banana', 'cherry']
+
+// iterate
+fruits.forEach((fruit) => console.log(fruit))
+
+// transform — returns a new array
+const upper = fruits.map((fruit) => fruit.toUpperCase())
+
+// filter — returns a new array of matching items
+const long = fruits.filter((fruit) => fruit.length > 5)
+
+// find — returns the first match
+const found = fruits.find((fruit) => fruit.startsWith('b'))
+
+// check membership
+console.log(fruits.includes('banana')) // true
+```
+
+### Objects
+
+```js
+const student = {
+  name: 'Alex Rivera',
+  cohort: 'Spring 2026',
+  skills: ['html', 'css'],
+}
+
+// access properties
+console.log(student.name)
+console.log(student['cohort'])
+
+// add a property
+student.graduated = false
+
+// destructure
+const { name, cohort } = student
+```
+
+## Examples {{ id: 'examples' }}
+
+**A function that filters an array of objects:**
+
+```js
+const students = [
+  { name: 'Alex', passed: true },
+  { name: 'Jordan', passed: false },
+  { name: 'Sam', passed: true },
+]
+
+const passing = students.filter((student) => student.passed)
+// [{ name: 'Alex', passed: true }, { name: 'Sam', passed: true }]
+```
+
+**A function that builds a summary string:**
+
+```js
+const summarize = (items) => {
+  if (items.length === 0) return 'nothing to show'
+  return items.map((item, i) => `${i + 1}. ${item}`).join('\n')
+}
+
+console.log(summarize(['html', 'css', 'javascript']))
+// 1. html
+// 2. css
+// 3. javascript
+```
+
+**Using reduce to sum values:**
+
+```js
+const scores = [88, 92, 76, 95]
+const total = scores.reduce((acc, score) => acc + score, 0)
+const average = total / scores.length
+console.log(average) // 87.75
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Using `==` instead of `===`.** Loose equality (`==`) does type coercion and causes surprising results. Always use strict equality (`===`).
+- **Mutating arrays directly instead of using methods.** `push`, `pop`, and `splice` change the original array. `map`, `filter`, and `slice` return new arrays. In React, you will almost always want the non-mutating versions.
+- **Confusing `undefined` and `null`.** `undefined` means a variable was declared but not assigned. `null` is an intentional empty value. Both are falsy.
+- **Declaring variables with `var`.** Use `const` by default. Use `let` only when you need to reassign. Avoid `var` entirely.
+- **Forgetting to `return` from a function.** An arrow function with curly braces needs an explicit `return`. Without braces, the return is implicit.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- `console.log` is your best friend. Log values at each step to trace what the program is doing.
+- `typeof value` tells you what type a variable holds — useful when you are not sure what you got back from an API.
+- If a function returns `undefined`, you probably forgot the `return` keyword.
+- If you get `TypeError: x is not a function`, check that you are calling a function, not a value — and that you didn't accidentally shadow a function with a variable of the same name.
+- Use the browser console to run small snippets of JS without a full file.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 4 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Write a set of utility functions: filter a list of students, calculate an average score, transform an array of objects into a formatted string, and find items based on a search term. No browser or DOM yet — run your code in Node.js or the browser console.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [MDN — JavaScript basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics) — foundational overview
+- [MDN — JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) — in-depth reference by topic
+- [javascript.info](https://javascript.info) — comprehensive modern JS tutorial, free
+- [Eloquent JavaScript](https://eloquentjavascript.net) — free book, deeper treatment of the language
+- [Codewars](https://www.codewars.com) — daily JS practice challenges (start at 8 kyu)
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I use `const` by default and `let` when I need to reassign
+- [ ] I can write functions as both declarations and arrow functions
+- [ ] I can use `if`, `else if`, and `else` to control program flow
+- [ ] I can loop over an array using `forEach` and `map`
+- [ ] I can access and modify object properties
+- [ ] I know the difference between `==` and `===`
+- [ ] I can use `filter`, `find`, and `reduce` on arrays
+- [ ] I understand what scope means and how it affects my code

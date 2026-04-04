@@ -1,0 +1,239 @@
+export const metadata = {
+  title: 'Module 3 — CSS Foundations',
+  description: 'Style your HTML with color, layout, and typography using CSS.',
+}
+
+export const sections = [
+  { title: 'Overview', id: 'overview' },
+  { title: 'Why This Matters', id: 'why' },
+  { title: 'Learning Goals', id: 'goals' },
+  { title: 'Vocabulary', id: 'vocabulary' },
+  { title: 'Core Concepts', id: 'core-concepts' },
+  { title: 'Examples', id: 'examples' },
+  { title: 'Common Mistakes', id: 'mistakes' },
+  { title: 'Debugging Tips', id: 'debugging' },
+  { title: 'Exercise', id: 'exercise' },
+  { title: 'Additional Resources', id: 'resources' },
+  { title: 'Recap Checklist', id: 'recap' },
+]
+
+# Module 3 — CSS Foundations
+
+Style your HTML with color, typography, spacing, and layout. {{ className: 'lead' }}
+
+## Overview {{ id: 'overview' }}
+
+CSS (Cascading Style Sheets) controls how your HTML looks. While HTML provides structure and meaning, CSS provides presentation — colors, fonts, spacing, borders, backgrounds, and layout. Understanding CSS well is the difference between a page that looks broken and one that looks professional.
+
+## Why This Matters {{ id: 'why' }}
+
+Raw HTML without CSS is functional but ugly, and ugly things get ignored. CSS also plays a role in accessibility — good contrast ratios, readable font sizes, and logical spacing all come from CSS decisions. As you move into component-based frameworks like React, you will still be writing CSS (or CSS-in-JS) constantly.
+
+## Learning Goals {{ id: 'goals' }}
+
+By the end of this module you should be able to:
+
+- Link a CSS file to an HTML document
+- Use selectors to target elements by tag, class, and ID
+- Understand the CSS box model (margin, border, padding, content)
+- Apply color, typography, and spacing properties
+- Use Flexbox to create horizontal and vertical layouts
+- Understand specificity and why some rules override others
+- Write clean, organized CSS
+
+## Vocabulary {{ id: 'vocabulary' }}
+
+| Term | Definition |
+|---|---|
+| Selector | Targets which HTML elements a rule applies to |
+| Property | The aspect being styled (e.g. `color`, `font-size`, `margin`) |
+| Value | What the property is set to (e.g. `red`, `16px`, `auto`) |
+| Box model | Every element is a box: content → padding → border → margin |
+| Specificity | How browsers decide which CSS rule wins when multiple apply |
+| Cascade | The rules that determine how styles are inherited and overridden |
+| Flexbox | A CSS layout model for aligning items in a row or column |
+| Media query | CSS that applies only at certain screen widths (responsive design) |
+
+## Core Concepts {{ id: 'core-concepts' }}
+
+### Linking CSS to HTML
+
+```html
+<head>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+```
+
+### Selectors
+
+```css
+/* tag selector */
+p {
+  color: #333;
+}
+
+/* class selector */
+.card {
+  background: white;
+  border-radius: 8px;
+}
+
+/* id selector */
+#main-nav {
+  position: sticky;
+  top: 0;
+}
+
+/* descendant selector */
+.card h2 {
+  font-size: 1.25rem;
+}
+```
+
+### The box model
+
+```css
+.box {
+  width: 300px;
+  padding: 16px;      /* space inside the border */
+  border: 2px solid #ccc;
+  margin: 24px auto;  /* space outside the border, centered horizontally */
+}
+```
+
+Use `box-sizing: border-box` to make `width` include padding and border — this is almost always what you want:
+
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+```
+
+### Flexbox
+
+```css
+.container {
+  display: flex;
+  gap: 16px;
+  align-items: center;      /* cross-axis (vertical by default) */
+  justify-content: space-between; /* main axis (horizontal by default) */
+}
+```
+
+```css
+/* column layout */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+```
+
+## Examples {{ id: 'examples' }}
+
+**A styled card:**
+
+```css
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: #111827;
+}
+
+.card p {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.6;
+}
+```
+
+**A navigation bar using Flexbox:**
+
+```css
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+nav a {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #111827;
+}
+```
+
+**A simple responsive grid:**
+
+```css
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.grid-item {
+  flex: 1 1 280px; /* grow, shrink, basis — wraps when narrower than 280px */
+}
+```
+
+## Common Mistakes {{ id: 'mistakes' }}
+
+- **Forgetting `box-sizing: border-box`.** Without it, padding and border add to the declared width, causing elements to overflow unexpectedly.
+- **Using ID selectors for styling.** IDs are fine for JavaScript targeting but use classes for CSS — they are reusable and have lower specificity, making them easier to override.
+- **Setting heights explicitly on containers.** Let content determine height whenever possible. Hardcoded heights cause overflow issues on smaller screens.
+- **Overusing `!important`.** This breaks the cascade and creates specificity battles. If you need it, something in your selector structure is already wrong.
+- **Not using a CSS reset or `box-sizing` baseline.** Browser default styles vary — always start with a consistent baseline.
+
+## Debugging Tips {{ id: 'debugging' }}
+
+- Open DevTools → Elements → Styles panel to see exactly which rules are applying and which are being overridden (shown with a strikethrough).
+- Use the box model diagram in DevTools (Computed tab) to see actual margin, border, and padding values.
+- If an element is not where you expect, add `outline: 2px solid red` temporarily — this shows the element's box without affecting layout.
+- If Flexbox is not working, make sure `display: flex` is on the **parent**, not the children.
+- Check specificity: a class rule (0,1,0) beats a tag rule (0,0,1); an ID rule (1,0,0) beats both.
+
+## Exercise {{ id: 'exercise' }}
+
+The exercise for this module is in the class repository:
+
+[ttpr-lagcc-spring-2026 → Module 3 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
+
+Take the HTML profile page from Module 2 and style it with CSS. Add a navigation bar, style your card, set up a color scheme, and use Flexbox for at least one layout. No frameworks — write all CSS by hand.
+
+## Additional Resources {{ id: 'resources' }}
+
+- [MDN — CSS basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics) — a solid first read on CSS fundamentals
+- [MDN — CSS reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference) — complete property reference
+- [Flexbox Froggy](https://flexboxfroggy.com) — learn Flexbox by moving frogs (seriously, it works)
+- [CSS Tricks — A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) — the definitive visual Flexbox reference
+- [web.dev — Learn CSS](https://web.dev/learn/css) — Google's structured CSS course
+- [Interneting Is Hard — HTML & CSS](https://internetingishard.netlify.app) — friendly visual guide with great CSS chapters
+
+## Recap Checklist {{ id: 'recap' }}
+
+- [ ] I can link a CSS file to an HTML document
+- [ ] I can target elements using tag, class, and ID selectors
+- [ ] I understand the box model and can control margin, padding, and border
+- [ ] I have `box-sizing: border-box` in my global styles
+- [ ] I can use Flexbox to lay out a row or column of items
+- [ ] I understand what specificity is and how it affects which rules win
+- [ ] My CSS is organized and consistently indented
