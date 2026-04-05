@@ -75,7 +75,7 @@ export const Header = forwardRef(function Header({ className, ...props }, ref) {
       />
 
       {/* Left side: toggle (desktop only) + search */}
-      <div className="flex flex-1 items-center gap-3 min-w-0">
+      <div className="hidden lg:flex lg:flex-1 items-center gap-3 min-w-0">
         <button
           type="button"
           onClick={toggleSidebar}

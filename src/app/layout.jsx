@@ -49,7 +49,7 @@ export default async function RootLayout({ children }) {
   let allSections = await getAllSections()
 
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html lang="en" className="h-full" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
         <Providers>
           <a
