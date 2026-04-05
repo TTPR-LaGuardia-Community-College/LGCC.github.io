@@ -12,6 +12,19 @@ export const metadata = {
   },
   description:
     'Student handbook and course archive for the TTPR program at LaGuardia Community College.',
+  openGraph: {
+    type: 'website',
+    siteName: 'LAGCC Student Handbook',
+    title: {
+      template: '%s - LAGCC Handbook',
+      default: 'LAGCC Student Handbook',
+    },
+    description:
+      'Student handbook and course archive for the TTPR program at LaGuardia Community College.',
+  },
+  twitter: {
+    card: 'summary',
+  },
 }
 
 let _sectionsPromise = null

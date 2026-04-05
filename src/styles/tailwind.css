@@ -42,6 +42,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     --shiki-color-text: var(--color-white);
     --shiki-token-constant: var(--color-emerald-300);
