@@ -12,20 +12,32 @@ export const metadata = {
   },
   description:
     'Student handbook and course archive for the TTPR program at LaGuardia Community College.',
-  icons: {
-    icon: '/favicon.ico',
-  },
+}
+
+// cache the promise itself — not just the result — so concurrent requests
+// (e.g. prefetch + navigate arriving before the first resolves) share one
+// computation instead of each triggering a full glob + import chain.
+// restart the dev server if you add new mdx files or change exported `sections`.
+let _sectionsPromise = null
+
+function getAllSections() {
+  if (!_sectionsPromise) {
+    _sectionsPromise = (async () => {
+      const pages = await glob('**/*.mdx', { cwd: 'src/app' })
+      const entries = await Promise.all(
+        pages.map(async (filename) => [
+          '/' + filename.replace(/(^|\/)page\.mdx$/, ''),
+          (await import(`./${filename}`)).sections,
+        ]),
+      )
+      return Object.fromEntries(entries)
+    })()
+  }
+  return _sectionsPromise
 }
 
 export default async function RootLayout({ children }) {
-  let pages = await glob('**/*.mdx', { cwd: 'src/app' })
-  let allSectionsEntries = await Promise.all(
-    pages.map(async (filename) => [
-      '/' + filename.replace(/(^|\/)page\.mdx$/, ''),
-      (await import(`./${filename}`)).sections,
-    ]),
-  )
-  let allSections = Object.fromEntries(allSectionsEntries)
+  let allSections = await getAllSections()
 
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>

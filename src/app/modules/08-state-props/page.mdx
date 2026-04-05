@@ -21,15 +21,15 @@ export const sections = [
 
 Give your components memory — make them respond to user actions and update the UI automatically. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 State is data that a component owns and can change over time. When state changes, React re-renders the component automatically. This module covers `useState`, controlled inputs, event handling in React, and how to share state between components by lifting it up to a common parent and passing it down through props.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Without state, React components are just templates. State is what makes a button a toggle, a form interactive, and a counter count. Understanding how state flows — down through props, up through callbacks — is the key mental model for building any non-trivial React application.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -40,7 +40,7 @@ By the end of this module you should be able to:
 - Pass callback functions as props to allow children to update parent state
 - Use `useEffect` to run code after a component renders
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -53,7 +53,7 @@ By the end of this module you should be able to:
 | `useEffect` | A hook that runs side effects after each render (or on specific changes) |
 | Dependency array | The second argument to `useEffect` — controls when it runs |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### useState
 
@@ -129,21 +129,21 @@ export default function UserProfile({ userId }) {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    // runs after render, whenever userId changes
+    // runs after render, whenever userid changes
     const load = async () => {
       const res = await fetch(`https://api.example.com/users/${userId}`)
       const data = await res.json()
       setUser(data)
     }
     load()
-  }, [userId]) // dependency array — re-runs when userId changes
+  }, [userId]) // dependency array — re-runs when userid changes
 
   if (!user) return <p>loading...</p>
   return <p>{user.name}</p>
 }
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A form with multiple controlled inputs:**
 
@@ -196,7 +196,7 @@ export default function PostList() {
 }
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Mutating state directly.** Never do `state.push(item)` or `state.name = 'new'`. Always call the setter with a new value: `setState([...state, item])`.
 - **Using stale state in event handlers.** If your new state depends on the previous value, use the updater form: `setCount((prev) => prev + 1)`.
@@ -204,14 +204,14 @@ export default function PostList() {
 - **Setting state in a `useEffect` with no dependencies.** This causes an infinite loop: render → effect → setState → re-render → effect → ...
 - **Not using controlled inputs.** Uncontrolled inputs (no `value` prop) make it hard to validate, reset, or pre-fill forms in React.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - React DevTools shows the current state and props for every component — this is the fastest way to verify state is what you expect.
 - If an update does not seem to work, check that you are calling the setter function, not the value: `setCount(...)` not `count(...)`.
 - If a `useEffect` is running too often, add `console.log` inside to trace when it triggers, then review the dependency array.
 - If state seems one render behind, remember: state updates are asynchronous. Log inside the component body, not after the `setState` call.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -219,7 +219,7 @@ The exercise for this module is in the class repository:
 
 Extend your Pokémon app from Module 6 using React. Add a search input with controlled state, fetch Pokémon data on form submit using `useEffect`, display the result, and handle loading and error states with separate state variables.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [React docs — State: A Component's Memory](https://react.dev/learn/state-a-components-memory) — official useState guide
 - [React docs — Sharing State Between Components](https://react.dev/learn/sharing-state-between-components) — lifting state up
@@ -227,7 +227,7 @@ Extend your Pokémon app from Module 6 using React. Add a search input with cont
 - [React docs — You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) — important: when not to use useEffect
 - [javascript.info — React](https://javascript.info) — supplemental reading on async patterns
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I can add state to a component with `useState`
 - [ ] I update state using the setter, never by mutating directly

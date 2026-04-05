@@ -73,13 +73,6 @@ function GitHubIcon(props) {
   )
 }
 
-function SlackIcon(props) {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true" {...props}>
-      <path d="M7.5 11.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 0V7.5m0 4v2a1.5 1.5 0 0 1-3 0v-2m3 0h4m0-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0 0h2a1.5 1.5 0 0 1 0 3h-2m0-3V7.5m-4 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0Zm0 0h-4" />
-    </svg>
-  )
-}
 
 function SocialLink({ href, icon: Icon, children }) {
   return (
@@ -99,9 +92,6 @@ function SmallPrint() {
       <div className="flex gap-4">
         <SocialLink href="https://github.com/TTPR-LaGuardia-Community-College" icon={GitHubIcon}>
           GitHub
-        </SocialLink>
-        <SocialLink href="#" icon={SlackIcon}>
-          Slack
         </SocialLink>
       </div>
     </div>

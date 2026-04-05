@@ -21,15 +21,15 @@ export const sections = [
 
 Build UIs from reusable components — think in components, not pages. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 React is a JavaScript library for building user interfaces. Instead of manipulating the DOM directly, you describe what the UI should look like, and React handles the updates. The core idea is components — small, reusable pieces of UI that can be composed together. This module introduces JSX, props, and how to structure a React application.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 React is the most widely used front-end library in the industry. Nearly every web development job listing mentions it. The component model also reflects how professional teams build UIs — each component has a single responsibility, can be tested independently, and can be reused across a project.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Apply conditional rendering
 - Structure a project with multiple component files
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -54,7 +54,7 @@ By the end of this module you should be able to:
 | Fragment | `<>...</>` — a wrapper with no DOM output, used when you need a single root |
 | Composition | Building complex UIs by nesting smaller components inside larger ones |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Creating a project
 
@@ -68,14 +68,14 @@ npm run dev
 ### Your first component
 
 ```jsx
-// components/Greeting.jsx
+// components/greeting.jsx
 export default function Greeting({ name }) {
   return <h1>Hello, {name}!</h1>
 }
 ```
 
 ```jsx
-// App.jsx
+// app.jsx
 import Greeting from './components/Greeting'
 
 export default function App() {
@@ -91,7 +91,7 @@ export default function App() {
 ### JSX rules
 
 ```jsx
-// always return a single root element (use a Fragment if needed)
+// always return a single root element (use a fragment if needed)
 return (
   <>
     <h1>Title</h1>
@@ -99,7 +99,7 @@ return (
   </>
 )
 
-// use className, not class
+// use classname, not class
 <div className="card">...</div>
 
 // expressions go in curly braces
@@ -132,7 +132,7 @@ export default function StatusBadge({ isActive }) {
 }
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A card component with props:**
 
@@ -176,7 +176,7 @@ export default function StudentList() {
 }
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Missing `key` prop on list items.** React needs a unique `key` to track items efficiently. Use a unique ID from your data, not the array index.
 - **Using `class` instead of `className`.** JSX compiles to JavaScript where `class` is a reserved word.
@@ -184,14 +184,14 @@ export default function StudentList() {
 - **Trying to render objects directly.** React cannot render plain objects (`{user}` will crash). Access the properties you want: `{user.name}`.
 - **Not capitalizing component names.** React treats lowercase names as HTML tags. `<card />` means a literal `<card>` tag. `<Card />` means your component.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Install the [React DevTools browser extension](https://react.dev/learn/react-developer-tools) — it lets you inspect components, props, and state directly.
 - If nothing renders, check the Console for errors first.
 - If a component is not receiving props, add `console.log(props)` inside the component to inspect what was passed.
 - `Cannot read properties of undefined` usually means you are trying to access a property before data has loaded. Add a guard: `if (!data) return null`.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -199,7 +199,7 @@ The exercise for this module is in the class repository:
 
 Build a student directory app in React. Create a `StudentCard` component with props for name, cohort, and bio. Render a list of cards from an array of data. Add a simple search input that filters which cards are shown.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [React docs — Quick Start](https://react.dev/learn) — official introduction
 - [React docs — Thinking in React](https://react.dev/learn/thinking-in-react) — the most important conceptual read
@@ -207,7 +207,7 @@ Build a student directory app in React. Create a `StudentCard` component with pr
 - [Vite docs](https://vitejs.dev/guide/) — project setup and configuration
 - [Scrimba — Learn React](https://scrimba.com/learn/learnreact) — interactive React course
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I can create a React project with Vite
 - [ ] I know JSX rules (className, single root, expressions in `{}`)

@@ -45,10 +45,10 @@ Error messages tell you what went wrong and where. Most beginners skip them too 
 **Log with labels:**
 
 ```javascript
-// Bad — you don't know what this is
+// bad — you don't know what this is
 console.log(data)
 
-// Good — you know exactly what you are looking at
+// good — you know exactly what you are looking at
 console.log('user object:', user)
 console.log('cart items count:', cart.length)
 ```
@@ -95,10 +95,10 @@ function calculateTotal(items) {
 **Check your assumptions:**
 
 ```javascript
-// You assume user exists — but what if it doesn't?
+// you assume user exists — but what if it doesn't?
 console.log(typeof user, user)
 
-// You assume the array has items — does it?
+// you assume the array has items — does it?
 console.log('items:', items, 'length:', items.length)
 ```
 
@@ -116,10 +116,10 @@ console.log('items:', items, 'length:', items.length)
 - Never mutate state directly. Always use the setter function.
 
 ```javascript
-// Wrong — mutating state directly
+// wrong — mutating state directly
 state.items.push(newItem)
 
-// Right — creating a new array
+// right — creating a new array
 setState([...state.items, newItem])
 ```
 

@@ -21,15 +21,15 @@ export const sections = [
 
 Write server-side JavaScript and build your first REST API. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 Node.js is a JavaScript runtime that runs outside the browser — on servers, in your terminal, anywhere you need to execute JS. Express is a minimal web framework for Node.js that makes it easy to define routes and handle HTTP requests. Together, they are the foundation of most JavaScript backends. This module takes you from "run a JS file" to "serve a working API."
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Up until now, your JavaScript has lived in the browser. Node.js opens up the server side: handling database queries, authenticating users, protecting sensitive keys, and sending custom responses. Express is the most widely used Node.js framework and the basis for the backend of your capstone project.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -42,7 +42,7 @@ By the end of this module you should be able to:
 - Return JSON responses
 - Test your API with Postman
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -55,7 +55,7 @@ By the end of this module you should be able to:
 | Route parameter | A dynamic segment in a route path (e.g., `/users/:id`) |
 | `dotenv` | A package for loading environment variables from a `.env` file |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Running a JS file with Node
 
@@ -76,7 +76,7 @@ const express = require('express')
 const app = express()
 const PORT = 3000
 
-// parse incoming JSON bodies
+// parse incoming json bodies
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -91,26 +91,26 @@ app.listen(PORT, () => {
 ### CRUD routes
 
 ```js
-// GET all items
+// get all items
 app.get('/students', (req, res) => {
   res.json(students)
 })
 
-// GET one item by id
+// get one item by id
 app.get('/students/:id', (req, res) => {
   const student = students.find((s) => s.id === Number(req.params.id))
   if (!student) return res.status(404).json({ error: 'not found' })
   res.json(student)
 })
 
-// POST — create
+// post — create
 app.post('/students', (req, res) => {
   const newStudent = { id: students.length + 1, ...req.body }
   students.push(newStudent)
   res.status(201).json(newStudent)
 })
 
-// PUT — update
+// put — update
 app.put('/students/:id', (req, res) => {
   const index = students.findIndex((s) => s.id === Number(req.params.id))
   if (index === -1) return res.status(404).json({ error: 'not found' })
@@ -118,7 +118,7 @@ app.put('/students/:id', (req, res) => {
   res.json(students[index])
 })
 
-// DELETE
+// delete
 app.delete('/students/:id', (req, res) => {
   const index = students.findIndex((s) => s.id === Number(req.params.id))
   if (index === -1) return res.status(404).json({ error: 'not found' })
@@ -147,7 +147,7 @@ PORT=3001
 DATABASE_URL=postgres://localhost/mydb
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **Adding CORS for a React frontend:**
 
@@ -163,7 +163,7 @@ app.use(cors()) // allow all origins (fine for development)
 **Using query strings:**
 
 ```js
-// GET /students?cohort=spring2026
+// get /students?cohort=spring2026
 app.get('/students', (req, res) => {
   const { cohort } = req.query
   const results = cohort
@@ -191,7 +191,7 @@ const studentRoutes = require('./routes/students')
 app.use('/students', studentRoutes)
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Forgetting `express.json()` middleware.** Without it, `req.body` is `undefined` on POST and PUT requests.
 - **Not sending a response.** Every route handler must call `res.json()`, `res.send()`, or `res.status()...` — otherwise the request hangs.
@@ -199,7 +199,7 @@ app.use('/students', studentRoutes)
 - **Using hardcoded ports or URLs.** Use environment variables for anything that might change between development and production.
 - **Not handling the 404 case.** If a resource is not found, return `res.status(404).json({ error: 'not found' })`, not an empty `res.json({})`.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Test routes in Postman before connecting a frontend — it lets you control the request precisely.
 - `console.log(req.body)` to see exactly what the client sent.
@@ -207,7 +207,7 @@ app.use('/students', studentRoutes)
 - If you get `Cannot GET /route`, the route is not defined or the path is wrong.
 - Use `nodemon` so your server restarts automatically on file changes: `npx nodemon index.js`.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -215,7 +215,7 @@ The exercise for this module is in the class repository:
 
 Build a REST API for a student directory. Implement all five CRUD routes (get all, get one, create, update, delete) using an in-memory array. Test every route with Postman. Add a query string filter for cohort.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [Node.js docs](https://nodejs.org/en/docs) — official Node documentation
 - [Express.js docs](https://expressjs.com) — official Express documentation
@@ -224,7 +224,7 @@ Build a REST API for a student directory. Implement all five CRUD routes (get al
 - [Postman](https://www.postman.com) — test your API endpoints
 - [The Odin Project — NodeJS](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs) — full structured backend curriculum
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I can run a JavaScript file with Node.js
 - [ ] I have an Express server running on a local port
