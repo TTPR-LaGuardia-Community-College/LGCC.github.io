@@ -21,15 +21,15 @@ export const sections = [
 
 Get your app off localhost and onto the internet. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 Deployment is the process of making your application available on the internet. For the full-stack apps you are building, that means deploying your React frontend (to Netlify) and your Express backend (to Render), with a production PostgreSQL database hosted on Render's managed database service. This module walks through the process end to end.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 A project that lives only on your laptop is not a project — it is a draft. Deploying gives you a real URL to put on your resume, share with employers, and show to users. It also exposes the gap between local development and production environments, which is valuable knowledge. Every developer needs to know how to ship.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Set production environment variables on Render
 - Run production database migrations
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -53,7 +53,7 @@ By the end of this module you should be able to:
 | Managed database | A hosted database service that handles backups, patches, and scaling |
 | `_redirects` | A Netlify config file that handles SPA routing |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Deploying the React frontend (Netlify)
 
@@ -107,14 +107,14 @@ Run via Render's shell or as a pre-deploy command.
 ### Pointing the frontend at the production backend
 
 ```js
-// in your React app, use an environment variable for the API base URL
+// in your react app, use an environment variable for the api base url
 const API_URL = import.meta.env.VITE_API_URL || '/api'
 
-// in Netlify environment variables:
-// VITE_API_URL = https://your-app.onrender.com/api
+// in netlify environment variables:
+// vite_api_url = https://your-app.onrender.com/api
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **An Express server that works on any port:**
 
@@ -138,7 +138,7 @@ export default defineConfig({
 })
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Committing `.env` to GitHub.** Render and Netlify both have environment variable UIs — never commit secrets.
 - **Forgetting `_redirects` on Netlify.** React Router pages will 404 on direct access or refresh without it.
@@ -146,7 +146,7 @@ export default defineConfig({
 - **Not running migrations after deploying a new model.** The table does not exist in the production database until you migrate.
 - **Using a free Render instance and expecting it to stay awake.** Free-tier Render services spin down after 15 minutes of inactivity. Warn users or upgrade for production.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Check the deploy logs on Netlify and Render for build errors.
 - On Render, the **Logs** tab shows runtime `console.log` output — use it to debug server behavior.
@@ -154,7 +154,7 @@ export default defineConfig({
 - Test API routes directly using the Render URL in Postman before debugging the frontend.
 - If your frontend is blank after deploy, open browser DevTools → Console — the error message usually points to the issue.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -162,7 +162,7 @@ The exercise for this module is in the class repository:
 
 Deploy your full-stack CRUD app from Module 12. Deploy the React frontend to Netlify and the Express backend to Render with a managed PostgreSQL database. Get a working live URL for both. Add the links to your GitHub profile README.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [Netlify docs](https://docs.netlify.com) — official Netlify documentation
 - [Render docs](https://render.com/docs) — official Render documentation
@@ -170,7 +170,7 @@ Deploy your full-stack CRUD app from Module 12. Deploy the React frontend to Net
 - [Netlify — Redirects and rewrites](https://docs.netlify.com/routing/redirects/) — configuring `_redirects`
 - [12factor.net](https://12factor.net) — best practices for building deployable apps (skim the config and processes sections)
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] My React frontend is deployed on Netlify and accessible via a public URL
 - [ ] I have a `_redirects` file so React Router works on Netlify

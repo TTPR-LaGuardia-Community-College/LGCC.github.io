@@ -1,17 +1,16 @@
 'use client'
 
 import clsx from 'clsx'
-import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
+import { motion, useIsPresent } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 
-import { Button } from '@/components/Button'
-import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
+import { useIsInsideMobileNavigation, useMobileNavigationStore } from '@/components/MobileNavigation'
 import { useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
+import { NavCompletionBadge } from '@/components/NavCompletionBadge'
 import { remToPx } from '@/lib/remToPx'
-import { CloseButton } from '@headlessui/react'
 
 function useInitialValue(value, condition = true) {
   let initialValue = useRef(value).current
@@ -19,33 +18,28 @@ function useInitialValue(value, condition = true) {
 }
 
 function TopLevelNavItem({ href, children }) {
+  let { close } = useMobileNavigationStore()
   return (
     <li className="md:hidden">
-      <CloseButton
-        as={Link}
+      <Link
         href={href}
-        className="block py-1 text-sm text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+        onClick={close}
+        className="block py-1 text-sm text-zinc-600 transition duration-200 ease-in hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
       >
         {children}
-      </CloseButton>
+      </Link>
     </li>
   )
 }
 
-function NavLink({
-  href,
-  children,
-  tag,
-  active = false,
-  isAnchorLink = false,
-}) {
+function NavLink({ href, children, tag, active = false, isAnchorLink = false, onClose }) {
   return (
-    <CloseButton
-      as={Link}
+    <Link
       href={href}
+      onClick={onClose}
       aria-current={active ? 'page' : undefined}
       className={clsx(
-        'flex justify-between gap-2 py-1 pr-3 text-sm transition',
+        'flex justify-between gap-2 py-1 pr-3 text-sm transition duration-200 ease-in',
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
@@ -58,7 +52,28 @@ function NavLink({
           {tag}
         </Tag>
       )}
-    </CloseButton>
+      {!isAnchorLink && <NavCompletionBadge href={href} />}
+    </Link>
+  )
+}
+
+// Indented child link for module sublinks — slightly smaller, deeper indent
+function SubNavLink({ href, children, active, onClose }) {
+  return (
+    <Link
+      href={href}
+      onClick={onClose}
+      aria-current={active ? 'page' : undefined}
+      className={clsx(
+        'flex justify-between gap-2 py-0.5 pl-8 pr-3 text-xs transition duration-200 ease-in rounded-md',
+        active
+          ? 'bg-zinc-800/5 text-zinc-900 dark:bg-white/5 dark:text-white'
+          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-white',
+      )}
+    >
+      <span className="truncate">{children}</span>
+      <NavCompletionBadge href={href} />
+    </Link>
   )
 }
 
@@ -88,10 +103,9 @@ function VisibleSectionHighlight({ group, pathname }) {
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { delay: 0.2 } }}
-      exit={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.1 } }}
+      exit={{ opacity: 0, transition: { duration: 0 } }}
       className="absolute inset-x-0 top-0 bg-zinc-800/2.5 will-change-transform dark:bg-white/2.5"
       style={{ borderRadius: 8, height, top }}
     />
@@ -106,71 +120,103 @@ function ActivePageMarker({ group, pathname }) {
 
   return (
     <motion.div
-      layout
       className="absolute left-2 h-6 w-px bg-[#C4262E]"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { delay: 0.2 } }}
-      exit={{ opacity: 0 }}
-      style={{ top }}
+      animate={{ opacity: 1, transition: { duration: 0.1 } }}
+      exit={{ opacity: 0, transition: { duration: 0 } }}
+      style={{ top, transition: 'top 200ms ease' }}
     />
   )
 }
 
 function NavigationGroup({ group, className }) {
-  // If this is the mobile navigation then we always render the initial
-  // state, so that the state does not change during the close animation.
-  // The state will still update when we re-open (re-render) the navigation.
   let isInsideMobileNavigation = useIsInsideMobileNavigation()
+  let { close } = useMobileNavigationStore()
+  let onClose = isInsideMobileNavigation ? close : undefined
+
   let [pathname, sections] = useInitialValue(
     [usePathname(), useSectionStore((s) => s.sections)],
     isInsideMobileNavigation,
   )
 
+  // When on a sublink (e.g. /modules/01-setup), resolve back to the parent
+  // link href (/modules) so the highlight and marker position correctly.
+  let effectivePathname = pathname
+  for (const link of group.links) {
+    if (link.sublinks?.some((s) => s.href === pathname)) {
+      effectivePathname = link.href
+      break
+    }
+  }
+
   let isActiveGroup =
-    group.links.findIndex((link) => link.href === pathname) !== -1
+    group.links.findIndex((link) => link.href === effectivePathname) !== -1
+
+  // When we've remapped a sublink pathname to its parent href, section-based
+  // height calculation in VisibleSectionHighlight is wrong (it uses the current
+  // page's sections, not the parent's). Show a fixed single-row highlight instead.
+  let isOnSublink = effectivePathname !== pathname
 
   return (
     <li className={clsx('relative mt-6', className)}>
-      <motion.h2
-        layout="position"
-        className="text-xs font-semibold text-zinc-900 dark:text-white"
-      >
+      <h2 className="text-xs font-semibold text-zinc-900 dark:text-white">
         {group.title}
-      </motion.h2>
+      </h2>
       <div className="relative mt-3 pl-2">
-        <AnimatePresence initial={!isInsideMobileNavigation}>
-          {isActiveGroup && (
-            <VisibleSectionHighlight group={group} pathname={pathname} />
-          )}
-        </AnimatePresence>
-        <motion.div
-          layout
-          className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5"
-        />
-        <AnimatePresence initial={false}>
-          {isActiveGroup && (
-            <ActivePageMarker group={group} pathname={pathname} />
-          )}
-        </AnimatePresence>
+        {isActiveGroup && !isOnSublink && (
+          <VisibleSectionHighlight group={group} pathname={effectivePathname} />
+        )}
+        <div className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5" />
+        {isActiveGroup && (
+          <ActivePageMarker group={group} pathname={effectivePathname} />
+        )}
         <ul role="list" className="border-l border-transparent">
-          {group.links.map((link) => (
-            <motion.li key={link.href} layout="position" className="relative">
-              <NavLink href={link.href} active={link.href === pathname}>
-                {link.title}
-              </NavLink>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {link.href === pathname && sections.length > 0 && (
+          {group.links.map((link) => {
+            const isActive = link.href === pathname
+            // A sublink is active when we're on one of its child pages
+            const isParentOfActive =
+              link.sublinks?.some((s) => s.href === pathname) ?? false
+            const showSublinks =
+              link.sublinks &&
+              (isActive || isParentOfActive || pathname.startsWith(link.href + '/'))
+
+            return (
+              <li key={link.href} className="relative">
+                <NavLink
+                  href={link.href}
+                  active={isActive}
+                  onClose={onClose}
+                >
+                  {link.title}
+                </NavLink>
+
+                {/* Fixed child links (e.g. module pages under /modules) */}
+                {showSublinks && (
                   <motion.ul
                     role="list"
                     initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: 1,
-                      transition: { delay: 0.1 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      transition: { duration: 0.15 },
-                    }}
+                    animate={{ opacity: 1, transition: { duration: 0.12, ease: 'easeOut' } }}
+                    exit={{ opacity: 0, transition: { duration: 0 } }}
+                  >
+                    {link.sublinks.map((sub) => (
+                      <li key={sub.href}>
+                        <SubNavLink
+                          href={sub.href}
+                          active={sub.href === pathname}
+                          onClose={onClose}
+                        >
+                          {sub.title}
+                        </SubNavLink>
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
+
+                {/* Anchor section links for the currently active page */}
+                {isActive && !link.sublinks && sections.length > 0 && (
+                  <ul
+                    role="list"
+                    className="animate-in fade-in duration-150"
                   >
                     {sections.map((section) => (
                       <li key={section.id}>
@@ -178,16 +224,17 @@ function NavigationGroup({ group, className }) {
                           href={`${link.href}#${section.id}`}
                           tag={section.tag}
                           isAnchorLink
+                          onClose={onClose}
                         >
                           {section.title}
                         </NavLink>
                       </li>
                     ))}
-                  </motion.ul>
+                  </ul>
                 )}
-              </AnimatePresence>
-            </motion.li>
-          ))}
+              </li>
+            )
+          })}
         </ul>
       </div>
     </li>
@@ -207,7 +254,26 @@ export const navigation = [
   {
     title: 'Curriculum',
     links: [
-      { title: 'Modules', href: '/modules' },
+      {
+        title: 'Modules',
+        href: '/modules',
+        sublinks: [
+          { title: '🛠️ M1 — Setup & Git', href: '/modules/01-setup' },
+          { title: '🏗️ M2 — HTML', href: '/modules/02-html' },
+          { title: '🎨 M3 — CSS', href: '/modules/03-css' },
+          { title: '⚡ M4 — JavaScript', href: '/modules/04-javascript' },
+          { title: '🌐 M5 — DOM', href: '/modules/05-dom' },
+          { title: '🔌 M6 — APIs', href: '/modules/06-apis' },
+          { title: '⚛️ M7 — React', href: '/modules/07-react' },
+          { title: '🔄 M8 — State & Props', href: '/modules/08-state-props' },
+          { title: '🧭 M9 — Router', href: '/modules/09-routing' },
+          { title: '🚀 M10 — Node & Express', href: '/modules/10-node-express' },
+          { title: '🗄️ M11 — Databases', href: '/modules/11-databases' },
+          { title: '🔗 M12 — Full-Stack', href: '/modules/12-crud' },
+          { title: '📦 M13 — Deployment', href: '/modules/13-deployment' },
+          { title: '🎓 M14 — Capstone', href: '/modules/14-capstone' },
+        ],
+      },
       { title: 'Morning Exercises', href: '/exercises' },
       { title: 'Assignments', href: '/assignments' },
     ],
@@ -238,6 +304,7 @@ export function Navigation(props) {
       <ul role="list">
         <TopLevelNavItem href="/">Handbook</TopLevelNavItem>
         <TopLevelNavItem href="/get-started">Get Started</TopLevelNavItem>
+        <TopLevelNavItem href="/modules">Modules</TopLevelNavItem>
         <TopLevelNavItem href="/faq">FAQ</TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
@@ -246,11 +313,6 @@ export function Navigation(props) {
             className={groupIndex === 0 ? 'md:mt-0' : ''}
           />
         ))}
-        <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
-          <Button href="#" variant="filled" className="w-full">
-            Sign in
-          </Button>
-        </li>
       </ul>
     </nav>
   )

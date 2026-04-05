@@ -21,15 +21,15 @@ export const sections = [
 
 Write programs that think, decide, and transform data. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 JavaScript is the programming language of the web. It runs in the browser, on the server (Node.js), and everywhere in between. This module covers the core building blocks: variables, data types, functions, conditionals, loops, arrays, and objects. These fundamentals apply whether you are writing vanilla JS, React, or a Node.js API.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Everything interactive on a webpage is JavaScript. Form validation, API calls, page updates without reloading, real-time features — all JavaScript. React is JavaScript. Node.js is JavaScript. If your JS fundamentals are shaky, everything built on top will feel like guesswork.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Understand scope — what variables are accessible where
 - Use common array methods: `map`, `filter`, `find`, `reduce`
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -54,7 +54,7 @@ By the end of this module you should be able to:
 | Higher-order function | A function that takes or returns another function |
 | Truthiness | Whether a value evaluates to `true` or `false` in a boolean context |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Variables
 
@@ -74,7 +74,7 @@ function greet(name) {
   return `Hello, ${name}!`
 }
 
-// arrow function (preferred in modern JS)
+// arrow function (preferred in modern js)
 const greet = (name) => `Hello, ${name}!`
 
 // arrow function with a block body
@@ -141,7 +141,7 @@ student.graduated = false
 const { name, cohort } = student
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A function that filters an array of objects:**
 
@@ -153,7 +153,7 @@ const students = [
 ]
 
 const passing = students.filter((student) => student.passed)
-// [{ name: 'Alex', passed: true }, { name: 'Sam', passed: true }]
+// [{ name: 'alex', passed: true }, { name: 'sam', passed: true }]
 ```
 
 **A function that builds a summary string:**
@@ -179,7 +179,7 @@ const average = total / scores.length
 console.log(average) // 87.75
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Using `==` instead of `===`.** Loose equality (`==`) does type coercion and causes surprising results. Always use strict equality (`===`).
 - **Mutating arrays directly instead of using methods.** `push`, `pop`, and `splice` change the original array. `map`, `filter`, and `slice` return new arrays. In React, you will almost always want the non-mutating versions.
@@ -187,7 +187,7 @@ console.log(average) // 87.75
 - **Declaring variables with `var`.** Use `const` by default. Use `let` only when you need to reassign. Avoid `var` entirely.
 - **Forgetting to `return` from a function.** An arrow function with curly braces needs an explicit `return`. Without braces, the return is implicit.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - `console.log` is your best friend. Log values at each step to trace what the program is doing.
 - `typeof value` tells you what type a variable holds — useful when you are not sure what you got back from an API.
@@ -195,7 +195,7 @@ console.log(average) // 87.75
 - If you get `TypeError: x is not a function`, check that you are calling a function, not a value — and that you didn't accidentally shadow a function with a variable of the same name.
 - Use the browser console to run small snippets of JS without a full file.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -203,7 +203,7 @@ The exercise for this module is in the class repository:
 
 Write a set of utility functions: filter a list of students, calculate an average score, transform an array of objects into a formatted string, and find items based on a search term. No browser or DOM yet — run your code in Node.js or the browser console.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [MDN — JavaScript basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics) — foundational overview
 - [MDN — JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) — in-depth reference by topic
@@ -211,7 +211,7 @@ Write a set of utility functions: filter a list of students, calculate an averag
 - [Eloquent JavaScript](https://eloquentjavascript.net) — free book, deeper treatment of the language
 - [Codewars](https://www.codewars.com) — daily JS practice challenges (start at 8 kyu)
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I use `const` by default and `let` when I need to reassign
 - [ ] I can write functions as both declarations and arrow functions

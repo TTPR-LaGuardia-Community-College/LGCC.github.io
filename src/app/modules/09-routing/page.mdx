@@ -21,15 +21,15 @@ export const sections = [
 
 Add navigation to your React apps — multiple pages, URL parameters, and programmatic redirects. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 Single-page applications (SPAs) load once and then swap content without a full page reload. React Router is the standard library for adding client-side routing to React apps — it maps URL paths to components, handles navigation, and gives you access to URL parameters. This module covers setting up routes, linking between them, reading URL params, and navigating programmatically.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Real applications have multiple views: a home page, a detail page, a profile page, a login page. React Router is how you manage those views in a React SPA. It is also how you pass data via the URL (e.g., `/users/42`) and how you protect routes from unauthenticated users. You will use it in every multi-page React project.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Create a shared layout with persistent navigation
 - Handle 404 routes with a catch-all
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -54,7 +54,7 @@ By the end of this module you should be able to:
 | `useNavigate` | A hook that returns a function for programmatic navigation |
 | Outlet | A placeholder where nested routes render their content |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Installation and setup
 
@@ -77,7 +77,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ### Defining routes
 
 ```jsx
-// App.jsx
+// app.jsx
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -143,12 +143,12 @@ export default function LoginForm() {
 }
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A layout component with shared navigation:**
 
 ```jsx
-// layouts/MainLayout.jsx
+// layouts/mainlayout.jsx
 import { Outlet } from 'react-router-dom'
 import Nav from '../components/Nav'
 
@@ -165,7 +165,7 @@ export default function MainLayout() {
 ```
 
 ```jsx
-// App.jsx with nested routes
+// app.jsx with nested routes
 <Routes>
   <Route element={<MainLayout />}>
     <Route path="/" element={<Home />} />
@@ -201,7 +201,7 @@ export default function PokemonDetail() {
 }
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Using `<a href>` instead of `<Link to>`.** An `<a>` tag triggers a full page reload, losing React state. Always use `<Link>` or `<NavLink>` for internal navigation.
 - **Not wrapping the app in `<BrowserRouter>`.** All router hooks (`useParams`, `useNavigate`) require a router context. The app will crash without it.
@@ -209,14 +209,14 @@ export default function PokemonDetail() {
 - **Not handling the 404 case.** A `<Route path="*">` catch-all prevents React Router from rendering nothing on an unknown URL.
 - **Using `window.location.href` for navigation.** This reloads the page. Use `useNavigate` instead.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - If a component is not rendering on the expected route, `console.log` the `path` prop and confirm the URL matches exactly (including trailing slashes).
 - React DevTools shows the component tree — you can confirm which page component is rendering.
 - If `useParams` returns an empty object, the route definition does not include the `:param` segment you are expecting.
 - If a link is doing a full reload, it is an `<a>` tag, not a `<Link>`.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -224,14 +224,14 @@ The exercise for this module is in the class repository:
 
 Add routing to your Pokémon app. Create a home page that lists Pokémon, a detail page at `/pokemon/:name` that shows full info, and a shared navigation layout. Use `useParams` to fetch the right data on the detail page.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [React Router docs](https://reactrouter.com/en/main) — official documentation
 - [React Router — Tutorial](https://reactrouter.com/en/main/start/tutorial) — step-by-step walkthrough
 - [React docs — Thinking in React](https://react.dev/learn/thinking-in-react) — helpful for thinking about component structure with routes
 - [Scrimba — React Router](https://scrimba.com) — interactive routing course
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I have React Router installed and `<BrowserRouter>` wrapping my app
 - [ ] I can define routes with `<Routes>` and `<Route>`

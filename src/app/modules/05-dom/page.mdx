@@ -21,15 +21,15 @@ export const sections = [
 
 Make your pages come alive — read and update content, respond to events, and build interactivity. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 The DOM (Document Object Model) is the browser's live representation of your HTML. JavaScript can read any element on the page, change its content, modify its styles, add or remove elements, and respond to user interactions like clicks, keypresses, and form submissions. This is the foundation of all browser interactivity before you get to React.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Even though you will spend most of the program working in React, React is a layer on top of the DOM. Understanding how the DOM works — and how JavaScript manipulates it directly — gives you a foundation that makes React make sense. You will also occasionally need raw DOM skills even in React projects.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Read values from form inputs
 - Prevent default browser behavior (e.g., form submission)
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -54,7 +54,7 @@ By the end of this module you should be able to:
 | `querySelector` | Returns the first element matching a CSS selector |
 | `classList` | A DOM API for adding, removing, and toggling CSS classes |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Selecting elements
 
@@ -64,7 +64,7 @@ const btn = document.querySelector('#submit-btn')
 const heading = document.querySelector('h1')
 const card = document.querySelector('.card')
 
-// select all matches (returns a NodeList)
+// select all matches (returns a nodelist)
 const items = document.querySelectorAll('.list-item')
 items.forEach((item) => console.log(item.textContent))
 ```
@@ -77,10 +77,10 @@ const heading = document.querySelector('h1')
 // read
 console.log(heading.textContent)
 
-// update text (safe — no HTML parsing)
+// update text (safe — no html parsing)
 heading.textContent = 'New Title'
 
-// update HTML (use only with trusted content)
+// update html (use only with trusted content)
 heading.innerHTML = '<em>New</em> Title'
 ```
 
@@ -123,7 +123,7 @@ newItem.textContent = 'Learn the DOM'
 list.appendChild(newItem)
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A counter button:**
 
@@ -166,7 +166,7 @@ searchInput.addEventListener('input', () => {
 })
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Running DOM code before the page loads.** If your `<script>` tag is in `<head>`, the elements do not exist yet. Put scripts at the bottom of `<body>`, or use `DOMContentLoaded`.
 - **Using `innerHTML` with user input.** This creates XSS vulnerabilities. Use `textContent` for user-supplied text.
@@ -174,7 +174,7 @@ searchInput.addEventListener('input', () => {
 - **Forgetting `event.preventDefault()` on form submit.** Without it, the page reloads and you lose your work.
 - **Adding event listeners inside loops.** Each iteration creates a new listener. Attach one listener to the parent and use event delegation instead.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - If your code runs but nothing changes, use `console.log` to confirm that `querySelector` found the element (not `null`).
 - Open DevTools → Console and check for errors before assuming the code is wrong.
@@ -182,7 +182,7 @@ searchInput.addEventListener('input', () => {
 - If a form is reloading the page, `event.preventDefault()` is missing.
 - Add `debugger` in your event listener to pause execution and step through it.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -190,7 +190,7 @@ The exercise for this module is in the class repository:
 
 Build a simple to-do list using only HTML, CSS, and vanilla JavaScript. Add items from a form input, display them in a list, and allow the user to mark items as complete (toggle a class) and delete them.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [MDN — Introduction to the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) — how the DOM works
 - [MDN — EventTarget.addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) — complete event listener reference
@@ -198,7 +198,7 @@ Build a simple to-do list using only HTML, CSS, and vanilla JavaScript. Add item
 - [javascript.info — Document](https://javascript.info/document) — excellent chapter on DOM manipulation
 - [javascript.info — Events](https://javascript.info/events) — everything about events
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I can select elements using `querySelector` and `querySelectorAll`
 - [ ] I can read and update element content with `textContent`

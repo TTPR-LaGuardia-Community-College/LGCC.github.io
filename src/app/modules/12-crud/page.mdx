@@ -21,15 +21,15 @@ export const sections = [
 
 Put it all together — React, Express, and PostgreSQL working as a complete application. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 A CRUD app (Create, Read, Update, Delete) is the foundation of most web applications. In this module you will build a full-stack app that connects a React frontend to an Express + PostgreSQL backend. Data flows from the database through your API to your React UI, and changes from the UI flow back to the database. This is the pattern behind almost every app you will build.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Up until now, you have built the pieces in isolation. This module is where everything comes together. Building a full-stack CRUD app from scratch — including managing state, handling loading/error states, and wiring up the frontend to real backend routes — is the closest thing to a real production workflow you will experience in this program.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Manage loading and error states across the full data lifecycle
 - Structure a full-stack project clearly
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -52,7 +52,7 @@ By the end of this module you should be able to:
 | Race condition | A bug where two async operations produce incorrect results because of timing |
 | Separation of concerns | Keeping the UI, business logic, and data storage in distinct layers |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Project structure
 
@@ -140,7 +140,7 @@ const handleDelete = async (id) => {
 }
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **Updating a record in place:**
 
@@ -174,7 +174,7 @@ return (
 )
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Not keeping UI state in sync with the database.** After a create, update, or delete, update your local state so the UI reflects the change without a full refetch.
 - **Running the frontend and backend on the same port.** They need separate ports. Use the Vite proxy to bridge them in development.
@@ -182,14 +182,14 @@ return (
 - **Sending requests before the component mounts.** Only call `fetch` inside `useEffect` or inside an event handler.
 - **Losing form state on re-render.** Make sure your form inputs are controlled (bound to state), especially when editing.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Check the Network tab in DevTools to see the actual request and response for every API call.
 - If your React app is getting a 404 on `/api/*`, confirm the Vite proxy is configured and the Express server is running on the correct port.
 - If the UI is out of sync after an update, check that you are updating the state correctly (e.g., using `.map()` to replace the updated item, not mutating the array).
 - Keep the Express console open while testing — server errors are logged there, not in the browser.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -197,7 +197,7 @@ The exercise for this module is in the class repository:
 
 Build a full-stack task manager. The backend is an Express + PostgreSQL API with full CRUD. The frontend is a React app that lists tasks, lets you add new ones from a form, toggle them complete, and delete them. Include loading and error states.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [Vite — Server Proxy](https://vitejs.dev/config/server-options.html#server-proxy) — proxying API requests in development
 - [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) — complete fetch reference
@@ -205,7 +205,7 @@ Build a full-stack task manager. The backend is an Express + PostgreSQL API with
 - [Express.js docs](https://expressjs.com) — Express routing and middleware reference
 - [Postman](https://www.postman.com) — test backend routes independently from the frontend
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] My project has separate client and server directories
 - [ ] I have a Vite proxy forwarding `/api` requests to my Express server

@@ -21,15 +21,15 @@ export const sections = [
 
 Fetch real data from the internet and render it in your pages. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 APIs (Application Programming Interfaces) allow applications to communicate with each other over the internet. In web development, this almost always means sending HTTP requests to a server and getting back JSON data. JavaScript's `fetch` API, combined with `async/await`, makes this straightforward. This module covers how to make GET and POST requests, handle responses, and deal with errors.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Almost every real application pulls data from an external source — weather data, user profiles, product listings, financial data. Knowing how to make API calls and handle the responses is one of the most practical skills in front-end development. It is also your first direct encounter with asynchronous programming, which is fundamental to JavaScript.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Use Postman to test an API before writing code
 - Display fetched data in the DOM
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -54,7 +54,7 @@ By the end of this module you should be able to:
 | async/await | Syntax for writing asynchronous code that looks synchronous |
 | Status code | A number indicating the result of a request (200 = OK, 404 = not found, 500 = server error) |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Making a GET request
 
@@ -118,7 +118,7 @@ const loadPokemon = async (name) => {
 loadPokemon('pikachu')
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **Fetching and rendering a list from a public API:**
 
@@ -157,7 +157,7 @@ const loadData = async () => {
 }
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Not checking `response.ok`.** A 404 or 500 response does not throw an error — `fetch` only rejects on network failures. Always check `response.ok` before calling `.json()`.
 - **Forgetting `await`.** Without `await`, you get a Promise object instead of the data. This is one of the most common bugs in async code.
@@ -165,7 +165,7 @@ const loadData = async () => {
 - **Calling an async function and using the return value directly.** Async functions return Promises. You need to `await` them or use `.then()`.
 - **Forgetting `Content-Type` header on POST.** Without it, the server may not know how to parse your request body.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Use Postman to test an API endpoint before writing any JavaScript. Confirm you get the expected data shape.
 - Open DevTools → Network tab to inspect real requests: URL, method, status code, request headers, and response body.
@@ -173,7 +173,7 @@ const loadData = async () => {
 - If you get a CORS error, the API does not allow requests from your origin. Look for a public CORS-friendly version, use a proxy, or call it from your own backend.
 - Check the response structure with `console.log(data)` before trying to access nested properties.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -181,7 +181,7 @@ The exercise for this module is in the class repository:
 
 Build a Pokémon lookup app using the [PokéAPI](https://pokeapi.co). A user types a Pokémon name, clicks a button, and the app fetches and displays the Pokémon's image, name, and types. Handle loading and error states.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) — complete fetch reference
 - [MDN — async/await](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises) — understanding async and promises
@@ -190,7 +190,7 @@ Build a Pokémon lookup app using the [PokéAPI](https://pokeapi.co). A user typ
 - [JSONPlaceholder](https://jsonplaceholder.typicode.com) — fake REST API for testing
 - [Postman](https://www.postman.com) — test API endpoints without writing code first
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I understand what an HTTP request and response are
 - [ ] I can use `fetch` with `async/await` to make a GET request

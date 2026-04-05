@@ -21,15 +21,15 @@ export const sections = [
 
 Learn the language that gives structure and meaning to every webpage on the internet. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 HTML (HyperText Markup Language) is the skeleton of every webpage. It describes the content and structure of a page using elements — things like headings, paragraphs, images, links, and forms. Before you can style anything or make it interactive, you need to understand how to write well-structured HTML.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Everything in web development builds on top of HTML. React renders HTML. CSS styles HTML. JavaScript manipulates HTML. If your HTML structure is wrong, everything on top of it will be harder to work with. Good HTML is also important for accessibility — screen readers and assistive technologies rely on semantic elements to help users navigate your pages.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -40,7 +40,7 @@ By the end of this module you should be able to:
 - Understand the difference between block and inline elements
 - Write valid, well-indented HTML
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -53,7 +53,7 @@ By the end of this module you should be able to:
 | Void element | Self-closing element with no content, e.g. `<img>`, `<br>`, `<input>` |
 | DOM | Document Object Model — the browser's internal representation of your HTML |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Document structure
 
@@ -117,7 +117,7 @@ Use elements that describe their purpose:
 
 Always pair `<label>` with an `<input>` using matching `for` and `id` attributes. This is required for accessibility.
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **An ordered list:**
 
@@ -149,7 +149,7 @@ Always pair `<label>` with an `<input>` using matching `for` and `id` attributes
 </figure>
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Missing `alt` attributes on images.** Every `<img>` needs an `alt` attribute, even if it's empty (`alt=""`). Screen readers need it and it appears when the image fails to load.
 - **Using `<div>` for everything.** Reach for semantic elements first. `<nav>`, `<main>`, `<article>`, `<section>` all carry meaning.
@@ -157,14 +157,14 @@ Always pair `<label>` with an `<input>` using matching `for` and `id` attributes
 - **Not closing tags.** Most elements need both an opening and closing tag. Missing a `</div>` or `</ul>` will break your layout in confusing ways.
 - **Putting block elements inside inline elements.** A `<div>` inside a `<span>` is invalid HTML. Block elements can contain inline elements, not the other way around.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Open DevTools → Elements tab to see the actual DOM. If your HTML looks different there than in your file, the browser tried to fix an error.
 - Validate your HTML at [validator.w3.org](https://validator.w3.org) to catch structural issues.
 - If a layout looks broken, check for unclosed tags. DevTools will usually show you where the structure went wrong.
 - If a form is not submitting, check that the `<button>` has `type="submit"` and is inside the `<form>`.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -172,7 +172,7 @@ The exercise for this module is in the class repository:
 
 Build a personal profile page using only HTML. It should include a header with navigation, a main section with your name, a short bio, a list of things you're learning, and a footer. No CSS yet — focus on clean, semantic structure.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [MDN — HTML basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics) — the best starting point for HTML fundamentals
 - [MDN — HTML elements reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) — complete list of every HTML element
@@ -180,7 +180,7 @@ Build a personal profile page using only HTML. It should include a header with n
 - [HTML validator](https://validator.w3.org) — check your HTML for errors
 - [Interneting Is Hard — HTML & CSS](https://internetingishard.netlify.app) — friendly visual guide to HTML and CSS
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I can write a valid HTML document from scratch
 - [ ] I understand the purpose of `<head>` vs `<body>`

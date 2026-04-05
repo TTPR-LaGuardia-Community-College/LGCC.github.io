@@ -21,15 +21,15 @@ export const sections = [
 
 Style your HTML with color, typography, spacing, and layout. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 CSS (Cascading Style Sheets) controls how your HTML looks. While HTML provides structure and meaning, CSS provides presentation — colors, fonts, spacing, borders, backgrounds, and layout. Understanding CSS well is the difference between a page that looks broken and one that looks professional.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Raw HTML without CSS is functional but ugly, and ugly things get ignored. CSS also plays a role in accessibility — good contrast ratios, readable font sizes, and logical spacing all come from CSS decisions. As you move into component-based frameworks like React, you will still be writing CSS (or CSS-in-JS) constantly.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Understand specificity and why some rules override others
 - Write clean, organized CSS
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -54,7 +54,7 @@ By the end of this module you should be able to:
 | Flexbox | A CSS layout model for aligning items in a row or column |
 | Media query | CSS that applies only at certain screen widths (responsive design) |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Linking CSS to HTML
 
@@ -131,7 +131,7 @@ Use `box-sizing: border-box` to make `width` include padding and border — this
 }
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A styled card:**
 
@@ -195,7 +195,7 @@ nav a:hover {
 }
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Forgetting `box-sizing: border-box`.** Without it, padding and border add to the declared width, causing elements to overflow unexpectedly.
 - **Using ID selectors for styling.** IDs are fine for JavaScript targeting but use classes for CSS — they are reusable and have lower specificity, making them easier to override.
@@ -203,7 +203,7 @@ nav a:hover {
 - **Overusing `!important`.** This breaks the cascade and creates specificity battles. If you need it, something in your selector structure is already wrong.
 - **Not using a CSS reset or `box-sizing` baseline.** Browser default styles vary — always start with a consistent baseline.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Open DevTools → Elements → Styles panel to see exactly which rules are applying and which are being overridden (shown with a strikethrough).
 - Use the box model diagram in DevTools (Computed tab) to see actual margin, border, and padding values.
@@ -211,7 +211,7 @@ nav a:hover {
 - If Flexbox is not working, make sure `display: flex` is on the **parent**, not the children.
 - Check specificity: a class rule (0,1,0) beats a tag rule (0,0,1); an ID rule (1,0,0) beats both.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -219,7 +219,7 @@ The exercise for this module is in the class repository:
 
 Take the HTML profile page from Module 2 and style it with CSS. Add a navigation bar, style your card, set up a color scheme, and use Flexbox for at least one layout. No frameworks — write all CSS by hand.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [MDN — CSS basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics) — a solid first read on CSS fundamentals
 - [MDN — CSS reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference) — complete property reference
@@ -228,7 +228,7 @@ Take the HTML profile page from Module 2 and style it with CSS. Add a navigation
 - [web.dev — Learn CSS](https://web.dev/learn/css) — Google's structured CSS course
 - [Interneting Is Hard — HTML & CSS](https://internetingishard.netlify.app) — friendly visual guide with great CSS chapters
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I can link a CSS file to an HTML document
 - [ ] I can target elements using tag, class, and ID selectors

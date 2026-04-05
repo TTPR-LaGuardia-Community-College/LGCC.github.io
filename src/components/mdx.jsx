@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
 import { PersistentCheckbox } from '@/components/PersistentCheckbox'
+import { ModuleCompletionBadge } from '@/components/ModuleCompletionBadge'
+import { ModuleIndexH2 } from '@/components/ModuleIndexH2'
 
 export function a({ href, children, ...props }) {
   const isExternal = href && (href.startsWith('http') || href.startsWith('//'))
@@ -29,7 +31,16 @@ export function wrapper({ children }) {
 }
 
 export const h2 = function H2(props) {
-  return <Heading level={2} {...props} />
+  return <ModuleIndexH2 {...props} />
+}
+
+export function h1({ children }) {
+  return (
+    <h1 className="flex items-center gap-3">
+      <span>{children}</span>
+      <ModuleCompletionBadge />
+    </h1>
+  )
 }
 
 function InfoIcon(props) {

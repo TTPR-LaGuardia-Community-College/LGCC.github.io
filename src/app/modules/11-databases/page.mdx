@@ -21,15 +21,15 @@ export const sections = [
 
 Give your app a real database — store, retrieve, and relate data that persists across requests. {{ className: 'lead' }}
 
-## Overview {{ id: 'overview' }}
+## Overview 📋 {{ id: 'overview' }}
 
 Up until now, data in your Express API lives in memory — it resets every time the server restarts. A real database makes data persistent. PostgreSQL is a powerful, open-source relational database. Sequelize is an ORM (Object-Relational Mapper) that lets you interact with PostgreSQL using JavaScript instead of raw SQL. This module covers tables, relationships, migrations, and the core Sequelize methods for querying data.
 
-## Why This Matters {{ id: 'why' }}
+## Why This Matters 💡 {{ id: 'why' }}
 
 Every production application stores data in a database. Learning PostgreSQL and Sequelize gives you the skills to build apps where users can sign up, save data, and come back later to find it. It is also a direct prerequisite for authentication and the CRUD app modules.
 
-## Learning Goals {{ id: 'goals' }}
+## Learning Goals 🎯 {{ id: 'goals' }}
 
 By the end of this module you should be able to:
 
@@ -41,7 +41,7 @@ By the end of this module you should be able to:
 - Connect your Express routes to Sequelize models
 - Handle async database errors
 
-## Vocabulary {{ id: 'vocabulary' }}
+## Vocabulary 📖 {{ id: 'vocabulary' }}
 
 | Term | Definition |
 |---|---|
@@ -55,7 +55,7 @@ By the end of this module you should be able to:
 | Migration | A versioned script that creates or modifies a database table |
 | Association | A relationship between two models (e.g., a User has many Posts) |
 
-## Core Concepts {{ id: 'core-concepts' }}
+## Core Concepts 🧠 {{ id: 'core-concepts' }}
 
 ### Installation
 
@@ -128,7 +128,7 @@ Post.belongsTo(models.User, { foreignKey: 'userId' })
 const users = await User.findAll({ include: Post })
 ```
 
-## Examples {{ id: 'examples' }}
+## Examples 💻 {{ id: 'examples' }}
 
 **A full GET route using Sequelize:**
 
@@ -176,7 +176,7 @@ router.delete('/:id', async (req, res) => {
 })
 ```
 
-## Common Mistakes {{ id: 'mistakes' }}
+## Common Mistakes ⚠️ {{ id: 'mistakes' }}
 
 - **Forgetting to run migrations.** Defining a model does not create the table. Run `npx sequelize-cli db:migrate` after generating a model.
 - **Not using `async/await` with Sequelize.** All Sequelize queries return Promises. Forgetting `await` means you get a Promise object, not data.
@@ -184,7 +184,7 @@ router.delete('/:id', async (req, res) => {
 - **Hardcoding database credentials.** Use environment variables. Never commit passwords to GitHub.
 - **Forgetting to define associations in both models.** A `hasMany` in one model needs a corresponding `belongsTo` in the other.
 
-## Debugging Tips {{ id: 'debugging' }}
+## Debugging Tips 🔍 {{ id: 'debugging' }}
 
 - Enable Sequelize logging in development to see the raw SQL queries: `new Sequelize(..., { logging: console.log })`.
 - Connect to your database with a client like TablePlus, DBeaver, or `psql` to inspect the actual table contents.
@@ -192,7 +192,7 @@ router.delete('/:id', async (req, res) => {
 - If a model method fails, check that the column names in your query match the column names in the migration.
 - If `findByPk` returns `null`, the record does not exist — return a 404 instead of crashing.
 
-## Exercise {{ id: 'exercise' }}
+## Exercise 🏋️ {{ id: 'exercise' }}
 
 The exercise for this module is in the class repository:
 
@@ -200,7 +200,7 @@ The exercise for this module is in the class repository:
 
 Replace the in-memory array in your Module 10 student directory API with a real PostgreSQL database using Sequelize. Generate a `Student` model, run the migration, and update all five CRUD routes to use Sequelize queries.
 
-## Additional Resources {{ id: 'resources' }}
+## Additional Resources 📚 {{ id: 'resources' }}
 
 - [PostgreSQL docs](https://www.postgresql.org/docs/) — official PostgreSQL documentation
 - [Sequelize docs](https://sequelize.org/docs/v6/) — full Sequelize v6 reference
@@ -208,7 +208,7 @@ Replace the in-memory array in your Module 10 student directory API with a real 
 - [Sequelize — Associations](https://sequelize.org/docs/v6/core-concepts/assocs/) — one-to-many, many-to-many
 - [TablePlus](https://tableplus.com) — great GUI for exploring your database locally
 
-## Recap Checklist {{ id: 'recap' }}
+## Recap Checklist ✔️ {{ id: 'recap' }}
 
 - [ ] I have PostgreSQL installed and a local database created
 - [ ] I connected Sequelize to my database via `config/config.json`
