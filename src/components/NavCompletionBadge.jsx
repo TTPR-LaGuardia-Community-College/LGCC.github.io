@@ -7,8 +7,6 @@ export function NavCompletionBadge({ href, className }) {
   const complete = useCheckboxCompletionStore((s) => s.completions[href] ?? false)
   const checkPage = useCheckboxCompletionStore((s) => s.checkPage)
 
-  // Read localStorage once on mount to seed the store for this href.
-  // After that, the global event listener in CheckboxCompletionStore handles updates.
   useEffect(() => {
     checkPage(href)
   }, [href, checkPage])

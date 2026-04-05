@@ -15,7 +15,7 @@ function readIsComplete(href) {
 }
 
 export const useCheckboxCompletionStore = create((set, get) => ({
-  completions: {}, // href -> boolean
+  completions: {},
 
   checkPage: (href) => {
     const complete = readIsComplete(href)
@@ -25,9 +25,6 @@ export const useCheckboxCompletionStore = create((set, get) => ({
   },
 }))
 
-// Single global event listener — registered once when this module is imported.
-// Uses a named reference stored on window so webpack HMR re-evaluations
-// remove the old listener before adding the new one, preventing duplicates.
 if (typeof window !== 'undefined') {
   const handler = (e) => {
     const { pathname } = e.detail ?? {}

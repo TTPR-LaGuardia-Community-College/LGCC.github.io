@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation'
 
 const STORAGE_PREFIX = 'lgcc:checkboxes:'
 
-// Module-level cache: pathname -> { [label]: boolean }
-// Parsed once per page per session — all subsequent reads are O(1) Map lookups.
 const cache = new Map()
 
 function loadPage(pathname) {
@@ -22,7 +20,6 @@ function loadPage(pathname) {
   }
 }
 
-// Writes to cache + localStorage and fires the update event so badges re-check.
 function savePage(pathname, data) {
   cache.set(pathname, data)
   try {
@@ -33,9 +30,6 @@ function savePage(pathname, data) {
   } catch {}
 }
 
-// Registers a label on first visit (value = false) so isPageComplete always
-// sees the full set. Fires the update event so badges recalculate — a newly
-// discovered unchecked box means the page is not complete.
 function registerLabel(pathname, label, value) {
   const page = loadPage(pathname)
   if (label in page) return // already registered, nothing to do
@@ -54,12 +48,7 @@ export function PersistentCheckbox({ label, defaultChecked }) {
   const [checked, setChecked] = useState(!!defaultChecked)
 
   useEffect(() => {
-    // Register this label with its default (false) if not yet stored.
-    // This ensures isPageComplete sees every checkbox, not just clicked ones.
     registerLabel(pathname, label, !!defaultChecked)
-
-    // Then read the stored value (may differ from defaultChecked if user
-    // has previously visited and checked/unchecked this box).
     const page = loadPage(pathname)
     setChecked(page[label])
   }, [pathname, label, defaultChecked])
@@ -76,7 +65,8 @@ export function PersistentCheckbox({ label, defaultChecked }) {
       type="checkbox"
       checked={checked}
       onChange={handleChange}
-      className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-zinc-300 accent-[#C4262E] dark:border-zinc-600"
+      aria-label={label}
+      className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-zinc-300 accent-[#C4262E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] focus-visible:ring-offset-2 dark:border-zinc-600"
     />
   )
 }

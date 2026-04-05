@@ -42,7 +42,8 @@ pnpm-debug.log*
 next-env.d.ts
 
 # claude code — local project settings and ai memory (machine-specific)
-.claude/
+.claude/*
+!.claude/settings.json
 
 # editor directories
 .vscode/

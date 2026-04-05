@@ -68,8 +68,9 @@ function CopyButton({ code }) {
   return (
     <button
       type="button"
+      aria-label={copied ? 'Copied!' : 'Copy code'}
       className={clsx(
-        'group/button absolute top-3.5 right-4 overflow-hidden rounded-full py-1 pr-3 pl-2 text-2xs font-medium opacity-0 backdrop-blur-sm transition group-hover:opacity-100 focus:opacity-100',
+        'group/button absolute top-3.5 right-4 overflow-hidden rounded-full py-1 pr-3 pl-2 text-2xs font-medium opacity-0 backdrop-blur-sm transition group-hover:opacity-100 focus:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E]',
         copied
           ? 'bg-[#C4262E]/10 ring-1 ring-[#C4262E]/20 ring-inset'
           : 'bg-white/5 hover:bg-white/7.5 dark:bg-white/2.5 dark:hover:bg-white/5',

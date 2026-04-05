@@ -29,13 +29,13 @@ Built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com
 
 ```
 src/
-├── app/                        # Next.js App Router — one folder per page
-│   ├── page.mdx                # Home
+├── app/
+│   ├── page.mdx
 │   ├── get-started/page.mdx
 │   ├── syllabus/page.mdx
 │   ├── modules/
-│   │   ├── page.mdx            # Modules index
-│   │   └── 01-setup/page.mdx  # Individual module pages
+│   │   ├── page.mdx
+│   │   └── 01-setup/page.mdx
 │   ├── exercises/page.mdx
 │   ├── assignments/page.mdx
 │   ├── references/
@@ -46,15 +46,15 @@ src/
 │   ├── algorithms/page.mdx
 │   ├── resources/page.mdx
 │   └── faq/page.mdx
-├── components/                 # Shared React components
-│   ├── Navigation.jsx          # Sidebar nav (update this to add/remove pages)
-│   ├── Guides.jsx              # Homepage quick-link cards
-│   ├── Resources.jsx           # Homepage reference cards
+├── components/
+│   ├── Navigation.jsx
+│   ├── Guides.jsx
+│   ├── Resources.jsx
 │   ├── Header.jsx
 │   ├── Footer.jsx
 │   ├── Logo.jsx
 │   └── ...
-├── mdx/                        # MDX processing pipeline (search, syntax highlighting)
+├── mdx/
 └── styles/
     └── tailwind.css
 ```

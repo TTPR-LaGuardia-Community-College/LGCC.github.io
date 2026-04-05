@@ -17,7 +17,6 @@ function rehypeParseCodeBlocks() {
   }
 }
 
-// Promise-level singleton — initialises once per process, never re-awaited.
 const highlighterPromise = shiki.getHighlighter({ theme: 'css-variables' })
 
 function rehypeShiki() {

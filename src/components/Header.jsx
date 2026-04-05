@@ -9,8 +9,8 @@ import { Logo } from '@/components/Logo'
 import {
   MobileNavigation,
   useIsInsideMobileNavigation,
-  useMobileNavigationStore,
 } from '@/components/MobileNavigation'
+import { useMobileNavigationStore } from '@/components/MobileNavigationStore'
 import { MobileSearch, Search } from '@/components/Search'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { useSidebarStore } from '@/components/SidebarStore'
@@ -48,7 +48,7 @@ export const Header = forwardRef(function Header({ className, ...props }, ref) {
   let bgOpacityDark = useTransform(scrollY, [0, 72], ['20%', '80%'])
 
   return (
-    <motion.div
+    <motion.header
       {...props}
       ref={ref}
       className={clsx(
@@ -79,8 +79,9 @@ export const Header = forwardRef(function Header({ className, ...props }, ref) {
         <button
           type="button"
           onClick={toggleSidebar}
-          className="hidden lg:flex shrink-0 size-6 items-center justify-center rounded-md text-zinc-500 transition duration-200 ease-in hover:bg-zinc-900/5 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-white"
+          className="hidden lg:flex shrink-0 size-6 items-center justify-center rounded-md text-zinc-500 transition duration-200 ease-in hover:bg-zinc-900/5 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-white"
           aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          aria-expanded={sidebarOpen}
         >
           <SidebarToggleIcon className="h-4 w-4 stroke-current" />
         </button>
@@ -111,6 +112,6 @@ export const Header = forwardRef(function Header({ className, ...props }, ref) {
           <ThemeToggle />
         </div>
       </div>
-    </motion.div>
+    </motion.header>
   )
 })

@@ -14,10 +14,6 @@ export const metadata = {
     'Student handbook and course archive for the TTPR program at LaGuardia Community College.',
 }
 
-// cache the promise itself — not just the result — so concurrent requests
-// (e.g. prefetch + navigate arriving before the first resolves) share one
-// computation instead of each triggering a full glob + import chain.
-// restart the dev server if you add new mdx files or change exported `sections`.
 let _sectionsPromise = null
 
 function getAllSections() {
@@ -43,6 +39,12 @@ export default async function RootLayout({ children }) {
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
         <Providers>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-zinc-900 focus:ring-2 focus:ring-[#C4262E] dark:focus:bg-zinc-900 dark:focus:text-white"
+          >
+            Skip to main content
+          </a>
           <div className="w-full">
             <Layout allSections={allSections}>{children}</Layout>
           </div>

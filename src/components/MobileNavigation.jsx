@@ -8,10 +8,10 @@ import {
 } from '@headlessui/react'
 import { motion } from 'framer-motion'
 import { Suspense, createContext, useContext } from 'react'
-import { create } from 'zustand'
 
 import { Header } from '@/components/Header'
 import { Navigation } from '@/components/Navigation'
+import { useMobileNavigationStore } from '@/components/MobileNavigationStore'
 
 function MenuIcon(props) {
   return (
@@ -46,6 +46,7 @@ const IsInsideMobileNavigationContext = createContext(false)
 function MobileNavigationDialog({ isOpen, close }) {
   return (
     <Dialog
+      id="mobile-nav-dialog"
       transition
       open={isOpen}
       onClose={close}
@@ -78,13 +79,6 @@ export function useIsInsideMobileNavigation() {
   return useContext(IsInsideMobileNavigationContext)
 }
 
-export const useMobileNavigationStore = create()((set) => ({
-  isOpen: false,
-  open: () => set({ isOpen: true }),
-  close: () => set({ isOpen: false }),
-  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
-}))
-
 export function MobileNavigation() {
   let isInsideMobileNavigation = useIsInsideMobileNavigation()
   let { isOpen, toggle, close } = useMobileNavigationStore()
@@ -94,8 +88,10 @@ export function MobileNavigation() {
     <IsInsideMobileNavigationContext.Provider value={true}>
       <button
         type="button"
-        className="relative flex size-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+        className="relative flex size-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] dark:hover:bg-white/5"
         aria-label="Toggle navigation"
+        aria-expanded={isOpen}
+        aria-controls="mobile-nav-dialog"
         onClick={toggle}
       >
         <span className="absolute size-12 pointer-fine:hidden" />

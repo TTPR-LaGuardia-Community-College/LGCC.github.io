@@ -17,8 +17,8 @@ export function Layout({ children, allSections }) {
 
   return (
     <SectionProvider sections={allSections[pathname] ?? []}>
-      {/* Sidebar — fixed full-height panel, slides in/out by animating width */}
-      <div
+      <aside
+        aria-label="Sidebar navigation"
         className={clsx(
           'fixed inset-y-0 left-0 z-40 hidden lg:flex lg:flex-col',
           'bg-white dark:bg-zinc-900',
@@ -28,7 +28,6 @@ export function Layout({ children, allSections }) {
             : 'lg:w-0 border-r-0',
         )}
       >
-        {/* Inner scroll container — fills full height, scrollable */}
         <div className="flex h-full w-72 xl:w-80 flex-col overflow-y-auto px-6 pt-4 pb-8">
           <div className="flex shrink-0">
             <Link href="/" aria-label="Home">
@@ -37,9 +36,7 @@ export function Layout({ children, allSections }) {
           </div>
           <Navigation className="mt-10 flex-1" />
         </div>
-      </div>
-
-      {/* Page area — shifts right to make room for the sidebar */}
+      </aside>
       <div
         className={clsx(
           'flex min-h-full flex-col',
@@ -49,7 +46,7 @@ export function Layout({ children, allSections }) {
       >
         <Header />
         <div className="relative flex flex-1 flex-col px-4 pt-14 sm:px-6 lg:px-8">
-          <main className="flex-auto">{children}</main>
+          <main id="main-content" className="flex-auto">{children}</main>
           <Footer />
         </div>
       </div>

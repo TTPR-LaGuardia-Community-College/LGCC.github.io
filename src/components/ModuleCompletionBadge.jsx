@@ -21,7 +21,6 @@ export function ModuleCompletionBadge() {
     <span
       aria-label="Module complete"
       className="shrink-0 text-xl leading-none"
-      title="All checklist items completed"
     >
       ✅
     </span>

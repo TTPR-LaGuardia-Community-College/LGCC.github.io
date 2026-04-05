@@ -6,7 +6,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 
-import { useIsInsideMobileNavigation, useMobileNavigationStore } from '@/components/MobileNavigation'
+import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
+import { useMobileNavigationStore } from '@/components/MobileNavigationStore'
+import { navigation } from '@/components/navigation-data'
 import { useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
 import { NavCompletionBadge } from '@/components/NavCompletionBadge'
@@ -57,7 +59,6 @@ function NavLink({ href, children, tag, active = false, isAnchorLink = false, on
   )
 }
 
-// Indented child link for module sublinks — slightly smaller, deeper indent
 function SubNavLink({ href, children, active, onClose }) {
   return (
     <Link
@@ -139,8 +140,6 @@ function NavigationGroup({ group, className }) {
     isInsideMobileNavigation,
   )
 
-  // When on a sublink (e.g. /modules/01-setup), resolve back to the parent
-  // link href (/modules) so the highlight and marker position correctly.
   let effectivePathname = pathname
   for (const link of group.links) {
     if (link.sublinks?.some((s) => s.href === pathname)) {
@@ -152,9 +151,6 @@ function NavigationGroup({ group, className }) {
   let isActiveGroup =
     group.links.findIndex((link) => link.href === effectivePathname) !== -1
 
-  // When we've remapped a sublink pathname to its parent href, section-based
-  // height calculation in VisibleSectionHighlight is wrong (it uses the current
-  // page's sections, not the parent's). Show a fixed single-row highlight instead.
   let isOnSublink = effectivePathname !== pathname
 
   return (
@@ -173,7 +169,6 @@ function NavigationGroup({ group, className }) {
         <ul role="list" className="border-l border-transparent">
           {group.links.map((link) => {
             const isActive = link.href === pathname
-            // A sublink is active when we're on one of its child pages
             const isParentOfActive =
               link.sublinks?.some((s) => s.href === pathname) ?? false
             const showSublinks =
@@ -190,7 +185,6 @@ function NavigationGroup({ group, className }) {
                   {link.title}
                 </NavLink>
 
-                {/* Fixed child links (e.g. module pages under /modules) */}
                 {showSublinks && (
                   <motion.ul
                     role="list"
@@ -212,7 +206,6 @@ function NavigationGroup({ group, className }) {
                   </motion.ul>
                 )}
 
-                {/* Anchor section links for the currently active page */}
                 {isActive && !link.sublinks && sections.length > 0 && (
                   <ul
                     role="list"
@@ -240,63 +233,6 @@ function NavigationGroup({ group, className }) {
     </li>
   )
 }
-
-export const navigation = [
-  {
-    title: 'Overview',
-    links: [
-      { title: 'Home', href: '/' },
-      { title: 'Quick Links', href: '/quick-links' },
-      { title: 'Get Started', href: '/get-started' },
-      { title: 'Syllabus', href: '/syllabus' },
-    ],
-  },
-  {
-    title: 'Curriculum',
-    links: [
-      {
-        title: 'Modules',
-        href: '/modules',
-        sublinks: [
-          { title: '🛠️ M1 — Setup & Git', href: '/modules/01-setup' },
-          { title: '🏗️ M2 — HTML', href: '/modules/02-html' },
-          { title: '🎨 M3 — CSS', href: '/modules/03-css' },
-          { title: '⚡ M4 — JavaScript', href: '/modules/04-javascript' },
-          { title: '🌐 M5 — DOM', href: '/modules/05-dom' },
-          { title: '🔌 M6 — APIs', href: '/modules/06-apis' },
-          { title: '⚛️ M7 — React', href: '/modules/07-react' },
-          { title: '🔄 M8 — State & Props', href: '/modules/08-state-props' },
-          { title: '🧭 M9 — Router', href: '/modules/09-routing' },
-          { title: '🚀 M10 — Node & Express', href: '/modules/10-node-express' },
-          { title: '🗄️ M11 — Databases', href: '/modules/11-databases' },
-          { title: '🔗 M12 — Full-Stack', href: '/modules/12-crud' },
-          { title: '📦 M13 — Deployment', href: '/modules/13-deployment' },
-          { title: '🎓 M14 — Capstone', href: '/modules/14-capstone' },
-        ],
-      },
-      { title: 'Morning Exercises', href: '/exercises' },
-      { title: 'Assignments', href: '/assignments' },
-    ],
-  },
-  {
-    title: 'References',
-    links: [
-      { title: 'Git & GitHub', href: '/references/git' },
-      { title: 'Debugging', href: '/references/debugging' },
-      { title: 'Code Improvement', href: '/references/code-improvement' },
-      { title: 'Deploying Projects', href: '/references/deployment' },
-      { title: 'Responsible AI Use', href: '/references/ai-use' },
-    ],
-  },
-  {
-    title: 'More',
-    links: [
-      { title: 'Algorithms Corner', href: '/algorithms' },
-      { title: 'Resources', href: '/resources' },
-      { title: 'FAQ', href: '/faq' },
-    ],
-  },
-]
 
 export function Navigation(props) {
   return (
