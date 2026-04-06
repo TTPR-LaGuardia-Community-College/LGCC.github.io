@@ -88,7 +88,7 @@ export function li({ children }) {
   ) {
     const label = childArray.slice(1).map(getTextContent).join('').trim()
     return (
-      <li className="flex items-start gap-2 pl-0! my-1 list-none">
+      <li className="flex items-center gap-2 pl-0! my-1 list-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
         <PersistentCheckbox label={label} defaultChecked={first.props.checked} />
         <span className={label && childArray.length > 2 ? '' : 'leading-snug'}>
           {childArray.slice(1)}

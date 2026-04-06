@@ -66,7 +66,7 @@ export function PersistentCheckbox({ label, defaultChecked }) {
       checked={checked}
       onChange={handleChange}
       aria-label={label}
-      className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-zinc-300 accent-[#C4262E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] focus-visible:ring-offset-2 dark:border-zinc-600"
+      className="h-4 w-4 shrink-0 cursor-pointer rounded border-zinc-300 accent-[#C4262E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] focus-visible:ring-offset-2 dark:border-zinc-600"
     />
   )
 }
