@@ -41,9 +41,14 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# claude code — local project settings and ai memory (machine-specific)
+# claude code — local/machine-specific files
 .claude/*
 !.claude/settings.json
+!.claude/agents/
+!.claude/commands/
+!.claude/hooks/
+!.claude/rules/
+!.claude/skills/
 
 # editor directories
 .vscode/
