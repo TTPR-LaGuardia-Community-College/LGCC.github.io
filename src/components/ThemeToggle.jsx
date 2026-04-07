@@ -1,3 +1,5 @@
+'use client'
+
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
@@ -33,7 +35,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className="flex size-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] dark:hover:bg-white/5"
+      className="flex size-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none dark:hover:bg-white/5"
       aria-label={mounted ? `Switch to ${otherTheme} theme` : 'Toggle theme'}
       onClick={() => setTheme(otherTheme)}
     >

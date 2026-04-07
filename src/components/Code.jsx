@@ -70,9 +70,9 @@ function CopyButton({ code }) {
       type="button"
       aria-label={copied ? 'Copied!' : 'Copy code'}
       className={clsx(
-        'group/button absolute top-3.5 right-4 overflow-hidden rounded-full py-1 pr-3 pl-2 text-2xs font-medium opacity-0 backdrop-blur-sm transition group-hover:opacity-100 focus:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E]',
+        'group/button absolute top-3.5 right-4 overflow-hidden rounded-full py-1 pr-3 pl-2 text-2xs font-medium opacity-0 backdrop-blur-sm transition group-hover:opacity-100 focus:opacity-100 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none',
         copied
-          ? 'bg-[#C4262E]/10 ring-1 ring-[#C4262E]/20 ring-inset'
+          ? 'bg-brand/10 ring-1 ring-brand/20 ring-inset'
           : 'bg-white/5 hover:bg-white/7.5 dark:bg-white/2.5 dark:hover:bg-white/5',
       )}
       onClick={() => {
@@ -94,7 +94,7 @@ function CopyButton({ code }) {
       <span
         aria-hidden={!copied}
         className={clsx(
-          'pointer-events-none absolute inset-0 flex items-center justify-center text-[#d94048] transition duration-300',
+          'pointer-events-none absolute inset-0 flex items-center justify-center text-brand-light transition duration-300',
           !copied && 'translate-y-1.5 opacity-0',
         )}
       >
@@ -175,7 +175,7 @@ function CodeGroupHeader({ title, children, selectedIndex }) {
               className={clsx(
                 'border-b py-3 transition data-selected:not-data-focus:outline-hidden',
                 childIndex === selectedIndex
-                  ? 'border-[#C4262E] text-[#d94048]'
+                  ? 'border-brand text-brand-light'
                   : 'border-transparent text-zinc-400 hover:text-zinc-300',
               )}
             >
@@ -238,7 +238,7 @@ function usePreventLayoutShift() {
   }
 }
 
-const usePreferredLanguageStore = create()((set) => ({
+const usePreferredLanguageStore = create((set) => ({
   preferredLanguages: [],
   addPreferredLanguage: (language) =>
     set((state) => ({

@@ -88,7 +88,7 @@ export function MobileNavigation() {
     <IsInsideMobileNavigationContext.Provider value={true}>
       <button
         type="button"
-        className="relative flex size-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] dark:hover:bg-white/5"
+        className="relative flex size-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:hover:bg-white/5"
         aria-label="Toggle navigation"
         aria-expanded={isOpen}
         aria-controls="mobile-nav-dialog"

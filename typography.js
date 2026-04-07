@@ -5,9 +5,10 @@ export default {
         css: {
           '--tw-prose-body': theme('colors.zinc.700'),
           '--tw-prose-headings': theme('colors.zinc.900'),
-          '--tw-prose-links': '#C4262E',
-          '--tw-prose-links-hover': '#a81f26',
-          '--tw-prose-links-underline': 'rgb(196 38 46 / 0.3)',
+          '--tw-prose-links': 'var(--color-brand)',
+          '--tw-prose-links-hover': 'var(--color-brand-dark)',
+          '--tw-prose-links-underline':
+            'color-mix(in srgb, var(--color-brand) 30%, transparent)',
           '--tw-prose-bold': theme('colors.zinc.900'),
           '--tw-prose-counters': theme('colors.zinc.500'),
           '--tw-prose-bullets': theme('colors.zinc.300'),
@@ -23,8 +24,8 @@ export default {
 
           '--tw-prose-invert-body': theme('colors.zinc.400'),
           '--tw-prose-invert-headings': theme('colors.white'),
-          '--tw-prose-invert-links': '#d94048',
-          '--tw-prose-invert-links-hover': '#C4262E',
+          '--tw-prose-invert-links': 'var(--color-brand-light)',
+          '--tw-prose-invert-links-hover': 'var(--color-brand)',
           '--tw-prose-invert-links-underline': theme(
             'colors.emerald.500 / 0.3',
           ),

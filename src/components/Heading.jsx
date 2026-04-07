@@ -84,7 +84,7 @@ export function Heading({
         offsetRem: tag || label ? 8 : 6,
       })
     }
-  })
+  }, [level, props.id, ref, tag, label, registerHeading])
 
   return (
     <>

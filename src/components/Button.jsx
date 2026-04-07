@@ -16,14 +16,14 @@ function ArrowIcon(props) {
 
 const variantStyles = {
   primary:
-    'rounded-full bg-zinc-900 py-1 px-3 text-white hover:bg-zinc-700 dark:bg-[#C4262E]/10 dark:text-[#d94048] dark:ring-1 dark:ring-inset dark:ring-[#C4262E]/20 dark:hover:bg-[#C4262E]/10 dark:hover:text-[#e05560] dark:hover:ring-[#e05560]',
+    'rounded-full bg-zinc-900 py-1 px-3 text-white hover:bg-zinc-700 dark:bg-brand/10 dark:text-brand-light dark:ring-1 dark:ring-inset dark:ring-brand/20 dark:hover:bg-brand/10 dark:hover:text-brand-lighter dark:hover:ring-brand-lighter',
   secondary:
     'rounded-full bg-zinc-100 py-1 px-3 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:ring-1 dark:ring-inset dark:ring-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-300',
   filled:
-    'rounded-full bg-zinc-900 py-1 px-3 text-white hover:bg-zinc-700 dark:bg-[#C4262E] dark:text-white dark:hover:bg-[#a81f26]',
+    'rounded-full bg-zinc-900 py-1 px-3 text-white hover:bg-zinc-700 dark:bg-brand dark:text-white dark:hover:bg-brand-dark',
   outline:
     'rounded-full py-1 px-3 text-zinc-700 ring-1 ring-inset ring-zinc-900/10 hover:bg-zinc-900/2.5 hover:text-zinc-900 dark:text-zinc-400 dark:ring-white/10 dark:hover:bg-white/5 dark:hover:text-white',
-  text: 'text-[#C4262E] hover:text-[#a81f26] dark:text-[#d94048] dark:hover:text-[#e05560]',
+  text: 'text-brand hover:text-brand-dark dark:text-brand-light dark:hover:text-brand-lighter',
 }
 
 export function Button({
@@ -34,7 +34,7 @@ export function Button({
   ...props
 }) {
   className = clsx(
-    'inline-flex gap-0.5 justify-center overflow-hidden text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] focus-visible:ring-offset-2',
+    'inline-flex gap-0.5 justify-center overflow-hidden text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
     variantStyles[variant],
     className,
   )
