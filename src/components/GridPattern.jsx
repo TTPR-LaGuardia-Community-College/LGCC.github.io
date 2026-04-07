@@ -1,3 +1,5 @@
+'use client'
+
 import { useId } from 'react'
 
 export function GridPattern({ width, height, x, y, squares, ...props }) {
@@ -17,7 +19,12 @@ export function GridPattern({ width, height, x, y, squares, ...props }) {
           <circle cx={width / 2} cy={height / 2} r="1.5" />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
+      <rect
+        width="100%"
+        height="100%"
+        strokeWidth={0}
+        fill={`url(#${patternId})`}
+      />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
           {squares.map(([sx, sy]) => (

@@ -79,7 +79,7 @@ export const Header = forwardRef(function Header({ className, ...props }, ref) {
         <button
           type="button"
           onClick={toggleSidebar}
-          className="hidden lg:flex shrink-0 size-6 items-center justify-center rounded-md text-zinc-500 transition duration-200 ease-in hover:bg-zinc-900/5 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4262E] dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-white"
+          className="hidden lg:flex shrink-0 size-6 items-center justify-center rounded-md text-zinc-500 transition duration-200 ease-in hover:bg-zinc-900/5 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-white"
           aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           aria-expanded={sidebarOpen}
         >

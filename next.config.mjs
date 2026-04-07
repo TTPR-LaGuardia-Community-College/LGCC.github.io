@@ -25,12 +25,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    staleTimes: {
-      dynamic: 30,
-      static: 300,
-    },
-  },
   webpack(config, { dev }) {
     if (dev) {
       config.cache = {

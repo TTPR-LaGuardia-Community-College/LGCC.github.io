@@ -121,7 +121,7 @@ function ActivePageMarker({ group, pathname }) {
 
   return (
     <motion.div
-      className="absolute left-2 h-6 w-px bg-[#C4262E]"
+      className="absolute left-2 h-6 w-px bg-brand"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.1 } }}
       exit={{ opacity: 0, transition: { duration: 0 } }}

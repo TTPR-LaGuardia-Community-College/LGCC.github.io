@@ -1,12 +1,12 @@
-import { isValidElement, Children } from 'react'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { Children, isValidElement } from 'react'
 
-import { Heading } from '@/components/Heading'
-import { Prose } from '@/components/Prose'
-import { PersistentCheckbox } from '@/components/PersistentCheckbox'
 import { ModuleCompletionBadge } from '@/components/ModuleCompletionBadge'
 import { ModuleIndexH2 } from '@/components/ModuleIndexH2'
+import { PersistentCheckbox } from '@/components/PersistentCheckbox'
+import { Prose } from '@/components/Prose'
+import { getTextContent } from '@/lib/getTextContent'
 
 export function a({ href, children, ...props }) {
   const isExternal = href && (href.startsWith('http') || href.startsWith('//'))
@@ -18,7 +18,11 @@ export function a({ href, children, ...props }) {
       </a>
     )
   }
-  return <Link href={href} {...props}>{children}</Link>
+  return (
+    <Link href={href} {...props}>
+      {children}
+    </Link>
+  )
 }
 export { Button } from '@/components/Button'
 export { Code as code, CodeGroup, Pre as pre } from '@/components/Code'
@@ -62,20 +66,11 @@ function InfoIcon(props) {
 
 export function Note({ children }) {
   return (
-    <div className="my-6 flex gap-2.5 rounded-2xl border border-[#C4262E]/20 bg-[#C4262E]/5 p-4 text-sm/6 text-zinc-900 dark:border-[#C4262E]/30 dark:bg-[#C4262E]/10 dark:text-zinc-200">
-      <InfoIcon className="mt-1 h-4 w-4 flex-none fill-[#C4262E] stroke-white dark:fill-[#C4262E]/60 dark:stroke-zinc-200" />
+    <div className="my-6 flex gap-2.5 rounded-2xl border border-brand/20 bg-brand/5 p-4 text-sm/6 text-zinc-900 dark:border-brand/30 dark:bg-brand/10 dark:text-zinc-200">
+      <InfoIcon className="mt-1 h-4 w-4 flex-none fill-brand stroke-white dark:fill-brand/60 dark:stroke-zinc-200" />
       <div className="*:first:mt-0 *:last:mb-0">{children}</div>
     </div>
   )
-}
-
-function getTextContent(node) {
-  if (typeof node === 'string') return node
-  if (typeof node === 'number') return String(node)
-  if (isValidElement(node) && node.props.children) {
-    return Children.toArray(node.props.children).map(getTextContent).join('')
-  }
-  return ''
 }
 
 export function li({ children }) {
@@ -88,8 +83,11 @@ export function li({ children }) {
   ) {
     const label = childArray.slice(1).map(getTextContent).join('').trim()
     return (
-      <li className="flex items-center gap-2 pl-0! my-1 list-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
-        <PersistentCheckbox label={label} defaultChecked={first.props.checked} />
+      <li className="my-1 flex list-none items-center gap-2 pl-0! [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+        <PersistentCheckbox
+          label={label}
+          defaultChecked={first.props.checked}
+        />
         <span className={label && childArray.length > 2 ? '' : 'leading-snug'}>
           {childArray.slice(1)}
         </span>
