@@ -13,6 +13,7 @@ export const sections = [
   { title: 'Common Mistakes', id: 'mistakes' },
   { title: 'Debugging Tips', id: 'debugging' },
   { title: 'Exercise', id: 'exercise' },
+  { title: 'Hands-on Labs', id: 'labs' },
   { title: 'Additional Resources', id: 'resources' },
   { title: 'Recap Checklist', id: 'recap' },
 ]
@@ -202,6 +203,17 @@ The exercise for this module is in the class repository:
 [ttpr-lagcc-spring-2026 → Module 4 Exercise](https://github.com/ttpr-lgcc/ttpr-lagcc-spring-2026)
 
 Write a set of utility functions: filter a list of students, calculate an average score, transform an array of objects into a formatted string, and find items based on a search term. No browser or DOM yet — run your code in Node.js or the browser console.
+
+## Hands-on Labs 🧪 {{ id: 'labs' }}
+
+Four function-writing labs ordered easiest to hardest. Each repo ships with a Jasmine/Jest spec file - clone, run `npm install`, then `npm test` and make the failing specs pass. Submit the same way as the Module 1 labs: branch named after your GitHub username, commit, push.
+
+- **[Is Between](https://github.com/ttpr-lgcc/js-isBetween-lagcc-002)** - Write `isBetween(num, min, max)` that returns `true` when `num` falls inside the inclusive range. Warm-up for conditionals and boolean returns.
+- **[Speaking Grandma](https://github.com/ttpr-lgcc/js-speaking-grandma-lagcc-002)** - Write `speakToGrandma(input)`. Grandma can only hear you when you SHOUT (all caps); otherwise she asks you to speak up. Practice with string methods and conditional branching.
+- **[Pig Latin](https://github.com/ttpr-lgcc/js-pigLatin-lagcc-002)** - Write `pigLatin(word)` that follows the vowel/consonant transformation rules. Practice with substrings, indexing, and edge-case handling.
+- **[Grains on a Chessboard](https://github.com/ttpr-lgcc/js-grains-lagcc-002)** - Calculate how many grains land on each of the 64 squares (doubling each time) and the total. Practice with loops, accumulation, and large-number arithmetic (`BigInt`).
+
+See also the [Assignments page](/assignments) for the central index.
 
 ## Additional Resources 📚 {{ id: 'resources' }}
 
