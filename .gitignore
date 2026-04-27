@@ -41,8 +41,9 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# claude code — local/machine-specific files (entire folder ignored)
+# claude code — local/machine-specific files (entire folder + project doc ignored)
 .claude/
+CLAUDE.md
 
 # serena (local agent tooling)
 .serena/
